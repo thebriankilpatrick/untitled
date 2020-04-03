@@ -5,7 +5,7 @@ function Header() {
         <>
             <nav>
                 <div class="nav-wrapper">
-                    <a href="#" class="brand-logo center">Google Books Search</a>
+                    <a href="#" class="brand-logo center">Untitled Card Game</a>
                 </div>
             </nav>
         </>
