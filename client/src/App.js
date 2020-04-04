@@ -1,12 +1,13 @@
-import React, { Component } from "react";
-// import Header from "./components/Header";
-import Landing from "./pages/Landing";
+import React from "react";
+// import Landing from "./pages/Landing";
+import MainPage from "./pages/MainPage";
 import "./App.css";
+
 
 function App() {
   return (
     <div>
-      <Landing ></Landing>
+      <MainPage></MainPage>
     </div>
   );
 }

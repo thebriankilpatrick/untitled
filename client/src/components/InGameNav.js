@@ -1,6 +1,6 @@
 import React from "react";
 
-function Header() {
+function InGameNav() {
     return (
         <>
             <nav>
@@ -12,4 +12,4 @@ function Header() {
     )
 }
 
-export default Header;
+export default InGameNav;
