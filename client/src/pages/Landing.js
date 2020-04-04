@@ -8,17 +8,16 @@ import "./Landing.css";
 
 // Render full size picture on body via body className
 
-// How to handle rendering of two diff modals??
-// On Landing component, have the parent modal div
-// within that, two buttons for "login" and "register"
-// Depending on button click, it will render different content???
+// Modal content rendering works, however
+// I can't render one until I click the link within the modal
+// Try having the landing page load as "/login" or "/register"
 function Landing() {
     return (
         <Router>
             <div >
                 <BodyClassName className="landingPagePic"></BodyClassName>
                 <div className="container" id="initPlayBtn">
-                    <Link to="/login" className="waves-effect waves-light btn-large modal-trigger" data-target="modal1" href="#modal1">PLAY GAME</Link>
+                    <a className="waves-effect waves-light btn-large modal-trigger" data-target="modal1" href="#modal1">PLAY GAME</a>
                 </div>
 
                 <div id="modal1" className="modal">
