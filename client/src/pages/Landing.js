@@ -1,5 +1,8 @@
 import React from "react";
 import BodyClassName from 'react-body-classname';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import LoginModalContent from "../components/LoginModalContent";
+import RegisterModalContent from "../components/RegisterModalContent";
 import "./Landing.css";
 
 
@@ -11,23 +14,22 @@ import "./Landing.css";
 // Depending on button click, it will render different content???
 function Landing() {
     return (
-        <div >
-            <BodyClassName className="landingPagePic"></BodyClassName>
-            <div className="container" id="initPlayBtn">
-                <a className="waves-effect waves-light btn-large modal-trigger" data-target="modal1" href="#modal1">PLAY GAME</a>
-            </div>
-
-            <div id="modal1" className="modal">
-                <div className="modal-content">
-                    <h4>Modal Header</h4>
-                    <p>A bunch of text</p>
+        <Router>
+            <div >
+                <BodyClassName className="landingPagePic"></BodyClassName>
+                <div className="container" id="initPlayBtn">
+                    <Link to="/login" className="waves-effect waves-light btn-large modal-trigger" data-target="modal1" href="#modal1">PLAY GAME</Link>
                 </div>
-                <div className="modal-footer">
-                    <a href="#!" className="modal-close waves-effect waves-green btn-flat">Agree</a>
-                </div>
-            </div>
 
-        </div>
+                <div id="modal1" className="modal">
+                    <Link to="/register"><h4>Register</h4></Link>
+                    <Link to="/login"><h4>Login</h4></Link>
+                    <Route exact path="/register" component={RegisterModalContent}/>
+                    <Route exact path="/login" component={LoginModalContent}/>
+                </div>
+
+            </div>
+        </Router>
     )
 }
 
