@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import Header from "./components/Header";
+// import Header from "./components/Header";
+import Landing from "./pages/Landing";
 import "./App.css";
 
 function App() {
   return (
     <div>
-      <Header></Header>
+      <Landing ></Landing>
     </div>
   );
 }
