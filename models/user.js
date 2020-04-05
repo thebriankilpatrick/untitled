@@ -3,10 +3,10 @@ const bcrypt = require("bcrypt-nodejs"); // Need install
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    email: {type: String, required: true},
-    username: {type: String, required: true},
+    email: {type: String, required: true, trim: true},
+    username: {type: String, required: true, trim: true},
     birthday: {type: Date, required: true}, // ??
-    password: {type: String, required: true}
+    password: {type: String, required: true, trim: true}
 });
 
 //generating a hash

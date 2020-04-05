@@ -1,0 +1,13 @@
+
+
+@media only screen and (min-width: 992px) {
+    body {
+      padding-right: 300px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    body {
+      padding-right: 0;
+    }
+}

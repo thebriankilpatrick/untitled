@@ -4,12 +4,15 @@ import Wrapper from "../components/Wrapper";
 import HomePage from "./HomePage";
 import CollectionPage from "./Collection";
 import Navbar from "../components/Navbar";
+import SideNav from "../components/SideNav";
+import "./MainPage.css";
 
 function MainPage() {
     return (
         <Router >
             <>
                 <Navbar ></Navbar>
+                <SideNav ></SideNav>
                 <Wrapper >
                     <Route exact path="/home" component={HomePage} />
                     <Route exact path="/collection" component={CollectionPage}/>

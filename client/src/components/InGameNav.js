@@ -5,7 +5,7 @@ function InGameNav() {
         <>
             <nav>
                 <div class="nav-wrapper">
-                    <a href="#" class="brand-logo center">Untitled Card Game</a>
+                    <a class="brand-logo center">Super Smash Kittens</a>
                 </div>
             </nav>
         </>
