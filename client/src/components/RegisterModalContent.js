@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
+// Register button should link to MainPage
 function RegisterModalContent() {
     return (
         <>

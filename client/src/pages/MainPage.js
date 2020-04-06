@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import SideNav from "../components/SideNav";
 import "./MainPage.css";
 
+
 function MainPage() {
     return (
         <Router >
@@ -14,6 +15,7 @@ function MainPage() {
                 <Navbar ></Navbar>
                 <SideNav ></SideNav>
                 <Wrapper >
+                    <Route exact path="/" component={HomePage} />
                     <Route exact path="/home" component={HomePage} />
                     <Route exact path="/collection" component={CollectionPage}/>
                 </Wrapper>

@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt-nodejs"); // Need install
 const Schema = mongoose.Schema;
 
+// Need to have association with:
+// Other users, cards, "in-battle table"?
+
 const userSchema = new Schema({
     email: {type: String, required: true, trim: true},
     username: {type: String, required: true, trim: true},
