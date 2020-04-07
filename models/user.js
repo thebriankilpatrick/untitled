@@ -2,14 +2,31 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt-nodejs"); // Need install
 const Schema = mongoose.Schema;
 
-// Need to have association with:
-// Other users, cards, "in-battle table"?
-
 const userSchema = new Schema({
     email: {type: String, required: true, trim: true},
     username: {type: String, required: true, trim: true},
     birthday: {type: Date, required: true}, // ??
-    password: {type: String, required: true, trim: true}
+    password: {type: String, required: true, trim: true},
+    friend:[{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    }],
+    cards: [{
+        type: Schema.Types.ObjectId,
+        ref: "Card"
+    }],
+    rank: {type: Number, default: 0},
+    losses: {type: Number, default: 0},
+    wins: {type: Number, default: 0},
+    deck: {
+        cards: [],
+        totalCount: {type: Number},
+        totalPower: {type: Number}
+    },
+    game: [{
+        type: Schema.Types.ObjectId,
+        ref: "Game"
+    }]
 });
 
 //generating a hash

@@ -81,7 +81,35 @@ const cardSeed = [
         title: "Fluffy",
         power: "",
         img: "",
-        flavor: "So cute, ya just want to pet 'em"
+        flavor: "So cute, ya just want to pet 'em."
+    },
+
+    {
+        title: "Skittles, the Destroyer",
+        power: "",
+        img: "",
+        flavor: "Skittles invokes destruction to all who gaze upon its cuteness."
+    },
+
+    {
+        title: "",
+        power: "",
+        img: "",
+        flavor: ""
+    },
+
+    {
+        title: "",
+        power: "",
+        img: "",
+        flavor: ""
+    },
+
+    {
+        title: "",
+        power: "",
+        img: "",
+        flavor: ""
     },
 
     {

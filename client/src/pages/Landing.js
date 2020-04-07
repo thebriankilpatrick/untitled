@@ -8,9 +8,7 @@ import "./Landing.css";
 
 // Render full size picture on body via body className
 
-// Modal content rendering works, however
-// I can't render one until I click the link within the modal
-// Try having the landing page load as "/login" or "/register"
+
 function Landing() {
     return (
         <Router>
@@ -21,8 +19,15 @@ function Landing() {
                 </div>
 
                 <div id="modal1" className="modal">
-                    <Link to="/register"><h4>Register</h4></Link>
-                    <Link to="/login"><h4>Login</h4></Link>
+                    <div className="row align-center">
+                        <div className="col l6 m6 s6">
+                        <Link to="/login"><h4 className="modalBtn center-align">Login</h4></Link>
+                        </div>
+                        <div className="col l6 m6 s6">
+                        <Link to="/register"><h4 className="modalBtn center-align">Register</h4></Link>
+                        </div>
+                    </div>
+                    <Route exact path="/" component={RegisterModalContent}/>
                     <Route exact path="/register" component={RegisterModalContent}/>
                     <Route exact path="/login" component={LoginModalContent}/>
                 </div>

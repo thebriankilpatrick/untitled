@@ -8,7 +8,7 @@ import React from "react";
 function HomePlayBtn() {
     return (
         <div className="container">
-            <a class="waves-effect waves-light btn-large" id="homePlayBtn">FIND MATCH</a>
+            <a className="waves-effect waves-light btn-large" id="homePlayBtn">FIND MATCH</a>
         </div>
     )
 }
