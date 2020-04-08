@@ -2,6 +2,16 @@
   font-family: 'Righteous', cursive;
 }
 
+.sideNavLink {
+  margin-left: 5px;
+}
+
+.sideNavLink:hover {
+  cursor: pointer;
+  color: #4aaaa5;
+  transition: .5s;
+}
+
 @media only screen and (min-width: 992px) {
     body {
       padding-right: 300px;

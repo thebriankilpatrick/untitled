@@ -4,11 +4,16 @@ import HowToPlayText from "../components/HowToPlayText";
 import HomePlayBtn from "../components/HomePlayBtn";
 import "./HomePage.css";
 
-function HomePage() {
+function HomePage(props) {
+
     return (
         <>
-            <h1>Home Page</h1>
-            <HomePlayBtn ></HomePlayBtn>
+            <HomePlayBtn 
+                username={props.username}
+                wins={props.wins}
+                losses={props.losses}
+                rank={props.rank}
+            />
             <HowToPlayText ></HowToPlayText>
             <Leaderboard ></Leaderboard>
         </>

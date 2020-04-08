@@ -11,7 +11,7 @@ function Navbar() {
     return (
         <>
             <nav>
-                <div className="nav-wrapper">
+                <div className="nav-wrapper grey darken-3">
                     <Link to="/" className="brand-logo">Logo</Link>
                     <ul id="nav-mobile" className="right">
                         <li><Link to="/home">Home</Link></li>

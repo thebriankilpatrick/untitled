@@ -1,3 +1,8 @@
 #homePlayBtn {
     font-family: 'Righteous', cursive;
+    top: 10px;
+}
+
+.customFont {
+    font-family: 'Righteous', cursive;
 }
