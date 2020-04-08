@@ -1,30 +1,65 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 
 // Login button should link to MainPage
-function LoginModalContent() {
-    return (
-        <>
-            <div className="modal-content">
-                <h4>Login Modal</h4>
-                <form>
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <input id="email" type="email" className="validate"/>
-                            <label for="email">Email</label>
-                            <span className="helper-text" data-error="wrong" data-success="right"></span>
-                        </div> 
-                        <div className="input-field col s12">
-                            <input id="password" type="password" className="validate"/>
-                            <label for="password">Password</label>
+class LoginModalContent extends Component {
+
+    state = {
+        email: "",
+        password: ""
+    }
+
+    handleChange = event => {
+        const {name, value} = event.target;
+        this.setState({[name]: value});
+        console.log(name + value);
+    }
+
+    loginUser = () => {
+        const {email, password} = this.state;
+        const userObj = {
+            email: email,
+            password: password
+        };
+
+        console.log(userObj);
+        // Success!
+        // Need to add API call here to handle the login and handle authentication
+    }
+
+
+    render() {
+        return (
+            <>
+                <div className="modal-content">
+                    <h4>Login Modal</h4>
+                    <form>
+                        <div className="row">
+                            <div className="input-field col s12">
+                                <input id="email" type="email" className="validate"
+                                    name="email"
+                                    value={this.state.email}
+                                    onChange={this.handleChange}
+                                />
+                                <label for="email">Email</label>
+                                <span className="helper-text" data-error="wrong" data-success="right"></span>
+                            </div> 
+                            <div className="input-field col s12">
+                                <input id="password" type="password" className="validate"
+                                    name="password"
+                                    value={this.state.password}
+                                    onChange={this.handleChange}
+                                />
+                                <label for="password">Password</label>
+                            </div>
+                            <Link to="/" onClick={this.loginUser} className="waves-effect waves-light btn">Login</Link>    
                         </div>
-                        <Link to="/" className="waves-effect waves-light btn">Login</Link>    
-                    </div>
-                </form>
-            </div>
-        </>
-    )
+                    </form>
+                </div>
+            </>
+        )
+    }
 }
 
 export default LoginModalContent;

@@ -1,38 +1,84 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 
 // Register button should link to MainPage
-function RegisterModalContent() {
-    return (
+class RegisterModalContent extends Component {
+
+    state = {
+        email: "",
+        username: "",
+        birthday: "",
+        password: ""
+    };
+
+    handleChange = event => {
+        const {name, value} = event.target;
+        this.setState({[name]: value});
+        console.log(name + value);
+    }
+
+    registerNewUser = () => {
+        const {email, username, birthday, password} = this.state;
+        const userObj = {
+            email: email,
+            username: username,
+            birthday: birthday,
+            password: password
+        };
+        console.log(userObj);
+        // Success!
+        // Need to add API call here to post user to db
+    }
+
+
+    render() {
+        return (
         <>
             <div className="modal-content">
                 <h4>Register Modal</h4>
                 <form>
                     <div className="row">
                         <div className="input-field col s12">
-                            <input id="email" type="email" className="validate"/>
+                            <input id="email" type="email" className="validate" 
+                                name="email" 
+                                value={this.state.email}
+                                onChange={this.handleChange}
+                                />
                             <label for="email">Email</label>
                             <span className="helper-text" data-error="wrong" data-success="right"></span>
                         </div>
                         <div className="input-field col s12">
-                            <input id="birthday" type="text" className="validate"/>
+                            <input id="birthday" type="text" className="validate" 
+                                name="birthday" 
+                                value={this.state.birthday}
+                                onChange={this.handleChange}
+                                />
                             <label for="birthday">Birthday</label>
                         </div>
                         <div className="input-field col s12">
-                            <input id="username" type="text" className="validate"/>
+                            <input id="username" type="text" className="validate" 
+                                name="username" 
+                                value={this.state.username}
+                                onChange={this.handleChange}
+                                />
                             <label for="username">Username</label>
                         </div>
                         <div className="input-field col s12">
-                            <input id="password" type="password" className="validate"/>
+                            <input id="password" type="password" className="validate" 
+                                name="password" 
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                                />
                             <label for="password">Password</label>
                         </div>
-                        <Link to="/" className="waves-effect waves-light btn">Register</Link>
+                        <Link to="/" onClick={this.registerNewUser} className="waves-effect waves-light btn">Register</Link>
                     </div>
                 </form>
             </div>
         </>
-    )
+        )
+    }
 }
 
 export default RegisterModalContent;
