@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import API from "../utils/API";
 
 
 // Login button should link to MainPage
@@ -26,6 +27,11 @@ class LoginModalContent extends Component {
         console.log(userObj);
         // Success!
         // Need to add API call here to handle the login and handle authentication
+        API.getUser(userObj).then(res => {
+            console.log(res.data);
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
 

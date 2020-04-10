@@ -6,10 +6,11 @@ const db = require("../models");
 
 module.exports = function(app) {
 
-    app.get("/api/user", (req, res) => {
+    app.get("/api/user/:email", (req, res) => {
         console.log("Hitting the route GET /api/user")
-        const userId = req.user._id;
-        db.User.findOne({_id:userId}).then(dbUser => {
+        const userEmail = req.params.email;
+        console.log(req);
+        db.User.findOne({email: userEmail}).then(dbUser => {
             console.log(dbUser)
             res.json(dbUser);
         }).catch(err => {

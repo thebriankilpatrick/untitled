@@ -9,8 +9,9 @@ export default {
 
     // user should have friends array, cards array, and deck array
     // so .get to those routes will not be necessary
-    getUser: function() {
-        return axios.get("/api/user");
+    getUser: function(userObj) {
+        console.log("Axios GET", userObj);
+        return axios.get("/api/user/" + userObj.email);
     },
 
     // .get to grab all cards from db
