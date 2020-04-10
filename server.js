@@ -4,17 +4,10 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-// const routes = require("./routes");
+const passport = require("passport");
+const session = require("express-session");
 
-// // Define middleware here
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
-// // Serve up static assets (usually on heroku)
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static("client/build"));
-// }
-
-
+// require("./config/passport")(passport);
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,6 +17,10 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   // app.use("*", express.static("client/build"));
 }
+
+app.use(session({ secret: 'keyboard cat' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 // Define API routes here

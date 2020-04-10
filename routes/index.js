@@ -29,4 +29,10 @@ module.exports = function(app) {
             res.json(err);
         });
     });
+
+    // app.post('/api/user/:email', 
+    //     passport.authenticate('local', { failureRedirect: '/login' }),
+    //     function(req, res) {
+    //         res.redirect('/');
+    // });
 }
