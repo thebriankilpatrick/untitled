@@ -78,7 +78,7 @@ class RegisterModalContent extends Component {
                                 />
                             <label for="password">Password</label>
                         </div>
-                        <Link to="/" onClick={this.registerNewUser} className="waves-effect waves-light btn">Register</Link>
+                        <Link to="/home" onClick={this.registerNewUser} className="waves-effect waves-light btn">Register</Link>
                     </div>
                 </form>
             </div>

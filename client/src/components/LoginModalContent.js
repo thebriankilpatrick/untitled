@@ -59,7 +59,7 @@ class LoginModalContent extends Component {
                                 />
                                 <label for="password">Password</label>
                             </div>
-                            <Link to="/" onClick={this.loginUser} className="waves-effect waves-light btn">Login</Link>    
+                            <Link to="/home" onClick={this.loginUser} className="waves-effect waves-light btn">Login</Link>    
                         </div>
                     </form>
                 </div>
