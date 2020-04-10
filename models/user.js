@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
+const uniqueValidator = require('mongoose-unique-validator');
 // const bcrypt = require("bcrypt-nodejs"); // Need install
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    email: {type: String, required: true, trim: true},
-    username: {type: String, required: true, minlength: 2, trim: true},
+    email: {type: String, required: true, trim: true, unique: true},
+    username: {type: String, required: true, minlength: 2, trim: true, unique: true},
     birthday: {type: Date, required: true}, // ??
     password: {type: String, required: true, trim: true},
     friend:[{
@@ -28,6 +29,8 @@ const userSchema = new Schema({
         ref: "Game"
     }]
 });
+
+userSchema.plugin(uniqueValidator);
 
 //generating a hash
 userSchema.methods.generateHash = function(password) {
