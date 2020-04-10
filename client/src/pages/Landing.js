@@ -16,6 +16,10 @@ class Landing extends Component {
         isLoggedIn: false
     };
 
+    handleLog = () => {
+        this.setState({ isLoggedIn: true });
+    }
+
     render() {
 
         if (this.state.isLoggedIn) {
@@ -42,9 +46,21 @@ class Landing extends Component {
                                 <Link to="/register"><h4 className="modalBtn center-align">Register</h4></Link>
                             </div>
                         </div>
-                        <Route exact path="/" component={RegisterModalContent}/>
-                        <Route exact path="/register" component={RegisterModalContent}/>
-                        <Route exact path="/login" component={LoginModalContent}/>
+                        <Route exact path="/">
+                            <RegisterModalContent 
+                                handleLog={this.handleLog}
+                            />
+                        </Route>
+                        <Route exact path="/register">
+                            <RegisterModalContent 
+                                handleLog={this.handleLog}
+                            />
+                        </Route>
+                        <Route exact path="/login">
+                            <LoginModalContent 
+                                handleLog={this.handleLog}
+                            />
+                        </Route>
                     </div>
 
                 </div>

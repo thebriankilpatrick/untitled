@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 // If I put Navbar and SideNav components inside HomePage and Collection, then
 // I should be able to link "/logout" and render the Landing page.
+// Possibly, I could set "/logout" to just "/"??
 function Navbar(props) {
     return (
         <>
