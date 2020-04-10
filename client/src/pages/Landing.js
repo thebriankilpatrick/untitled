@@ -9,10 +9,11 @@ import MainPage from "./MainPage";
 
 // Render full size picture on body via body className
 // Use isLoggedIn to handle rendering of either Landing or MainPage components
+// When clicking the "Login" button, it should set the isLoggedIn state to true
 
 class Landing extends Component {
     state = {
-        isLoggedIn: true
+        isLoggedIn: false
     };
 
     render() {

@@ -5,28 +5,43 @@ import HomePage from "./HomePage";
 import CollectionPage from "./Collection";
 import Navbar from "../components/Navbar";
 import SideNav from "../components/SideNav";
+import Landing from "./Landing";
 import "./MainPage.css";
 
 // Would like to pass the amound of friends that are online through props...
 class MainPage extends Component {
 
     // Testing passing state through props
+    // Added isLoggedIn, default to true.
+    // When logging out, it should set state to false, rendering the Landing page.
     state = {
         username: "ChefBriGuy",
         wins: 5,
         losses: 0,
         rank: 21,
-        friends: ["Bob", "Bill", "Sally"]
+        friends: ["Bob", "Bill", "Sally"],
+        isLoggedIn: true
+    }
+
+    handleClick = () => {
+        this.setState({ isLoggedIn: false });
     }
 
 
     render = () => {
-        console.log(this.state.username);
+
+        if (!this.state.isLoggedIn) {
+            return (
+                <Landing ></Landing>
+            )
+        }
 
         return (
             <Router >
                 <>
-                    <Navbar ></Navbar>
+                    <Navbar 
+                        handleClick={this.handleClick}
+                    />
                     <SideNav 
                         username={this.state.username}
                         friends={this.state.friends}

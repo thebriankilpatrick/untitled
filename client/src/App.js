@@ -1,6 +1,6 @@
 import React from "react";
-import Landing from "./pages/Landing";
-// import MainPage from "./pages/MainPage";
+// import Landing from "./pages/Landing";
+import MainPage from "./pages/MainPage";
 import "./App.css";
 
 
@@ -9,7 +9,7 @@ import "./App.css";
 function App() {
   return (
     <div>
-      <Landing ></Landing>
+      <MainPage ></MainPage>
     </div>
   );
 }

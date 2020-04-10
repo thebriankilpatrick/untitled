@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 // If I put Navbar and SideNav components inside HomePage and Collection, then
 // I should be able to link "/logout" and render the Landing page.
-function Navbar() {
+function Navbar(props) {
     return (
         <>
             <nav>
@@ -16,7 +16,7 @@ function Navbar() {
                     <ul id="nav-mobile" className="right">
                         <li><Link to="/home">Home</Link></li>
                         <li><Link to="/collection">Collection</Link></li>
-                        <li><Link to="/logout">Logout</Link></li>
+                        <li><Link to="/logout" onClick={props.handleClick} >Logout</Link></li>
                     </ul>
                 </div>
             </nav>
