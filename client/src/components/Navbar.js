@@ -12,7 +12,7 @@ function Navbar() {
         <>
             <nav>
                 <div className="nav-wrapper grey darken-3">
-                    <Link to="/" className="brand-logo">Logo</Link>
+                    <Link to="/" className="brand-logo hide-on-med-and-down">Super Smash Kittens</Link>
                     <ul id="nav-mobile" className="right">
                         <li><Link to="/home">Home</Link></li>
                         <li><Link to="/collection">Collection</Link></li>

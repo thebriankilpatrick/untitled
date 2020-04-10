@@ -21,10 +21,10 @@ function Landing() {
                 <div id="modal1" className="modal">
                     <div className="row align-center">
                         <div className="col l6 m6 s6">
-                        <Link to="/login"><h4 className="modalBtn center-align">Login</h4></Link>
+                            <Link to="/login"><h4 className="modalBtn center-align">Login</h4></Link>
                         </div>
                         <div className="col l6 m6 s6">
-                        <Link to="/register"><h4 className="modalBtn center-align">Register</h4></Link>
+                            <Link to="/register"><h4 className="modalBtn center-align">Register</h4></Link>
                         </div>
                     </div>
                     <Route exact path="/" component={RegisterModalContent}/>

@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar";
 import SideNav from "../components/SideNav";
 import "./MainPage.css";
 
-
+// Would like to pass the amound of friends that are online through props...
 class MainPage extends Component {
 
     // Testing passing state through props

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import API from "../utils/API";
 
 
 // Register button should link to MainPage
@@ -29,6 +30,11 @@ class RegisterModalContent extends Component {
         console.log(userObj);
         // Success!
         // Need to add API call here to post user to db
+        API.registerNewUser(userObj).then(res => {
+            console.log(res.data);
+        }).catch(err => {
+            throw err
+        })
     }
 
 

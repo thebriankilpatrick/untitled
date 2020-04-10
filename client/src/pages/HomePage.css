@@ -3,6 +3,10 @@
     top: 10px;
 }
 
+#homePlayBtnContainer {
+    margin-top: 20px;
+}
+
 .customFont {
     font-family: 'Righteous', cursive;
 }

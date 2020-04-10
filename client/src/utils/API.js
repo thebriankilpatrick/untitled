@@ -2,23 +2,24 @@ import axios from "axios";
 
 export default {
 
-    registerNewUser: function() {
-        axios.post("/api/user");
+    registerNewUser: function(userObj) {
+        console.log('axios post', userObj)
+        return axios.post("/api/user", userObj);
     },
 
     // user should have friends array, cards array, and deck array
     // so .get to those routes will not be necessary
     getUser: function() {
-        axios.get("/api/user");
+        return axios.get("/api/user");
     },
 
     // .get to grab all cards from db
     // I think I'll need this... ?
     getCards: function() {
-        axios.get("/api/cards");
+        return axios.get("/api/cards");
     },
 
     playGame: function() {
-        axios.post("/api/game");
+        return axios.post("/api/game");
     }
 }

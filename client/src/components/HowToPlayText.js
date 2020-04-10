@@ -4,7 +4,12 @@ function HowToPlayText() {
     return (
         <div className="container">
             <p>
-               BRAINSTORMING IDEAS:: 
+               How to Play Super Smash Kittens:
+            </p>
+            <p>
+                Super Smash Kittens is a battle card game, with the objective
+                of destroying your opponent!  By using the cards at your disposal, 
+                your mission is to decimate your opponent by lowering his/her health points.
             </p>
             <p>
                 Each deck contains no more or no less than 20 cards.

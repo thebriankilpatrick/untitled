@@ -7,7 +7,7 @@ import React from "react";
 // It will need to make a call to the db before it can render
 function HomePlayBtn(props) {
     return (
-        <div className="container">
+        <div className="container" id="homePlayBtnContainer">
             <div className="row">
                 <div className="col l6 m6 s6 customFont">
                     <h6>{props.username}</h6>
