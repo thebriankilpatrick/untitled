@@ -32,14 +32,23 @@ const userSchema = new Schema({
 
 userSchema.plugin(uniqueValidator);
 
-//generating a hash
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
-//checking if password is valid
-userSchema.methods.validPassword = function(password){
-    return bcrypt.compareSync(password, this.local.password);
-};
+// //generating a hash
+// userSchema.methods.generateHash = function(password) {
+//     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+// };
+// //checking if password is valid
+// userSchema.methods.validPassword = function(password){
+//     return bcrypt.compareSync(password, this.local.password);
+// };
+
+userSchema.methods = {
+    checkPassword: function (inputPassword) {
+    return bcrypt.compareSync(inputPassword, this.password)
+  },
+    hashPassword: plainTextPassword => {
+    return bcrypt.hashSync(plainTextPassword, 10)
+    }
+}
 
 userSchema.pre('save', function (next) {
     if (!this.password) {

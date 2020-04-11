@@ -39,8 +39,7 @@ class LoginModalContent extends Component {
     }
 
 
-    // Want to pass "handleLog" through props, to render the page when logged in
-    render(props) {
+    render() {
         return (
             <>
                 <div className="modal-content">

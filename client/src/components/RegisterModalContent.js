@@ -41,7 +41,6 @@ class RegisterModalContent extends Component {
     }
 
 
-    // Want to pass "handleLog" through props, to render the page when logged in
     render() {
         return (
         <>
