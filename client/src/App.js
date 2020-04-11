@@ -6,6 +6,8 @@ import "./App.css";
 
 // MainPage will be imported from Landing
 // And Landing will be rendered here.
+
+// Should I handle the conditional rendering here, for logged in or not??
 function App() {
   return (
     <div>

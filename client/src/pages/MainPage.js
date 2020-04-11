@@ -9,6 +9,7 @@ import Landing from "./Landing";
 import "./MainPage.css";
 
 // Would like to pass the amound of friends that are online through props...
+// Might need to add the isLoggedIn state to the App component
 class MainPage extends Component {
 
     // Testing passing state through props

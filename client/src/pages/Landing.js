@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import BodyClassName from 'react-body-classname';
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import LoginModalContent from "../components/LoginModalContent";
 import RegisterModalContent from "../components/RegisterModalContent";
 import "./Landing.css";
@@ -8,8 +8,8 @@ import MainPage from "./MainPage";
 
 
 // Render full size picture on body via body className
-// Use isLoggedIn to handle rendering of either Landing or MainPage components
-// When clicking the "Login" button, it should set the isLoggedIn state to true
+// After logging out, and rendering Landing page, state should be set to isLoggedIn: false
+// Might need to add the isLoggedIn state to the App component
 
 class Landing extends Component {
     state = {
@@ -19,6 +19,10 @@ class Landing extends Component {
     handleLog = () => {
         this.setState({ isLoggedIn: true });
     }
+
+    // componentDidMount = () => {
+    //     this.setState({ isLoggedIn: false });
+    // }
 
     render() {
 

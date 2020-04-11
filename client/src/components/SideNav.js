@@ -18,7 +18,7 @@ function SideNav(props) {
 
     return (
         <>
-            <ul id="nav-mobile" className="sidenav sidenav-fixed">
+            <ul id="nav-mobile" className="sidenav sidenav-fixed right-aligned">
                 <nav>
                     <div className="nav-wrapper grey darken-3">
                         <a className="brand-logo center">{props.username}</a>

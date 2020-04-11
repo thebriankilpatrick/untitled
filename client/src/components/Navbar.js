@@ -2,12 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-// How to handle "/logout"?
-// If linked from MainPage, it needs to completely re render the page as Landing
-
-// If I put Navbar and SideNav components inside HomePage and Collection, then
-// I should be able to link "/logout" and render the Landing page.
-// Possibly, I could set "/logout" to just "/"??
+// Need to set the state of Landing page to isLoggedIn: false
+// after clicking the logout button
 function Navbar(props) {
     return (
         <>
@@ -17,7 +13,7 @@ function Navbar(props) {
                     <ul id="nav-mobile" className="right">
                         <li><Link to="/home">Home</Link></li>
                         <li><Link to="/collection">Collection</Link></li>
-                        <li><Link to="/logout" onClick={props.handleClick} >Logout</Link></li>
+                        <li><Link to="/" onClick={props.handleClick} >Logout</Link></li>
                     </ul>
                 </div>
             </nav>
