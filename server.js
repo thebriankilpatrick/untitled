@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const session = require("express-session");
 
-// require("./config/passport")(passport);
+require("./config/passport")(passport);
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));

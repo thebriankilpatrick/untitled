@@ -28,7 +28,11 @@ class LoginModalContent extends Component {
         // Success!
         // Need to add API call here to handle the login and handle authentication
         API.getUser(userObj).then(res => {
-            console.log(res.data);
+            console.log(res);
+            if (res.status === 200) {
+                // this.props.handleLog() works!!!
+                this.props.handleLog();
+            }
         }).catch(err => {
             console.log(err);
         });

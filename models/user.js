@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require('mongoose-unique-validator');
-// const bcrypt = require("bcrypt-nodejs"); // Need install
+const bcrypt = require("bcryptjs");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -40,6 +40,26 @@ userSchema.methods.generateHash = function(password) {
 userSchema.methods.validPassword = function(password){
     return bcrypt.compareSync(password, this.local.password);
 };
+
+userSchema.pre('save', function (next) {
+    if (!this.password) {
+      console.log('models/user.js =======NO PASSWORD PROVIDED=======')
+      next()
+    } else {
+      console.log('models/user.js hashPassword in pre save');
+      this.password = this.hashPassword(this.password)
+      next()
+    }
+})
+
+// userSchema.methods = {
+//     checkPassword: function (inputPassword) {
+//     return bcrypt.compareSync(inputPassword, this.password)
+//   },
+//     hashPassword: plainTextPassword => {
+//     return bcrypt.hashSync(plainTextPassword, 10)
+//     }
+// }
 
 const User = mongoose.model("User", userSchema);
 

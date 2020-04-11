@@ -2,7 +2,7 @@ const db = require("../models");
 // // const path = require("path");
 // const express = require("express");
 // const app = express();
-// const passport = require("passport");
+const passport = require("passport");
 
 module.exports = function(app) {
 
@@ -30,9 +30,9 @@ module.exports = function(app) {
         });
     });
 
-    // app.post('/api/user/:email', 
-    //     passport.authenticate('local', { failureRedirect: '/login' }),
-    //     function(req, res) {
-    //         res.redirect('/');
-    // });
+    app.post('/api/user/:email', 
+        passport.authenticate('local', { failureRedirect: '/login' }),
+        function(req, res) {
+            res.redirect('/');
+    });
 }

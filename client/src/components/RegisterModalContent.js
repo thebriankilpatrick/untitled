@@ -31,7 +31,10 @@ class RegisterModalContent extends Component {
         // Success!
         // Need to add API call here to post user to db
         API.registerNewUser(userObj).then(res => {
-            console.log(res.data);
+            if (res.status === 200) {
+                // this.props.handleLog() works!!!
+                this.props.handleLog();
+            }
         }).catch(err => {
             throw err
         })
@@ -39,7 +42,7 @@ class RegisterModalContent extends Component {
 
 
     // Want to pass "handleLog" through props, to render the page when logged in
-    render(props) {
+    render() {
         return (
         <>
             <div className="modal-content">
