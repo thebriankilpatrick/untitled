@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import LoginModalContent from "../components/LoginModalContent";
 import RegisterModalContent from "../components/RegisterModalContent";
 import "./Landing.css";
-import MainPage from "./MainPage";
+// import MainPage from "./MainPage";
 
 
 // Render full size picture on body via body className
@@ -16,21 +16,24 @@ class Landing extends Component {
         isLoggedIn: false
     };
 
-    handleLog = () => {
-        this.setState({ isLoggedIn: true });
-    }
+    // handleLog = () => {
+    //     this.setState({ isLoggedIn: true });
+    // }
 
     // componentDidMount = () => {
     //     this.setState({ isLoggedIn: false });
     // }
+    componentDidMount() {
+        this.render();
+    }
 
-    render() {
+    render(props) {
 
-        if (this.state.isLoggedIn) {
-            return (
-                <MainPage></MainPage>
-            )
-        }
+        // if (this.state.isLoggedIn) {
+        //     return (
+        //         <MainPage></MainPage>
+        //     )
+        // }
 
         return (
             <Router>
@@ -52,19 +55,19 @@ class Landing extends Component {
                         </div>
                         <Route exact path="/">
                             <RegisterModalContent 
-                                handleLog={this.handleLog}
+                                handleLog={this.props.handleLog}
                                 isLoggedIn={this.state.isLoggedIn}
                             />
                         </Route>
                         <Route exact path="/register">
                             <RegisterModalContent 
-                                handleLog={this.handleLog}
+                                handleLog={this.props.handleLog}
                                 isLoggedIn={this.state.isLoggedIn}
                             />
                         </Route>
                         <Route exact path="/login">
                             <LoginModalContent 
-                                handleLog={this.handleLog}
+                                handleLog={this.props.handleLog}
                                 isLoggedIn={this.state.isLoggedIn}
                             />
                         </Route>

@@ -17,7 +17,7 @@ class LoginModalContent extends Component {
         console.log(name + value);
     }
 
-    loginUser = () => {
+    loginUser = (props) => {
         const {email, password} = this.state;
         const userObj = {
             email: email,

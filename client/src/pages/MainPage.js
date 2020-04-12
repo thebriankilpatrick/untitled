@@ -5,7 +5,7 @@ import HomePage from "./HomePage";
 import CollectionPage from "./Collection";
 import Navbar from "../components/Navbar";
 import SideNav from "../components/SideNav";
-import Landing from "./Landing";
+// import Landing from "./Landing";
 import "./MainPage.css";
 
 // Would like to pass the amound of friends that are online through props...
@@ -24,24 +24,18 @@ class MainPage extends Component {
         isLoggedIn: true
     }
 
-    handleClick = () => {
-        this.setState({ isLoggedIn: false });
-    }
+    // handleClick = () => {
+    //     this.setState({ isLoggedIn: false });
+    // }
 
 
-    render = () => {
-
-        if (!this.state.isLoggedIn) {
-            return (
-                <Landing ></Landing>
-            )
-        }
+    render = (props) => {
 
         return (
             <Router >
                 <>
                     <Navbar 
-                        handleClick={this.handleClick}
+                        handleClick={this.props.handleClick}
                     />
                     <SideNav 
                         username={this.state.username}
