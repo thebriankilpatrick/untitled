@@ -11,7 +11,8 @@ export default {
     // so .get to those routes will not be necessary
     getUser: function(userObj) {
         console.log("Axios GET", userObj);
-        return axios.get("/api/user/" + userObj.email);
+        // return axios.get("/api/user/" + userObj.email);
+        return axios.post("/login", userObj);
     },
 
     // .get to grab all cards from db

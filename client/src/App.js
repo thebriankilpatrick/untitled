@@ -4,18 +4,28 @@ import MainPage from "./pages/MainPage";
 import "./App.css";
 
 
-// MainPage will be imported from Landing
-// And Landing will be rendered here.
-
-// Should I handle the conditional rendering here, for logged in or not??
+// How to handle getting user info here??
 class App extends Component {
   
   state = {
-    isLoggedIn: false
+    // isLoggedIn: false,
+    username: "",
+    wins: "",
+    losses: "",
+    rank: "",
+    friends: []
+  }
+
+  getUser = () => {
+
+    console.log("What logic to put here to get the logged in user info???");
+    // Use passport session storage to log the userID, and then make a get request
+    // to the db with that userID?
   }
 
   handleClick = () => {
     this.setState({ isLoggedIn: false });
+    // window.location.reload();
   }
 
   handleLog = () => {

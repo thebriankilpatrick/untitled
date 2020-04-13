@@ -32,7 +32,7 @@ const userSchema = new Schema({
 
 userSchema.plugin(uniqueValidator);
 
-// //generating a hash
+// // //generating a hash
 // userSchema.methods.generateHash = function(password) {
 //     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 // };

@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const session = require("express-session");
+var cookieParser = require('cookie-parser')
 
 require("./config/passport")(passport);
 
@@ -18,21 +19,25 @@ if (process.env.NODE_ENV === "production") {
   // app.use("*", express.static("client/build"));
 }
 
-app.use(session({ secret: 'keyboard cat' }));
+app.use(cookieParser());
+app.use(session({ secret: 'keyboard cat',
+  resave: false, //required
+  saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 
 // Define API routes here
-require("./routes")(app);
+require("./routes")(app, passport);
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/card-game");
 
 // Send every other request to the React app
 // Define any API routes before this runs
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
+// app.get("*", (req, res) => {
+//   console.log("* route in server.js")
+//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// });
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);

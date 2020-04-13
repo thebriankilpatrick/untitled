@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import API from "../utils/API";
 
 
@@ -31,7 +31,8 @@ class LoginModalContent extends Component {
             console.log(res);
             if (res.status === 200) {
                 // this.props.handleLog() works!!!
-                this.props.handleLog();
+                // this.props.handleLog();
+                console.log(res);
             }
         }).catch(err => {
             console.log(err);
@@ -63,7 +64,7 @@ class LoginModalContent extends Component {
                                 />
                                 <label for="password">Password</label>
                             </div>
-                            <Link to="/home" onClick={this.loginUser} className="waves-effect waves-light btn">Login</Link>    
+                            <a onClick={this.loginUser} className="waves-effect waves-light btn">Login</a>    
                         </div>
                     </form>
                 </div>

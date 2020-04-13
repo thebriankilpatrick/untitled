@@ -12,9 +12,6 @@ import "./Landing.css";
 // Might need to add the isLoggedIn state to the App component
 
 class Landing extends Component {
-    state = {
-        isLoggedIn: false
-    };
 
     // handleLog = () => {
     //     this.setState({ isLoggedIn: true });
@@ -23,9 +20,6 @@ class Landing extends Component {
     // componentDidMount = () => {
     //     this.setState({ isLoggedIn: false });
     // }
-    componentDidMount() {
-        this.render();
-    }
 
     render(props) {
 
@@ -56,19 +50,19 @@ class Landing extends Component {
                         <Route exact path="/">
                             <RegisterModalContent 
                                 handleLog={this.props.handleLog}
-                                isLoggedIn={this.state.isLoggedIn}
+                                isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>
                         <Route exact path="/register">
                             <RegisterModalContent 
                                 handleLog={this.props.handleLog}
-                                isLoggedIn={this.state.isLoggedIn}
+                                isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>
                         <Route exact path="/login">
                             <LoginModalContent 
                                 handleLog={this.props.handleLog}
-                                isLoggedIn={this.state.isLoggedIn}
+                                isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>
                     </div>
