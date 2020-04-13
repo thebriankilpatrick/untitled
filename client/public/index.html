@@ -44,6 +44,10 @@
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems);
       });
+      document.addEventListener('LandingPageLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+      });
       document.addEventListener('DOMContentLoaded', function() {
         var options = {edge: "right"}
         var elems = document.querySelectorAll('.sidenav');

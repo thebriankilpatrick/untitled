@@ -39,6 +39,7 @@ module.exports = function(app, passport) {
         res.json(req.user);
     })
 
+    // -----------IN CASE OF ERROR, SEND INFO BACK TO USER THAT USERNAME IS TAKEN
     app.post("/api/user", (req, res) => {
         console.log("Hitting the route POST /api/user")
         db.User.create(req.body).then(dbUser => {

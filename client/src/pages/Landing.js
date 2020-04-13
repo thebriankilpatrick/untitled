@@ -17,9 +17,23 @@ class Landing extends Component {
     //     this.setState({ isLoggedIn: true });
     // }
 
-    // componentDidMount = () => {
-    //     this.setState({ isLoggedIn: false });
-    // }
+    componentDidMount = () => {
+
+        var event = document.createEvent('Event');
+        // Define the event name.
+        event.initEvent('LandingPageLoaded', true, true);
+        document.dispatchEvent(event)
+    }
+
+    clicky = () => {
+        console.log('cliiiiiiick');
+        // var modal = document.querySelector('#modal1');
+        // // modal.modal()
+        // modal.open();
+        // console.log(modal)
+        // var instances = M.Modal.init(elems);
+        // $('.modal').modal()
+    }
 
     render(props) {
 
@@ -35,7 +49,8 @@ class Landing extends Component {
                 <div >
                     <BodyClassName className="landingPagePic"></BodyClassName>
                     <div className="container" id="initPlayBtn">
-                        <a className="waves-effect waves-light btn-large modal-trigger" data-target="modal1" href="#modal1">PLAY GAME</a>
+                        <a onClick={this.clicky} className="waves-effect waves-light btn-large modal-trigger" data-target="modal1" href="#modal1">PLAY GAME</a>
+                        {/* <a onClick={this.clicky} className="waves-effect waves-light btn-large modal-trigger">PLAY GAME</a> */}
                     </div>
 
                     <div id="modal1" className="modal">
@@ -50,19 +65,19 @@ class Landing extends Component {
                         <Route exact path="/">
                             <RegisterModalContent 
                                 handleLog={this.props.handleLog}
-                                isLoggedIn={this.props.isLoggedIn}
+                                // isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>
                         <Route exact path="/register">
                             <RegisterModalContent 
                                 handleLog={this.props.handleLog}
-                                isLoggedIn={this.props.isLoggedIn}
+                                // isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>
                         <Route exact path="/login">
                             <LoginModalContent 
                                 handleLog={this.props.handleLog}
-                                isLoggedIn={this.props.isLoggedIn}
+                                // isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>
                     </div>

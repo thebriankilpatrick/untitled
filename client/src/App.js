@@ -29,8 +29,10 @@ class App extends Component {
   }
 
   handleClick = () => {
-    this.setState({ isLoggedIn: false });
+    
     // window.location.reload();
+    sessionStorage.removeItem("user");
+    this.setState({ isLoggedIn: false });
   }
 
   handleLog = (user) => {
@@ -38,6 +40,8 @@ class App extends Component {
     // Save data to sessionStorage
     // user.remove("password");
     sessionStorage.setItem("user", JSON.stringify(user));
+    this.setState({isLoggedIn: true});
+
   }
   
   render() {
@@ -49,14 +53,15 @@ class App extends Component {
           />
       )
     }
-
-    return (
-      <div>
-        <MainPage 
-          handleClick={this.handleClick}
-        />
-      </div>
-    );
+    else {
+      return (
+        <div>
+          <MainPage 
+            handleClick={this.handleClick}
+          />
+        </div>
+      );
+    }
   }
 }
 
