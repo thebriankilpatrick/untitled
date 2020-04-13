@@ -54,7 +54,7 @@ class RegisterModalContent extends Component {
             console.log(res);
             if (res.status === 200) {
                 // this.props.handleLog() works!!!
-                this.props.handleLog(res.data);
+                this.props.login(res.data);
                 console.log(res);
             }
         }).catch(err => {

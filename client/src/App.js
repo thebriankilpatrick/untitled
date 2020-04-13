@@ -29,14 +29,14 @@ class App extends Component {
     // to the db with that userID?
   }
 
-  handleClick = () => {
+  logout = () => {
     
     // window.location.reload();
     sessionStorage.removeItem("user");
     this.setState({ isLoggedIn: false });
   }
 
-  handleLog = (user) => {
+  login = (user) => {
     // this.setState({ isLoggedIn: true });
     // Save data to sessionStorage
     // user.remove("password");
@@ -50,7 +50,7 @@ class App extends Component {
     if (!this.state.isLoggedIn) {
       return (
           <Landing 
-            handleLog={this.handleLog}
+            login={this.login}
           />
       )
     }
@@ -58,7 +58,7 @@ class App extends Component {
       return (
         <div>
           <MainPage 
-            handleClick={this.handleClick}
+            logout={this.logout}
           />
         </div>
       );

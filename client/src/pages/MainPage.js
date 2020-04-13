@@ -58,7 +58,7 @@ class MainPage extends Component {
             <Router >
                 <>
                     <Navbar 
-                        handleClick={this.props.handleClick}
+                        logout={this.props.logout}
                     />
                     <SideNav 
                         username={this.state.username}

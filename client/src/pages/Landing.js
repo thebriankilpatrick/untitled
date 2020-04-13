@@ -54,19 +54,19 @@ class Landing extends Component {
                         </div>
                         <Route exact path="/">
                             <RegisterModalContent 
-                                handleLog={this.props.handleLog}
+                                login={this.props.login}
                                 // isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>
                         <Route exact path="/register">
                             <RegisterModalContent 
-                                handleLog={this.props.handleLog}
+                                login={this.props.login}
                                 // isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>
                         <Route exact path="/login">
                             <LoginModalContent 
-                                handleLog={this.props.handleLog}
+                                login={this.props.login}
                                 // isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>

@@ -13,7 +13,7 @@ function Navbar(props) {
                     <ul id="nav-mobile" className="right">
                         <li><Link to="/home">Home</Link></li>
                         <li><Link to="/collection">Collection</Link></li>
-                        <li><Link to="/" onClick={props.handleClick} >Logout</Link></li>
+                        <li><Link to="/" onClick={props.logout} >Logout</Link></li>
                     </ul>
                 </div>
             </nav>
