@@ -13,6 +13,7 @@ function HomePage(props) {
                 wins={props.wins}
                 losses={props.losses}
                 rank={props.rank}
+                findMatch={props.findMatch}
             />
             <HowToPlayText ></HowToPlayText>
             <Leaderboard ></Leaderboard>

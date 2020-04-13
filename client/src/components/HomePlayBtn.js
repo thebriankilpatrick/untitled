@@ -16,7 +16,7 @@ function HomePlayBtn(props) {
                 </div>
 
                 <div className="col l6 m6 s6">
-                    <a className="waves-effect waves-light btn-large" id="homePlayBtn">FIND MATCH</a>
+                    <a onClick={props.findMatch} className="waves-effect waves-light btn-large" id="homePlayBtn">FIND MATCH</a>
                 </div>
             </div>
         </div>

@@ -42,6 +42,15 @@ class MainPage extends Component {
     //     this.setState({ isLoggedIn: false });
     // }
 
+    findMatch = () => {
+        // Button click works!--
+        console.log("HANDLE THIS FUNCTIONALITY");
+        // Need to find a game record where playerOne has a value, and playerTwo does not.
+        // If no game record exist, or exists with conditions above,
+        // then create new game record.
+        // If the above does exists, then update the record with playerTwo info
+    }
+
 
     render = (props) => {
 
@@ -62,6 +71,7 @@ class MainPage extends Component {
                                 wins={this.state.wins}
                                 losses={this.state.losses}
                                 rank={this.state.rank}
+                                findMatch={this.findMatch}
                             />
                         </Route>
                         <Route exact path="/home">
@@ -70,6 +80,7 @@ class MainPage extends Component {
                                 wins={this.state.wins}
                                 losses={this.state.losses}
                                 rank={this.state.rank}
+                                findMatch={this.findMatch}
                             />
                         </Route>
                         <Route exact path="/collection">

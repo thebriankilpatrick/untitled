@@ -51,6 +51,27 @@ module.exports = function(app, passport) {
         });
     });
 
+    // ---------------------------------------------------------------------------------------
+    // TESTING FIND MATCH FUNCTIONALITY
+    // In the conditions playerOne and playerTwo, do I use null or ""?
+    app.get("/api/findGame", (req,res) => {
+        db.Game.findOne({
+            playerOne: { $ne: "" },
+            playerTwo: ""
+        }).then(dbGame => {
+            if (!dbGame) {
+                // initiate db.Game.create()??
+            }
+            else {
+                console.log(dbGame);
+                res.json(dbGame);
+            }
+        }).catch(err => {
+            console.log(err)
+            res.status(500).send(err);
+        })
+    })
+
     app.post('/login',
     passport.authenticate('local', { 
         successRedirect: '/home',
