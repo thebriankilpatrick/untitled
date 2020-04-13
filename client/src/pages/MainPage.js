@@ -16,12 +16,26 @@ class MainPage extends Component {
     // Added isLoggedIn, default to true.
     // When logging out, it should set state to false, rendering the Landing page.
     state = {
-        username: "ChefBriGuy",
-        wins: 5,
-        losses: 0,
-        rank: 21,
-        friends: ["Bob", "Bill", "Sally"],
-        isLoggedIn: true
+        username: "",
+        wins: "",
+        losses: "",
+        rank: "",
+        friends: [],
+        // isLoggedIn: true
+    }
+
+    componentDidMount = () => {
+        const user = sessionStorage.getItem("user");
+        const userObj = JSON.parse(user);
+        console.log("------------------------------------",userObj.friend);
+        this.setState({
+            username: userObj.username,
+            wins: userObj.wins,
+            losses: userObj.losses,
+            rank: userObj.rank,
+            friends: userObj.friend
+        });
+        console.log(this.state.friends);
     }
 
     // handleClick = () => {

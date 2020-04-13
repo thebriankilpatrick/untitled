@@ -16,6 +16,7 @@ class App extends Component {
     friends: []
   }
 
+  // Do I want to set the state here, with user info?? and pass through props?
   componentDidMount = () => {
     const user = sessionStorage.getItem('user');
     user ? this.setState({isLoggedIn: true}) : this.setState({isLoggedIn: false})

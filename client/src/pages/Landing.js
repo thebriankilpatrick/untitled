@@ -25,15 +25,6 @@ class Landing extends Component {
         document.dispatchEvent(event)
     }
 
-    clicky = () => {
-        console.log('cliiiiiiick');
-        // var modal = document.querySelector('#modal1');
-        // // modal.modal()
-        // modal.open();
-        // console.log(modal)
-        // var instances = M.Modal.init(elems);
-        // $('.modal').modal()
-    }
 
     render(props) {
 
@@ -49,8 +40,7 @@ class Landing extends Component {
                 <div >
                     <BodyClassName className="landingPagePic"></BodyClassName>
                     <div className="container" id="initPlayBtn">
-                        <a onClick={this.clicky} className="waves-effect waves-light btn-large modal-trigger" data-target="modal1" href="#modal1">PLAY GAME</a>
-                        {/* <a onClick={this.clicky} className="waves-effect waves-light btn-large modal-trigger">PLAY GAME</a> */}
+                        <a className="waves-effect waves-light btn-large modal-trigger" data-target="modal1" href="#modal1">PLAY GAME</a>
                     </div>
 
                     <div id="modal1" className="modal">

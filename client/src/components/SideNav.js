@@ -9,11 +9,14 @@ import React from "react";
 // This will be a "Nice-to-have"
 function SideNav(props) {
 
-    for (let i = 0; i < props.friends.length; i++) {
-        // Or maybe... Display total friends, not online friends...???
-        // But online friends would be slightly more impressive
-        console.log("Handle logic to sort through friends to find out which ones are online?")
-    }
+    // for (let i = 0; i < props.friends.length; i++) {
+    //     // Or maybe... Display total friends, not online friends...???
+    //     // But online friends would be slightly more impressive
+    //     console.log("Handle logic to sort through friends to find out which ones are online?")
+    // }
+
+    
+    // console.log(props.friends);
 
 
     return (
