@@ -28,10 +28,15 @@ module.exports = function(app, passport) {
     }
 
     app.get("/home", isLoggedIn, function(req, res){
-        const user = req.user;
         // Add const userObj, to modify what I am sending back to the front end
-        res.json(user);
-        console.log("------------------- HOME ROUTE")
+        console.log("------------------- HOME ROUTE");
+        res.json(req.user);
+    })
+
+    app.get("/login", function(req, res){
+        // Add const userObj, to modify what I am sending back to the front end
+        console.log("------------------- LOGIN FAILURE ROUTE");
+        res.json(req.user);
     })
 
     app.post("/api/user", (req, res) => {
@@ -41,7 +46,7 @@ module.exports = function(app, passport) {
             res.json(dbUser);
         }).catch(err => {
             console.log(err)
-            res.json(err);
+            res.status(500).send(err);
         });
     });
 

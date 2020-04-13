@@ -22,7 +22,7 @@ module.exports = function(passport) {
         console.log(`USING THE LOCAL STRADEGYYYYYYY  username: ${username}  password: ${password}`);
         User.findOne({ email: username }, function (err, user) {
           if (err) { return done(err); }
-          console.log("config/passport.js------------", user);
+          console.log("config/passport.js------------", user, "\nError:", err);
           if (!user) {
             return done(null, false, { message: 'Incorrect username.' });
           }

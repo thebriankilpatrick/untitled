@@ -8,12 +8,17 @@ import "./App.css";
 class App extends Component {
   
   state = {
-    // isLoggedIn: false,
+    isLoggedIn: false,
     username: "",
     wins: "",
     losses: "",
     rank: "",
     friends: []
+  }
+
+  componentDidMount = () => {
+    const user = sessionStorage.getItem('user');
+    user ? this.setState({isLoggedIn: true}) : this.setState({isLoggedIn: false})
   }
 
   getUser = () => {
@@ -28,8 +33,11 @@ class App extends Component {
     // window.location.reload();
   }
 
-  handleLog = () => {
-    this.setState({ isLoggedIn: true });
+  handleLog = (user) => {
+    // this.setState({ isLoggedIn: true });
+    // Save data to sessionStorage
+    // user.remove("password");
+    sessionStorage.setItem("user", JSON.stringify(user));
   }
   
   render() {

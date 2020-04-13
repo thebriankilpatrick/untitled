@@ -33,11 +33,33 @@ class RegisterModalContent extends Component {
         API.registerNewUser(userObj).then(res => {
             if (res.status === 200) {
                 // this.props.handleLog() works!!!
-                this.props.handleLog();
+                this.loginUser(userObj.email, userObj.password)
             }
         }).catch(err => {
             throw err
         })
+    }
+
+    loginUser = (email, password) => {
+
+        const userObj = {
+            email: email,
+            password: password
+        };
+
+        console.log(userObj);
+        // Success!
+        // Need to add API call here to handle the login and handle authentication
+        API.getUser(userObj).then(res => {
+            console.log(res);
+            if (res.status === 200) {
+                // this.props.handleLog() works!!!
+                this.props.handleLog(res.data);
+                console.log(res);
+            }
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
 
@@ -81,7 +103,7 @@ class RegisterModalContent extends Component {
                                 />
                             <label for="password">Password</label>
                         </div>
-                        <Link to="/home" onClick={this.registerNewUser} className="waves-effect waves-light btn">Register</Link>
+                        <a onClick={this.registerNewUser} className="waves-effect waves-light btn">Register</a>
                     </div>
                 </form>
             </div>
