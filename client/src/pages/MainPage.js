@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Wrapper from "../components/Wrapper";
 import HomePage from "./HomePage";
 import CollectionPage from "./Collection";
+import GamePage from "./GamePage";
 import Navbar from "../components/Navbar";
 import SideNav from "../components/SideNav";
 import API from "../utils/API";
@@ -105,6 +106,11 @@ class MainPage extends Component {
                         <Route exact path="/collection">
                             <CollectionPage 
                                 cards={this.state.cards}
+                            />
+                        </Route>
+                        <Route exact path="/game">
+                            <GamePage 
+                                
                             />
                         </Route>
                     </Wrapper>
