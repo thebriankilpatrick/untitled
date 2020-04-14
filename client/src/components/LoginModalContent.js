@@ -55,7 +55,7 @@ class LoginModalContent extends Component {
                                     onChange={this.handleChange}
                                 />
                                 <label for="email">Email</label>
-                                <span className="helper-text" data-error="wrong" data-success="right"></span>
+                                <span className="helper-text" data-error="please input an email" data-success=""></span>
                             </div> 
                             <div className="input-field col s12">
                                 <input id="password" type="password" className="validate"

@@ -35,8 +35,8 @@ class RegisterModalContent extends Component {
                 // this.props.handleLog() works!!!
                 this.loginUser(userObj.email, userObj.password)
             }
-        }).catch(err => {
-            throw err
+        }).catch(error => {
+            throw error
         })
     }
 
@@ -78,7 +78,7 @@ class RegisterModalContent extends Component {
                                 onChange={this.handleChange}
                                 />
                             <label for="email">Email</label>
-                            <span className="helper-text" data-error="wrong" data-success="right"></span>
+                            <span className="helper-text" data-error="please input an email" data-success=""></span>
                         </div>
                         <div className="input-field col s12">
                             <input id="birthday" type="text" className="validate" 

@@ -46,7 +46,6 @@ module.exports = function(app, passport) {
             console.log(dbUser)
             res.json(dbUser);
         }).catch(err => {
-            console.log(err)
             res.status(500).send(err);
         });
     });
