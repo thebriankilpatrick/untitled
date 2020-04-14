@@ -70,7 +70,18 @@ module.exports = function(app, passport) {
             console.log(err)
             res.status(500).send(err);
         })
-    })
+    });
+
+    // -------------------- TESTING TO FIND DB CARDS -----------------
+    app.get("/api/cards", (req, res) => {
+        db.Card.find().then(cardData => {
+            console.log(cardData);
+            res.json(cardData);
+        }).catch(err => {
+            console.log(err);
+            res.status(500).send(err);
+        });
+    });
 
     app.post('/login',
     passport.authenticate('local', { 

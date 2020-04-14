@@ -5,6 +5,7 @@ import HomePage from "./HomePage";
 import CollectionPage from "./Collection";
 import Navbar from "../components/Navbar";
 import SideNav from "../components/SideNav";
+import API from "../utils/API";
 // import Landing from "./Landing";
 import "./MainPage.css";
 
@@ -21,6 +22,7 @@ class MainPage extends Component {
         losses: "",
         rank: "",
         friends: [],
+        cards: []
         // isLoggedIn: true
     }
 
@@ -49,6 +51,17 @@ class MainPage extends Component {
         // If no game record exist, or exists with conditions above,
         // then create new game record.
         // If the above does exists, then update the record with playerTwo info
+
+
+
+        // ------------------------ TESTING CARD IMAGE GET FROM DB ------------------------
+        // THIS IS NOT THE FUNCTION TO PUT THIS
+        API.getCards().then(res => {
+            console.log(res);
+            this.setState({ cards: res.data });
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
 
@@ -84,7 +97,9 @@ class MainPage extends Component {
                             />
                         </Route>
                         <Route exact path="/collection">
-                            <CollectionPage />
+                            <CollectionPage 
+                                cards={this.state.cards}
+                            />
                         </Route>
                     </Wrapper>
                 </>

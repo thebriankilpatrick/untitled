@@ -7,7 +7,11 @@ import "./Collection.css";
 // Then map over cardCollection and render for each card
 
 // Add className="borderHover" for hover effect
-function CollectionPage() {
+
+// Passed test card image through props.
+// you will need to map over array to display all cards
+// also, don't forget to actually set the cards to the user, not call cards from db...
+function CollectionPage(props) {
     return (
         <>
             <div className="container">
@@ -18,7 +22,7 @@ function CollectionPage() {
                     <div className="card blue-grey darken-1 borderHover">
                         <div className="card-content white-text">
                         <span className="card-title">Replace Me</span>
-                        <p>This should be replaced with the actual card's image</p>
+                        <img src={props.cards[0].img} alt={props.cards[0].title}/>
                         </div>
                         <div className="card-action">
                         <a href="#">This is a link</a>
