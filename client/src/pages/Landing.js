@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import BodyClassName from 'react-body-classname';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import LoginModalContent from "../components/LoginModalContent";
 import RegisterModalContent from "../components/RegisterModalContent";
 import "./Landing.css";
@@ -12,6 +12,10 @@ import "./Landing.css";
 // Might need to add the isLoggedIn state to the App component
 
 class Landing extends Component {
+
+    state = {
+        redirect: ""
+    }
 
     // handleLog = () => {
     //     this.setState({ isLoggedIn: true });
@@ -25,6 +29,12 @@ class Landing extends Component {
         document.dispatchEvent(event)
     }
 
+    redirect = () => {
+        this.setState({
+            redirect: "/home"
+        })
+    }
+
 
     render(props) {
 
@@ -34,7 +44,16 @@ class Landing extends Component {
         //     )
         // }
 
+        if (this.state.redirect === "/home") {
+            return (
+                <Router >
+                    <Redirect to="/home"/>
+                </Router>
+            )
+        }
+
         return (
+
             <Router>
 
                 <div >
@@ -55,18 +74,21 @@ class Landing extends Component {
                         <Route exact path="/">
                             <RegisterModalContent 
                                 login={this.props.login}
+                                redirect={this.redirect}
                                 // isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>
                         <Route exact path="/register">
                             <RegisterModalContent 
                                 login={this.props.login}
+                                redirect={this.redirect}
                                 // isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>
                         <Route exact path="/login">
                             <LoginModalContent 
                                 login={this.props.login}
+                                redirect={this.redirect}
                                 // isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import API from "../utils/API";
 
 
@@ -54,6 +54,7 @@ class RegisterModalContent extends Component {
             console.log(res);
             if (res.status === 200) {
                 // this.props.handleLog() works!!!
+                this.props.redirect();
                 this.props.login(res.data);
                 console.log(res);
             }

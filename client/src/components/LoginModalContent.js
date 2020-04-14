@@ -31,6 +31,7 @@ class LoginModalContent extends Component {
             console.log(res);
             if (res.status === 200) {
                 // this.props.handleLog() works!!!
+                this.props.redirect();
                 this.props.login(res.data);
                 console.log(res);
             }
