@@ -15,16 +15,21 @@ function CollectionPage(props) {
     return (
         <>
             <div className="container">
-                <h1>Collection Page</h1>
                 
-                <div className="row">
-                    <div className="col s12 m6">
-                        <div className="card blue-grey darken-1 borderHover">
-                            <div className="card-content white-text">
-                                <img className="cardImg" src={props.cards[0].img} alt={props.cards[0].title}/>
+                <div className="row" id="cardContainer">
+
+                    {props.cards.map((card, index) => {
+                        return (
+                            <div className="col s6 m4 l6 xl4" key={index}>
+                                <div className="card blue-grey darken-1 borderHover">
+                                    <div className="card-image" id={card.title} data-power={card.power}>
+                                        <img className="cardImg" src={card.img} alt={card.title}/>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        )
+                    })}
+
                 </div>
             </div>
         </>

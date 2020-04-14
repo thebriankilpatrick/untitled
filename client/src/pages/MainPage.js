@@ -29,7 +29,7 @@ class MainPage extends Component {
     componentDidMount = () => {
         const user = sessionStorage.getItem("user");
         const userObj = JSON.parse(user);
-        console.log("------------------------------------",userObj.friend);
+        // console.log("------------------------------------",userObj.friend);
         this.setState({
             username: userObj.username,
             wins: userObj.wins,
@@ -37,7 +37,13 @@ class MainPage extends Component {
             rank: userObj.rank,
             friends: userObj.friend
         });
-        console.log(this.state.friends);
+        // console.log(this.state.friends);
+        API.getCards().then(res => {
+            console.log(res);
+            this.setState({ cards: res.data });
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
     // handleClick = () => {
@@ -56,12 +62,12 @@ class MainPage extends Component {
 
         // ------------------------ TESTING CARD IMAGE GET FROM DB ------------------------
         // THIS IS NOT THE FUNCTION TO PUT THIS
-        API.getCards().then(res => {
-            console.log(res);
-            this.setState({ cards: res.data });
-        }).catch(err => {
-            console.log(err);
-        });
+        // API.getCards().then(res => {
+        //     console.log(res);
+        //     this.setState({ cards: res.data });
+        // }).catch(err => {
+        //     console.log(err);
+        // });
     }
 
 

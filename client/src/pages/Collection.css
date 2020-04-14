@@ -31,19 +31,12 @@
     filter: blur(30px);
 }
 
-.card {
-    border-radius: 5px;
-    height: 320px;
-    width: 265px;
-    padding: 0 !important;
-}
-
-.card-content {
-    padding: 0 !important;
+#cardContainer {
+    margin-top: 20px !important;
 }
 
 .cardImg {
     border-radius: 5px;
-    height: 320px;
-    width: 265px;
+    height: 100%;
+    width: 100%;
 }

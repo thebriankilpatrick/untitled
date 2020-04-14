@@ -9,13 +9,17 @@ function HomePlayBtn(props) {
     return (
         <div className="container" id="homePlayBtnContainer">
             <div className="row">
-                <div className="col l6 m6 s6 customFont">
-                    <h6>{props.username}</h6>
+                <div className="col l4 m4 s4 customFont">
+                    <h5>{props.username}</h5>
+                    <p>honor: {props.rank}</p>
+                </div>
+
+                <div className="col l4 m4 s4 customFont">
                     <p>wins: {props.wins}</p>
                     <p>losses: {props.losses}</p>
                 </div>
 
-                <div className="col l6 m6 s6">
+                <div className="col l4 m4 s4">
                     <a onClick={props.findMatch} className="waves-effect waves-light btn-large" id="homePlayBtn">FIND MATCH</a>
                 </div>
             </div>

@@ -143,7 +143,7 @@ const cardSeed = [
     {
         title: "Count Flufferton",
         power: 6,
-        img: "/assets/images/countFlufferton",
+        img: "/assets/images/countFlufferton.PNG",
         flavor: ""
     }
 ];
