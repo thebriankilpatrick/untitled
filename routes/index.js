@@ -36,7 +36,7 @@ module.exports = function(app, passport) {
     app.get("/login", function(req, res){
         // Add const userObj, to modify what I am sending back to the front end
         console.log("------------------- LOGIN FAILURE ROUTE");
-        res.json(req.user);
+        res.status(500).json(req.user);
     })
 
     // -----------IN CASE OF ERROR, SEND INFO BACK TO USER THAT USERNAME IS TAKEN
@@ -46,24 +46,39 @@ module.exports = function(app, passport) {
             console.log(dbUser)
             res.json(dbUser);
         }).catch(err => {
-            res.status(500).send(err);
+            console.log(err);
+            res.status(409).send("User already exists.");
         });
     });
 
+    app.get("/api/user", (req, res) => {
+        db.User.find().then(dbUsers => {
+            console.log(dbUsers);
+            res.json(dbUsers);
+        }).catch(err => {
+            res.status(500).send(err);
+        })
+    })
+
     // ---------------------------------------------------------------------------------------
     // TESTING FIND MATCH FUNCTIONALITY
-    // In the conditions playerOne and playerTwo, do I use null or ""?
     app.get("/api/findGame", (req,res) => {
         db.Game.findOne({
-            playerOne: { $ne: "" },
-            playerTwo: ""
+            playerOne: { $ne: null },
+            playerTwo: null
         }).then(dbGame => {
             if (!dbGame) {
                 // initiate db.Game.create()??
+                db.Game.create({
+                    playerOne: req.body
+                }).then(gameObj => {
+                    res.json(gameObj);
+                })
             }
             else {
-                console.log(dbGame);
-                res.json(dbGame);
+                // console.log(dbGame);
+                // res.json(dbGame);
+                db.Game.findByIdAndUpdate()
             }
         }).catch(err => {
             console.log(err)

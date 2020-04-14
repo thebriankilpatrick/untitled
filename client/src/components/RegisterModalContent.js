@@ -36,7 +36,8 @@ class RegisterModalContent extends Component {
                 this.loginUser(userObj.email, userObj.password)
             }
         }).catch(error => {
-            throw error
+            // console.log(error);
+            throw error;
         })
     }
 

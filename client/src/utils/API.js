@@ -7,6 +7,10 @@ export default {
         return axios.post("/api/user", userObj);
     },
 
+    getAllUsers: function() {
+        return axios.get("/api/user");
+    },
+
     // user should have friends array, cards array, and deck array
     // so .get to those routes will not be necessary
     getUser: function(userObj) {

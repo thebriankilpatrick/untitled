@@ -25,17 +25,17 @@ class LoginModalContent extends Component {
         };
 
         console.log(userObj);
-        // Success!
-        // Need to add API call here to handle the login and handle authentication
+
         API.getUser(userObj).then(res => {
             console.log(res);
             if (res.status === 200) {
-                // this.props.handleLog() works!!!
+
                 this.props.redirect();
                 this.props.login(res.data);
                 console.log(res);
             }
         }).catch(err => {
+            alert("Either username or password is incorrect.");
             console.log(err);
         });
     }

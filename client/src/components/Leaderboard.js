@@ -1,27 +1,56 @@
-import React from "react";
+import React, { Component } from "react";
+import API from "../utils/API";
 
-function Leaderboard() {
-    return (
-        <div className="container">
-            <table>
-                <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Username</th>
-                    <th>Honor</th>
-                </tr>
-                </thead>
+class Leaderboard extends Component {
 
-                <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    )
+    state = {
+        users: []
+    }
+
+    componentDidMount = () => {
+        API.getAllUsers().then(res => {
+            this.setState({
+                users: res.data
+            });
+            this.state.users.sort((a, b) => (a.rank > b.rank) ? 1 : -1);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    render() {
+        return (
+            <div className="container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Username</th>
+                        <th>Honor</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        {this.state.users.map((user, index) => {
+                            return (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{user.username}</td>
+                                <td>{user.rank}</td>
+                            </tr>
+                            )
+                        })}
+
+                    {/* <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr> */}
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
 }
 
 export default Leaderboard;
