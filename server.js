@@ -6,7 +6,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const session = require("express-session");
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
+// var io = require('socket.io')(app);
 
 require("./config/passport")(passport);
 
@@ -38,6 +39,10 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/card-game");
 //   console.log("* route in server.js")
 //   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 // });
+
+// const server = require('http').Server(app);
+// const io = require('socket.io').listen(server);
+// io.on("connection", require("./socket.js"));//importing socket.io methods
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
