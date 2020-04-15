@@ -12,23 +12,44 @@ class GamePage extends Component {
 
     componentDidMount = () => {
         API.getCards().then(res => {
-            console.log(res);
             this.setState({ cards: res.data });
+            this.drawCards();
         }).catch(err => {
             console.log(err);
         });
-        console.log(this.state.cards);
-
-        // FIGURE OUT A FUNCTION, THAT WILL SET THE STATE OF BOTH
-        // PLAYER ONE CARDS AND PLAYER TWO CARDS OF 
-        // FOUR RANDOM CARDS FROM THE CARDS ARRAY
-        const test = this.state.cards[Math.floor(Math.random() * this.state.cards.length)];
-        console.log(test, "-----TEST");
     }
 
-    drawCards = (cards) => {
-        const test = this.state.cards[Math.floor(Math.random() * this.state.cards.length)];
-        console.log(test, "-----TEST");
+
+    // FUNCTION "DRAWS" FOUR RANDOM CARDS FOR PLAYER ONE AND PLAYER TWO
+    // AND SETS THOSE EQUAL TO THE CORRESPONDING STATE
+
+    // NOTE --------------------
+    // HOW WILL THE LOGIC BE HANDLED FOR ACTUALLY DRAWING THE CARDS???
+    // WILL THE FUNCTION BE RAN ONCE, AND BOTH USER'S WEB PAGES CALL IT?
+    drawCards = () => {
+
+        for (let i = 0; i < 2; i++) {
+            const results = this.state.cards
+            .sort(function() { return .5 - Math.random() }) // Shuffle array
+            .slice(0, 4); // Get first 2 items
+
+            const cardOne = results[0];
+            const cardTwo = results[1];
+            const cardThree = results[2];
+            const cardFour = results[3];
+
+            const playerCards = [];
+            playerCards.push(cardOne, cardTwo, cardThree, cardFour);
+
+            if (this.state.playerOneCards.length === 0) {
+                this.setState({ playerOneCards: playerCards });
+            }
+            else {
+                this.setState({ playerTwoCards: playerCards });
+            }
+        }
+        console.log("PLAYER ONE-----", this.state.playerOneCards);
+        console.log("PLAYER TWO-----", this.state.playerTwoCards);
     }
 
 
