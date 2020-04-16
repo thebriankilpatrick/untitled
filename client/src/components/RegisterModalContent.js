@@ -78,7 +78,7 @@ class RegisterModalContent extends Component {
                                 value={this.state.email}
                                 onChange={this.handleChange}
                                 />
-                            <label for="email">Email</label>
+                            <label htmlFor="email">Email</label>
                             <span className="helper-text" data-error="please input an actual email" data-success=""></span>
                         </div>
                         <div className="input-field col s12">
@@ -87,7 +87,7 @@ class RegisterModalContent extends Component {
                                 value={this.state.birthday}
                                 onChange={this.handleChange}
                                 />
-                            <label for="birthday">Birthday</label>
+                            <label htmlFor="birthday">Birthday</label>
                         </div>
                         <div className="input-field col s12">
                             <input id="username" type="text" className="validate inputLoginRegister" 
@@ -95,7 +95,7 @@ class RegisterModalContent extends Component {
                                 value={this.state.username}
                                 onChange={this.handleChange}
                                 />
-                            <label for="username">Username</label>
+                            <label htmlFor="username">Username</label>
                         </div>
                         <div className="input-field col s12">
                             <input id="password" type="password" className="validate inputLoginRegister" 
@@ -103,7 +103,7 @@ class RegisterModalContent extends Component {
                                 value={this.state.password}
                                 onChange={this.handleChange}
                                 />
-                            <label for="password">Password</label>
+                            <label htmlFor="password">Password</label>
                         </div>
                         <a onClick={this.registerNewUser} className="waves-effect waves-light btn btnStyle">Register</a>
                     </div>

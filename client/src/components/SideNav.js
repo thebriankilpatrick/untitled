@@ -20,7 +20,7 @@ function SideNav(props) {
 
 
     return (
-        <>
+        <div>
             <ul id="nav-mobile" className="sidenav sidenav-fixed right-aligned">
                 <nav>
                     <div className="nav-wrapper grey darken-3">
@@ -30,7 +30,7 @@ function SideNav(props) {
                 <li className="sideNavLink">Friends ({props.friends.length})</li>
                 <li className="sideNavLink">Messages</li>
             </ul>
-        </>
+        </div>
     )
 }
 

@@ -54,7 +54,7 @@ class LoginModalContent extends Component {
                                     value={this.state.email}
                                     onChange={this.handleChange}
                                 />
-                                <label className="labelLoginRegister" for="email">Email</label>
+                                <label className="labelLoginRegister" htmlFor="email">Email</label>
                                 <span className="helper-text" data-error="please input an email" data-success=""></span>
                             </div> 
                             <div className="input-field col s12">
@@ -63,7 +63,7 @@ class LoginModalContent extends Component {
                                     value={this.state.password}
                                     onChange={this.handleChange}
                                 />
-                                <label for="password">Password</label>
+                                <label htmlFor="password">Password</label>
                             </div>
                             <a onClick={this.loginUser} className="modal-close waves-effect waves-light btn btnStyle">Login</a>    
                         </div>

@@ -63,7 +63,7 @@ class GamePage extends Component {
 
                     {this.state.playerOneCards.map((card, index) => {
                         return (
-                            <div className="col s6 m4 l6 xl3" key={index}>
+                            <div className="col s3 m3 l3 xl3" key={index}>
                                 <div className="card blue-grey darken-1 borderHover">
                                     <div className="card-image" id={card.title}>
                                         <img className="cardImg" src={card.img} alt={card.title} data-power={card.power}/>
@@ -81,7 +81,7 @@ class GamePage extends Component {
 
                     {this.state.playerTwoCards.map((card, index) => {
                         return (
-                            <div className="col s6 m4 l6 xl3" key={index}>
+                            <div className="col s3 m3 l3 xl3" key={index}>
                                 <div className="card blue-grey darken-1 borderHover">
                                     <div className="card-image" id={card.title}>
                                         <img className="cardImg" src={card.img} alt={card.title} data-power={card.power}/>

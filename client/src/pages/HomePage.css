@@ -1,6 +1,15 @@
+#navLogo {
+    font-family: 'Righteous', cursive;
+}
+
 #homePlayBtn {
     font-family: 'Righteous', cursive;
     top: 10px;
+    background-color: #039be5;
+}
+
+#homePlayBtn:hover {
+    background-color: #0382c2;
 }
 
 #homePlayBtnContainer {

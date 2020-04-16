@@ -16,6 +16,9 @@
     body {
       padding-right: 300px;
     }
+    .navMargin {
+      padding-right: 300px !important;
+    }
 }
 
 @media only screen and (max-width: 991px) {

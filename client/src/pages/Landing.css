@@ -47,3 +47,7 @@ input:-internal-autofill-selected {
 .btnStyle {
     background-color: #039be5;
 }
+
+.btnStyle:hover {
+    background-color: #0382c2;
+}
