@@ -45,27 +45,27 @@ class LoginModalContent extends Component {
         return (
             <>
                 <div className="modal-content">
-                    <h4>Login Modal</h4>
+                    <h4 className="modalHeader">Login</h4>
                     <form>
                         <div className="row">
                             <div className="input-field col s12">
-                                <input id="email" type="email" className="validate"
+                                <input id="email" type="email" className="validate inputLoginRegister"
                                     name="email"
                                     value={this.state.email}
                                     onChange={this.handleChange}
                                 />
-                                <label for="email">Email</label>
+                                <label className="labelLoginRegister" for="email">Email</label>
                                 <span className="helper-text" data-error="please input an email" data-success=""></span>
                             </div> 
                             <div className="input-field col s12">
-                                <input id="password" type="password" className="validate"
+                                <input id="password" type="password" className="validate inputLoginRegister"
                                     name="password"
                                     value={this.state.password}
                                     onChange={this.handleChange}
                                 />
                                 <label for="password">Password</label>
                             </div>
-                            <a onClick={this.loginUser} className="modal-close waves-effect waves-light btn">Login</a>    
+                            <a onClick={this.loginUser} className="modal-close waves-effect waves-light btn btnStyle">Login</a>    
                         </div>
                     </form>
                 </div>

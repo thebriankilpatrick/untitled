@@ -12,7 +12,7 @@ function HowToPlayText() {
                 your mission is to decimate your opponent by lowering his/her health points.
             </p>
             <p>
-                Each deck contains no more or no less than 20 cards.
+                Each deck contains no more and no less than 20 cards.
                 Of those 20 cards, the total power cannot exceed 100.
                 When battling an opponent, you draw four cards from 
                 your deck at random, and those are the cards you will be 

@@ -58,7 +58,40 @@ class GamePage extends Component {
     render() {
         return (
             <>
+
+                <div className="row" id="cardContainer">
+
+                    {this.state.playerOneCards.map((card, index) => {
+                        return (
+                            <div className="col s6 m4 l6 xl3" key={index}>
+                                <div className="card blue-grey darken-1 borderHover">
+                                    <div className="card-image" id={card.title}>
+                                        <img className="cardImg" src={card.img} alt={card.title} data-power={card.power}/>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    })}
+
+                </div>
+
                 <h1>The Game Page</h1>
+
+                <div className="row" id="cardContainer">
+
+                    {this.state.playerTwoCards.map((card, index) => {
+                        return (
+                            <div className="col s6 m4 l6 xl3" key={index}>
+                                <div className="card blue-grey darken-1 borderHover">
+                                    <div className="card-image" id={card.title}>
+                                        <img className="cardImg" src={card.img} alt={card.title} data-power={card.power}/>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    })}
+
+                </div>
             </>
         )
     }

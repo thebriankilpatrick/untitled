@@ -69,20 +69,20 @@ class RegisterModalContent extends Component {
         return (
         <>
             <div className="modal-content">
-                <h4>Register Modal</h4>
+                <h4 className="modalHeader" >Register</h4>
                 <form>
                     <div className="row">
                         <div className="input-field col s12">
-                            <input id="email" type="email" className="validate" 
+                            <input id="email" type="email" className="validate inputLoginRegister" 
                                 name="email" 
                                 value={this.state.email}
                                 onChange={this.handleChange}
                                 />
                             <label for="email">Email</label>
-                            <span className="helper-text" data-error="please input an email" data-success=""></span>
+                            <span className="helper-text" data-error="please input an actual email" data-success=""></span>
                         </div>
                         <div className="input-field col s12">
-                            <input id="birthday" type="text" className="validate" 
+                            <input id="birthday" type="text" className="validate inputLoginRegister" 
                                 name="birthday" 
                                 value={this.state.birthday}
                                 onChange={this.handleChange}
@@ -90,7 +90,7 @@ class RegisterModalContent extends Component {
                             <label for="birthday">Birthday</label>
                         </div>
                         <div className="input-field col s12">
-                            <input id="username" type="text" className="validate" 
+                            <input id="username" type="text" className="validate inputLoginRegister" 
                                 name="username" 
                                 value={this.state.username}
                                 onChange={this.handleChange}
@@ -98,14 +98,14 @@ class RegisterModalContent extends Component {
                             <label for="username">Username</label>
                         </div>
                         <div className="input-field col s12">
-                            <input id="password" type="password" className="validate" 
+                            <input id="password" type="password" className="validate inputLoginRegister" 
                                 name="password" 
                                 value={this.state.password}
                                 onChange={this.handleChange}
                                 />
                             <label for="password">Password</label>
                         </div>
-                        <a onClick={this.registerNewUser} className="waves-effect waves-light btn">Register</a>
+                        <a onClick={this.registerNewUser} className="waves-effect waves-light btn btnStyle">Register</a>
                     </div>
                 </form>
             </div>

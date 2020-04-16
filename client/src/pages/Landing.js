@@ -59,7 +59,7 @@ class Landing extends Component {
                 <div >
                     <BodyClassName className="landingPagePic"></BodyClassName>
                     <div className="container" id="initPlayBtn">
-                        <a className="waves-effect waves-light btn-large modal-trigger" data-target="modal1" href="#modal1">PLAY GAME</a>
+                        <a className="waves-effect waves-light btn-large modal-trigger btnStyle" data-target="modal1" href="#modal1">PLAY GAME</a>
                     </div>
 
                     <div id="modal1" className="modal">

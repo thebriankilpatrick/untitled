@@ -19,6 +19,31 @@ body {
     font-family: 'Righteous', cursive;
 }
 
+.modal {
+    opacity: .9 !important;
+    background-color: rgb(66, 66, 66);
+}
+
+input:-internal-autofill-selected {
+    background-color: transparent !important;
+}
+
+.modalHeader {
+    font-family: 'Righteous', cursive;
+    position: relative;
+    left: 7px !important;
+}
+
 .modalBtn {
     font-family: 'Righteous', cursive;
+}
+
+.inputLoginRegister {
+    color: white !important;
+    /* Can't get the autofill background to be transparent... */
+    background-color: transparent !important;
+}
+
+.btnStyle {
+    background-color: #039be5;
 }

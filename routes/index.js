@@ -72,13 +72,14 @@ module.exports = function(app, passport) {
                 db.Game.create({
                     playerOne: req.body
                 }).then(gameObj => {
+                    console.log("Game did NOT exist, created one here ----", gameObj);
                     res.json(gameObj);
                 })
             }
             else {
-                // console.log(dbGame);
+                console.log("Game exists, here it is --------", dbGame);
                 // res.json(dbGame);
-                db.Game.findByIdAndUpdate()
+                // db.Game.findByIdAndUpdate()
             }
         }).catch(err => {
             console.log(err)
