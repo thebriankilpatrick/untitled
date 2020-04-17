@@ -9,28 +9,44 @@ class GamePage extends Component {
         cards: [],
         playerOneCards: [],
         playerTwoCards: [],
-        timer: ""
+        timer: 10,
+        round: ""
     }
 
     componentDidMount = () => {
         API.getCards().then(res => {
             this.setState({ cards: res.data });
             this.drawCards();
+            this.startTimer();
         }).catch(err => {
             console.log(err);
         });
     }
 
     startTimer = () => {
-        console.log("Handle functionality for timer");
-        // Timer is in state, and needs to be updated via timer function
+        var test = setInterval(this.countDown, 1000);
         // The function will need to be called with each round, so the time resets
         // After each player has chosen, the timer stops, and the battle logic commences.
         // Then, at the start of the next round, the timer is reset and starts back up.
 
         // Note, if a player does not pick a card within the allotted time, 
         // that player forefeits the match.
+        return test;
     }
+    
+    countDown = (test) => {
+
+        let time = this.state.timer - 1;
+
+        if (time === -1) { 
+          clearInterval(test);
+        }
+        else {
+            this.setState({
+                timer: time
+            });
+        }
+      }
 
 
     // FUNCTION "DRAWS" FOUR RANDOM CARDS FOR PLAYER ONE AND PLAYER TWO
@@ -100,7 +116,10 @@ class GamePage extends Component {
 
                 <div className="row">
                     <div className="col s4 m4 l4">Player One</div>
-                    <div className="col s4 m4 l4 center-align">Timer</div>
+                    <div className="col s4 m4 l4 center-align">
+                        <p>Round: {this.state.round} Choose a card.</p>
+                        <p>Time Remaining: {this.state.timer}</p>
+                    </div>
                     <div className="col s4 m4 l4 right-align">Player Two</div>
                 </div>
 
