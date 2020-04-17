@@ -9,8 +9,10 @@ class GamePage extends Component {
         cards: [],
         playerOneCards: [],
         playerTwoCards: [],
-        timer: 10,
-        round: ""
+        timer: 60,
+        round: "",
+        playerOneClicked: "",
+        playerTwoClicked: ""
     }
 
     componentDidMount = () => {
@@ -81,8 +83,16 @@ class GamePage extends Component {
         console.log("PLAYER TWO-----", this.state.playerTwoCards);
     }
 
-    cardClick = () => {
-        console.log("Handle logic for a card being clicked..");
+    playerOneClick = (event) => {
+        this.setState({
+            playerOneClicked: event.target.id
+        });
+    }
+
+    playerTwoClick = (event) => {
+        this.setState({
+            playerTwoClicked: event.target.id
+        })
     }
 
 
@@ -103,9 +113,16 @@ class GamePage extends Component {
                     {this.state.playerOneCards.map((card, index) => {
                         return (
                             <div className="col s3 m3 l3 xl3 cardSelectTop" key={index}>
-                                <div className="card blue-grey darken-1 borderHover">
-                                    <div className="card-image" id={card.title}>
-                                        <img className="cardImg" src={card.img} alt={card.title} data-power={card.power}/>
+                                <div className="card borderHover"
+                                    onClick={this.playerOneClick}
+                                    style={ this.state.playerOneClicked === card.title ? { top: "20px" } : {} }
+                                >
+                                    <div className="card-image">
+                                        <img className="cardImg" src={card.img} 
+                                            alt={card.title} 
+                                            data-power={card.power} 
+                                            id={card.title}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -128,9 +145,17 @@ class GamePage extends Component {
                     {this.state.playerTwoCards.map((card, index) => {
                         return (
                             <div className="col s3 m3 l3 xl3 cardSelectBot" key={index}>
-                                <div className="card blue-grey darken-1 borderHover">
+                                <div className="card borderHover"
+                                        onClick={this.playerTwoClick}
+                                        style={ this.state.playerTwoClicked === card.title ? { top: "-20px" } : {} }
+                                    >
                                     <div className="card-image" id={card.title}>
-                                        <img className="cardImg" src={card.img} alt={card.title} data-power={card.power}/>
+                                        <img className="cardImg" 
+                                            src={card.img} 
+                                            alt={card.title} 
+                                            data-power={card.power}
+                                            id={card.title}
+                                        />
                                     </div>
                                 </div>
                             </div>

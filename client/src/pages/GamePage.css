@@ -1,9 +1,9 @@
 .cardSelectBot:active {
     position: relative;
-    top: -20px;
+    /* top: -20px; */
 }
 
 .cardSelectTop:active {
     position: relative;
-    top: 20px;
+    /* top: 20px; */
 }
