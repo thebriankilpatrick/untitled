@@ -40,12 +40,6 @@ class Leaderboard extends Component {
                             </tr>
                             )
                         })}
-
-                    {/* <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr> */}
                     </tbody>
                 </table>
             </div>

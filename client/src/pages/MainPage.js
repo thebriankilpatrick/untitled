@@ -4,6 +4,7 @@ import Wrapper from "../components/Wrapper";
 import HomePage from "./HomePage";
 import CollectionPage from "./Collection";
 import GamePage from "./GamePage";
+import FriendsPage from "./FriendsPage";
 import Navbar from "../components/Navbar";
 import SideNav from "../components/SideNav";
 import API from "../utils/API";
@@ -107,6 +108,9 @@ class MainPage extends Component {
                             <CollectionPage 
                                 cards={this.state.cards}
                             />
+                        </Route>
+                        <Route exact path="/friends">
+                            <FriendsPage />
                         </Route>
                         <Route exact path="/game">
                             <GamePage 
