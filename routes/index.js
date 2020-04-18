@@ -62,81 +62,90 @@ module.exports = function(app, passport) {
 
     // ---------------------------------------------------------------------------------------
     // TESTING FIND MATCH FUNCTIONALITY
+    app.post("/api/findGame", (req,res) => {
+        console.log("DOES IT EVENT GET TO HERE??");
+        db.Game.findOne({
+            gameStatus: "waiting"
+        }).then(dbGame => {
+            console.log("dbGame object received back from the find request", dbGame);
+            if (!dbGame) {
+
+                db.Game.create({
+                    playerOne: req.body.player,
+                    gameStatus: "waiting"
+                }).then(gameObj => {
+                    console.log("Game did NOT exist, created one here ----", gameObj);
+
+                    // return back to UI {gameId: 12344, gameStatus: "ready" or "waiting"}
+                    res.json(gameObj);
+                })
+            }
+            else {
+                console.log("Game exists, here it is --------", dbGame);
+                console.log("HEY YOU!  THIS IS THE REQ.BODY-------", req.body);
+                // res.json(dbGame);
+                db.Game.findByIdAndUpdate({
+                    _id: dbGame._id
+                },{
+                    playerTwo: req.body.player,
+                    gameStatus: "ready"
+                },
+                {
+                    // Forces the call to return an updated record
+                    new: true
+                }
+                ).then(gameObj => {
+                    console.log("Updated existing game record", gameObj);
+                    res.json(gameObj);
+                })
+            }
+        }).catch(err => {
+            console.log(err)
+            res.status(500).send(err);
+        })
+    });
+
+
+
+    // Perhaps how the game route should be done?? -------------------
     // app.get("/api/findGame", (req,res) => {
     //     db.Game.findOne({
     //         playerOne: { $ne: null },
     //         playerTwo: null
     //     }).then(dbGame => {
-    //         if (!dbGame) {
-    //             // initiate db.Game.create()??
-    //             db.Game.create({
-    //                 playerOne: req.body,
-    //                 gameStatus: "waiting"
-    //             }).then(gameObj => {
-    //                 console.log("Game did NOT exist, created one here ----", gameObj);
-
-    //                 // return back to UI {gameId: 12344, gameStatus: "ready" or "waiting"}
-    //                 res.json(gameObj);
-    //             })
-    //         }
-    //         else {
-    //             console.log("Game exists, here it is --------", dbGame);
-    //             // res.json(dbGame);
-    //             db.Game.findByIdAndUpdate({
-    //                 _id: dbGame._id
-    //             },{
-    //                 playerTwo: req.body,
-    //                 gameStatus: "ready"
-    //             }).then(gameObj => {
-    //                 console.log("Updated existing game record", gameObj);
-    //                 res.json(gameObj);
-    //             })
-    //         }
+    //         console.log("GET REQUEST FOR FIND GAME--", dbGame);
+    //         res.json(dbGame);
     //     }).catch(err => {
-    //         console.log(err)
+    //         console.log("Something went wrong, Get request for find game", err);
+    //         res.status(500).send(err);
+    //     });
+    // });
+
+    // app.post("/api/findGame", (req, res) => {
+    //     db.Game.create(req.body
+    //     ).then(dbGame => {
+    //         console.log("CREATED A NEW GAME RECORD---", dbGame);
+    //         res.json(dbGame);
+    //     }).catch(err => {
+    //         console.log("Something went wrong, post request for find game", err);
     //         res.status(500).send(err);
     //     })
     // });
 
-    // Perhaps how the game route should be done?? -------------------
-    app.get("/api/findGame", (req,res) => {
-        db.Game.findOne({
-            playerOne: { $ne: null },
-            playerTwo: null
-        }).then(dbGame => {
-            console.log("GET REQUEST FOR FIND GAME--", dbGame);
-            res.json(dbGame);
-        }).catch(err => {
-            console.log("Something went wrong, Get request for find game", err);
-            res.status(500).send(err);
-        });
-    });
-
-    app.post("/api/findGame", (req, res) => {
-        db.Game.create(req.body
-        ).then(dbGame => {
-            console.log("CREATED A NEW GAME RECORD---", dbGame);
-            res.json(dbGame);
-        }).catch(err => {
-            console.log("Something went wrong, post request for find game", err);
-            res.status(500).send(err);
-        })
-    });
-
-    app.put("/api/findGame", (req, res) => {
-        db.Game.findOneAndUpdate({
-            gameStatus: "waiting"
-        },
-        req.body
+    // app.put("/api/findGame", (req, res) => {
+    //     db.Game.findOneAndUpdate({
+    //         gameStatus: "waiting"
+    //     },
+    //     req.body
             
-        ).then(dbGame => {
-            console.log("UPDATE REQUEST FOR FIND GAME---", dbGame);
-            res.json(dbGame);
-        }).catch(err => {
-            console.log("Something went wrong, PUT request for find game", err);
-            res.status(500).send(err);
-        })
-    })
+    //     ).then(dbGame => {
+    //         console.log("UPDATE REQUEST FOR FIND GAME---", dbGame);
+    //         res.json(dbGame);
+    //     }).catch(err => {
+    //         console.log("Something went wrong, PUT request for find game", err);
+    //         res.status(500).send(err);
+    //     })
+    // })
 
 
 
@@ -144,7 +153,7 @@ module.exports = function(app, passport) {
     // -------------------- TESTING TO FIND DB CARDS -----------------
     app.get("/api/cards", (req, res) => {
         db.Card.find().then(cardData => {
-            console.log(cardData);
+            // console.log(cardData);
             res.json(cardData);
         }).catch(err => {
             console.log(err);

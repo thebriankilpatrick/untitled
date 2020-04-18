@@ -10,7 +10,7 @@ const gameSchema = new Schema({
         required: true
     },
     playerTwo: {
-        type: String
+        type: String,
     },
     playerOneAccepted: {
         type: Boolean,

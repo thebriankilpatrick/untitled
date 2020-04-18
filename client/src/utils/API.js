@@ -25,16 +25,17 @@ export default {
         return axios.get("/api/cards");
     },
 
-    findGame: function() {
-        return axios.get("/api/findGame");
-    },
-
-    createGame: function(gameObj) {
-        console.log("CREATE GAME OBJ", gameObj);
+    findGame: function(gameObj) {
+        console.log("FIND GAME END POINT -----", gameObj);
         return axios.post("/api/findGame", gameObj);
-    },
-
-    updateGame: function(gameObj) {
-        return axios.put("/api/findGame", gameObj);
     }
+
+    // createGame: function(gameObj) {
+    //     console.log("CREATE GAME OBJ", gameObj);
+    //     return axios.post("/api/findGame", gameObj);
+    // },
+
+    // updateGame: function(gameObj) {
+    //     return axios.put("/api/findGame", gameObj);
+    // }
 }

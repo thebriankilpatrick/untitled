@@ -24,26 +24,40 @@ class GamePage extends Component {
         });
         console.log("THE USERNAME THAT YOU SET", this.props.username);
 
-        API.findGame().then(res => {
-            const gameObj = {playerOne: this.state.username,
-                gameStatus: "waiting",              
-            }
-            if (res.data === null) {
-                API.createGame(
-                    gameObj
-                ).then(res => {
-                    console.log("CREATED GAME RESPONSE", res.data);
-                    this.props.socket.emit("join game", "PASS IN GAME ID HERE");
-                })
-            }
-            else {
-                const updateGameObj = { playerTwo: this.state.username, gameStatus: "ready" }
-                API.updateGame(updateGameObj).then(res => {
-                    console.log("UPDATED GAME RESPONSE", res.data);
-                    this.props.socket.emit("join game", "PASS IN GAME ID HERE");
-                })
-            }
+        const gameObj = {
+            player: this.props.username
+        }
+
+        API.findGame(gameObj).then(res => {
+            console.log("RESPONSE FROM THE FIND GAME END POINT", res.data);
+            this.setState({
+                gameId: res.data._id
+            });
+            this.props.socket.emit("join game", "PASS IN GAME ID HERE");
+        }).catch(err => {
+            console.log(err);
         })
+
+        // API.findGame().then(res => {
+        //     const gameObj = {playerOne: this.state.username,
+        //         gameStatus: "waiting",              
+        //     }
+        //     const updateGameObj = { playerTwo: this.state.username, gameStatus: "ready" }
+        //     if (res.data === null) {
+        //         API.createGame(
+        //             gameObj
+        //         ).then(res => {
+        //             console.log("CREATED GAME RESPONSE", res.data);
+        //             this.props.socket.emit("join game", "PASS IN GAME ID HERE");
+        //         })
+        //     }
+        //     else {
+        //         API.updateGame(updateGameObj).then(res => {
+        //             console.log("UPDATED GAME RESPONSE", res.data);
+        //             this.props.socket.emit("join game", "PASS IN GAME ID HERE");
+        //         })
+        //     }
+        // })
 
 
 
@@ -55,6 +69,10 @@ class GamePage extends Component {
         }).catch(err => {
             console.log(err);
         });
+    }
+
+    componentWillUnmount = () => {
+
     }
 
     startTimer = () => {
