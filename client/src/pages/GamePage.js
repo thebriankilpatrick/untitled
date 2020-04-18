@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import BodyClassName from 'react-body-classname';
 import API from "../utils/API";
 import "./GamePage.css";
 
@@ -14,9 +15,27 @@ class GamePage extends Component {
         round: "",
         playerOneClicked: "",
         playerTwoClicked: "",
-        gameReady: false,
-        gameId: ""
+        gameStatus: "waiting",
+        gameId: "",
+
+        // SOMETHING LIKE THIS??
+        // game: {
+        //     user: {
+        //         exampleUser1: {
+        //             health: 10,
+        //             cards: [],
+        //             pickedCard: ""
+        //         },
+        //         exampleUser2: {
+        //             health: 10,
+        //             cards: [],
+        //             pickedCard: ""
+        //         }
+        //     }
+        // }
     }
+
+    // CREATE USER OBJECT, AND THEN STORE IN THE STATE!!
 
     componentDidMount = () => {
         this.setState({
@@ -28,15 +47,25 @@ class GamePage extends Component {
             player: this.props.username
         }
 
+        this.props.socket.on("startGame", (data) => {
+            this.setState({
+                gameStatus: "found"
+            });
+        });
+
+        console.log(this.state.gameStatus);
+
         API.findGame(gameObj).then(res => {
             console.log("RESPONSE FROM THE FIND GAME END POINT", res.data);
             this.setState({
                 gameId: res.data._id
             });
-            this.props.socket.emit("join game", "PASS IN GAME ID HERE");
+            this.props.socket.emit("join game", {gameId: res.data._id, gameStatus: res.data.gameStatus});
+           
         }).catch(err => {
             console.log(err);
         })
+        
 
         // API.findGame().then(res => {
         //     const gameObj = {playerOne: this.state.username,
@@ -171,12 +200,48 @@ class GamePage extends Component {
     // Should I add state, and have a "selectedCard" within state???
     render() {
 
-        if (this.state.gameReady === false) {
+        if (this.state.gameStatus === "waiting") {
             return (
                 <>
-                    <p>Return looking for game status, timer, and maybe a modal that will pop up
-                        when a game has been found?
-                    </p>
+                    <BodyClassName className="gamePagePic"></BodyClassName>
+                    <div className="container">
+                        <h5 className="font">Searching for game...</h5>
+                    </div>
+
+
+                </>
+            )
+        }
+        else if (this.state.gameStatus === "found") {
+            return (
+                <>
+                    <BodyClassName className="gamePagePic"></BodyClassName>
+                    <div className="container">
+                        <h5 className="font">Game has been found...</h5>
+                    </div>
+                </>
+            )
+        }
+
+        else if (this.state.gameStatus === "start") {
+            return (
+                <>
+                    <BodyClassName className="gamePagePic"></BodyClassName>
+                    <div className="container">
+                        <h5 className="font">Game started...</h5>
+                    </div>
+                </>
+            )
+        }
+
+        else if (this.state.gameStatus === "end") {
+            return (
+                <>
+                    <BodyClassName className="gamePagePic"></BodyClassName>
+                    <div className="container">
+                        <h5 className="font">Game Ended...
+                        Put if statements inside of this return, to return results from the ended game.</h5>
+                    </div>
                 </>
             )
         }
