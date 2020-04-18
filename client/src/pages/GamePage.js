@@ -6,17 +6,49 @@ class GamePage extends Component {
 
     // Probably need to store both playerOne and playerTwo data in state
     state = {
+        username: "",
         cards: [],
         playerOneCards: [],
         playerTwoCards: [],
         timer: 60,
         round: "",
         playerOneClicked: "",
-        playerTwoClicked: ""
+        playerTwoClicked: "",
+        gameReady: false,
+        gameId: ""
     }
 
     componentDidMount = () => {
+        this.setState({
+            username: this.props.username
+        });
+        console.log("THE USERNAME THAT YOU SET", this.props.username);
+
+        API.findGame().then(res => {
+            const gameObj = {playerOne: this.state.username,
+                gameStatus: "waiting",              
+            }
+            if (res.data === null) {
+                API.createGame(
+                    gameObj
+                ).then(res => {
+                    console.log("CREATED GAME RESPONSE", res.data);
+                    this.props.socket.emit("join game", "PASS IN GAME ID HERE");
+                })
+            }
+            else {
+                const updateGameObj = { playerTwo: this.state.username, gameStatus: "ready" }
+                API.updateGame(updateGameObj).then(res => {
+                    console.log("UPDATED GAME RESPONSE", res.data);
+                    this.props.socket.emit("join game", "PASS IN GAME ID HERE");
+                })
+            }
+        })
+
+
+
         API.getCards().then(res => {
+            this.props.socket.emit("test");
             this.setState({ cards: res.data });
             this.drawCards();
             this.startTimer();
@@ -96,6 +128,21 @@ class GamePage extends Component {
     }
 
 
+    // on BTN click , call api endpoint /findGame
+    /**
+     * in .then .
+     * - emit("join game", {gameId: , gameStatus: })
+     * 
+     * 
+     * on("startGame")  
+     * this.setSTate (...) and your UI template switches to game
+    */
+
+
+    
+    
+
+
     // Probably will need to map/render over playerOne cards, as well as map/render..
     // .. playerTwo cards.
 
@@ -105,6 +152,18 @@ class GamePage extends Component {
 
     // Should I add state, and have a "selectedCard" within state???
     render() {
+
+        if (this.state.gameReady === false) {
+            return (
+                <>
+                    <p>Return looking for game status, timer, and maybe a modal that will pop up
+                        when a game has been found?
+                    </p>
+                </>
+            )
+        }
+
+
         return (
             <>
 

@@ -3,8 +3,8 @@ import Landing from "./pages/Landing";
 import MainPage from "./pages/MainPage";
 import "./App.css";
 
-// import io from "socket.io-client";
-// const socket = io("http://localhost:3000");
+import openSocket from "socket.io-client";
+const socket = openSocket("http://localhost:3000");
 
 
 // How to handle getting user info here??
@@ -62,6 +62,7 @@ class App extends Component {
         <div>
           <MainPage 
             logout={this.logout}
+            socket={socket}
           />
         </div>
       );

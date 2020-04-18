@@ -6,12 +6,11 @@ const Schema = mongoose.Schema;
 // This would be to handle who gets the bonus of winning v. losing...?
 const gameSchema = new Schema({
     playerOne: {
-        type: Schema.Types.ObjectId,
-        ref: "User"
+        type: String,
+        required: true
     },
     playerTwo: {
-        type: Schema.Types.ObjectId,
-        ref: "User"
+        type: String
     },
     playerOneAccepted: {
         type: Boolean,
@@ -20,7 +19,8 @@ const gameSchema = new Schema({
     playerTwoAccepted: {
         type: Boolean,
         default: false
-    }
+    },
+    gameStatus: ""
 });
 
 const Game = mongoose.model("Game", gameSchema);

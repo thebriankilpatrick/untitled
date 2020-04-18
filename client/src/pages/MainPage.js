@@ -15,9 +15,6 @@ import "./MainPage.css";
 // Might need to add the isLoggedIn state to the App component
 class MainPage extends Component {
 
-    // Testing passing state through props
-    // Added isLoggedIn, default to true.
-    // When logging out, it should set state to false, rendering the Landing page.
     state = {
         username: "",
         wins: "",
@@ -29,6 +26,7 @@ class MainPage extends Component {
     }
 
     componentDidMount = () => {
+        this.props.socket.emit("test");
         const user = sessionStorage.getItem("user");
         const userObj = JSON.parse(user);
         // console.log("------------------------------------",userObj.friend);
@@ -41,16 +39,12 @@ class MainPage extends Component {
         });
         // console.log(this.state.friends);
         API.getCards().then(res => {
-            console.log(res);
+            // console.log(res);
             this.setState({ cards: res.data });
         }).catch(err => {
             console.log(err);
         });
     }
-
-    // handleClick = () => {
-    //     this.setState({ isLoggedIn: false });
-    // }
 
     findMatch = () => {
         // Button click works!--
@@ -62,14 +56,7 @@ class MainPage extends Component {
 
 
 
-        // ------------------------ TESTING CARD IMAGE GET FROM DB ------------------------
-        // THIS IS NOT THE FUNCTION TO PUT THIS
-        // API.getCards().then(res => {
-        //     console.log(res);
-        //     this.setState({ cards: res.data });
-        // }).catch(err => {
-        //     console.log(err);
-        // });
+        
     }
 
 
@@ -84,6 +71,7 @@ class MainPage extends Component {
                     <SideNav 
                         username={this.state.username}
                         friends={this.state.friends}
+                        socket={this.props.socket}
                     />
                     <Wrapper >
                         <Route exact path="/">
@@ -93,6 +81,7 @@ class MainPage extends Component {
                                 losses={this.state.losses}
                                 rank={this.state.rank}
                                 findMatch={this.findMatch}
+                                socket={this.props.socket}
                             />
                         </Route>
                         <Route exact path="/home">
@@ -102,6 +91,7 @@ class MainPage extends Component {
                                 losses={this.state.losses}
                                 rank={this.state.rank}
                                 findMatch={this.findMatch}
+                                socket={this.props.socket}
                             />
                         </Route>
                         <Route exact path="/collection">
@@ -110,11 +100,14 @@ class MainPage extends Component {
                             />
                         </Route>
                         <Route exact path="/friends">
-                            <FriendsPage />
+                            <FriendsPage 
+                                socket={this.props.socket}
+                            />
                         </Route>
                         <Route exact path="/game">
                             <GamePage 
-                                
+                                socket={this.props.socket}
+                                username={this.state.username}
                             />
                         </Route>
                     </Wrapper>

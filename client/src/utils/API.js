@@ -25,7 +25,16 @@ export default {
         return axios.get("/api/cards");
     },
 
-    playGame: function() {
-        return axios.post("/api/game");
+    findGame: function() {
+        return axios.get("/api/findGame");
+    },
+
+    createGame: function(gameObj) {
+        console.log("CREATE GAME OBJ", gameObj);
+        return axios.post("/api/findGame", gameObj);
+    },
+
+    updateGame: function(gameObj) {
+        return axios.put("/api/findGame", gameObj);
     }
 }
