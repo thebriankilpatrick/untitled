@@ -11,7 +11,9 @@ class GamePage extends Component {
         cards: [],
         playerOneCards: [],
         playerTwoCards: [],
-        timer: 60,
+        timerCount: 5,
+        timer: null,
+        timerName: null,
         round: "",
         playerOneClicked: "",
         playerTwoClicked: "",
@@ -51,6 +53,7 @@ class GamePage extends Component {
             this.setState({
                 gameStatus: "found"
             });
+            this.startTimer("preGameTimer");
         });
 
         console.log(this.state.gameStatus);
@@ -90,41 +93,59 @@ class GamePage extends Component {
 
 
 
-        API.getCards().then(res => {
-            this.props.socket.emit("test");
-            this.setState({ cards: res.data });
-            this.drawCards();
-            this.startTimer();
-        }).catch(err => {
-            console.log(err);
-        });
+        // API.getCards().then(res => {
+        //     this.props.socket.emit("test");
+        //     this.setState({ cards: res.data });
+        //     this.drawCards();
+        //     // this.startTimer();
+        // }).catch(err => {
+        //     console.log(err);
+        // });
     }
 
     componentWillUnmount = () => {
 
     }
 
-    startTimer = () => {
-        var test = setInterval(this.countDown, 1000);
+    startTimer = (timerName) => {
+        if (timerName === 'preGameTimer') {
+            this.setState({
+                timerCount: 5,
+                timerName
+            });
+        }
+        else if (timerName === "gameTimer") {
+            this.setState({
+                timerCount: 60,
+                timerName
+            });
+        }
+        this.setState({timer: setInterval(this.countDown, 1000)});
         // The function will need to be called with each round, so the time resets
         // After each player has chosen, the timer stops, and the battle logic commences.
         // Then, at the start of the next round, the timer is reset and starts back up.
 
         // Note, if a player does not pick a card within the allotted time, 
         // that player forefeits the match.
-        return test;
     }
     
     countDown = (test) => {
-
-        let time = this.state.timer - 1;
+        console.log("TIMER NAME:", this.state.timerName);
+        console.log("TIMER", test);
+        let time = this.state.timerCount - 1;
 
         if (time === -1) { 
-          clearInterval(test);
+            clearInterval(this.state.timer);
+            // REMEMBER TO ADD ALL OTHER LOGIC FOR DIFFERENT TIMER NAMES
+            if (this.state.timerName === "preGameTimer") {
+                this.setState({
+                    gameStatus: "start"
+                });
+            }
         }
         else {
             this.setState({
-                timer: time
+                timerCount: time
             });
         }
       }
@@ -218,6 +239,7 @@ class GamePage extends Component {
                     <BodyClassName className="gamePagePic"></BodyClassName>
                     <div className="container">
                         <h5 className="font">Game has been found...</h5>
+                        <h5 className="font">Game starts in {this.state.timerCount}</h5>
                     </div>
                 </>
             )
