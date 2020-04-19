@@ -43,13 +43,15 @@ class GamePage extends Component {
         this.setState({
             username: this.props.username
         });
-        console.log("THE USERNAME THAT YOU SET", this.props.username);
+        // console.log("THE USERNAME THAT YOU SET", this.props.username);
 
         const gameObj = {
             player: this.props.username
         }
 
         this.props.socket.on("startGame", (data) => {
+            // data from socket only contains gameId and gameStatus
+            // console.log("THIS IS THE DATA COMING BACK FROM SOCKET.IO -----------", data)
             this.setState({
                 gameStatus: "found"
             });
@@ -60,9 +62,34 @@ class GamePage extends Component {
 
         API.findGame(gameObj).then(res => {
             console.log("RESPONSE FROM THE FIND GAME END POINT", res.data);
+
+            // Create a player object, using the res.data received back from API?
+            // Refer back to the users in state
+            // Call function to draw four random cards, and set those in this object?
+            // Examply
+            // const playerObj = {
+            //     username: res.data.playerOne, // How to differentiate between setting as player one or two??  if statement?
+            //     cards: [], // Fill with data from card function
+            //     health: 10,
+            //     pickedCard: ""
+            // }
+
+            // Put in if statement,
+            // if this.state.game.user is null, it means player one has not been added to state
+            // if player one isn't null, it means you should set state for player two?
+            if (this.state.game.user === null) {
+                const playerObj = {
+                    username: res.data.playerOne, // How to differentiate between setting as player one or two??  if statement?
+                    cards: [], // Fill with data from card function
+                    health: 10,
+                    pickedCard: ""
+                }
+            }
+
             this.setState({
                 gameId: res.data._id
             });
+            // Only the playerTwo will emit the game data with both playerOne and playerTwo
             this.props.socket.emit("join game", {gameId: res.data._id, gameStatus: res.data.gameStatus});
            
         }).catch(err => {
@@ -104,9 +131,10 @@ class GamePage extends Component {
     }
 
     componentWillUnmount = () => {
-
+        // Need to handle logic for if a user closes or refreshes the page..
     }
 
+    // This is where the timer name in state is being set
     startTimer = (timerName) => {
         if (timerName === 'preGameTimer') {
             this.setState({
@@ -141,6 +169,9 @@ class GamePage extends Component {
                 this.setState({
                     gameStatus: "start"
                 });
+            }
+            else if (this.state.timerName === "gameTimer") {
+                // What to do here?
             }
         }
         else {
@@ -194,42 +225,26 @@ class GamePage extends Component {
             playerTwoClicked: event.target.id
         })
     }
-
-
-    // on BTN click , call api endpoint /findGame
-    /**
-     * in .then .
-     * - emit("join game", {gameId: , gameStatus: })
-     * 
-     * 
-     * on("startGame")  
-     * this.setSTate (...) and your UI template switches to game
-    */
-
-
-    
     
 
 
     // Probably will need to map/render over playerOne cards, as well as map/render..
     // .. playerTwo cards.
 
-    // Right now, there's hardcoded style in CSS to shift up/down on active image. 
-    // Basically a "held" click.
-    // Need to handle JS to maintain the shift up/down of the image.
-
-    // Should I add state, and have a "selectedCard" within state???
     render() {
 
         if (this.state.gameStatus === "waiting") {
             return (
                 <>
                     <BodyClassName className="gamePagePic"></BodyClassName>
-                    <div className="container">
-                        <h5 className="font">Searching for game...</h5>
+                    <div className="container centerText">
+                        <div id="loadingIconDiv">
+                            <img src="/assets/images/loadingCatGif.gif" alt="loading icon"></img>
+                        </div>
+                        <div className="centerText">
+                            <h5 className="font" id="loadingText">Searching for game</h5>
+                        </div>
                     </div>
-
-
                 </>
             )
         }
@@ -237,7 +252,7 @@ class GamePage extends Component {
             return (
                 <>
                     <BodyClassName className="gamePagePic"></BodyClassName>
-                    <div className="container">
+                    <div className="container centerText">
                         <h5 className="font">Game has been found...</h5>
                         <h5 className="font">Game starts in {this.state.timerCount}</h5>
                     </div>
@@ -250,7 +265,7 @@ class GamePage extends Component {
                 <>
                     <BodyClassName className="gamePagePic"></BodyClassName>
                     <div className="container">
-                        <h5 className="font">Game started...</h5>
+                        <h5 className="font">Game started...Will need to be replaced with actual game</h5>
                     </div>
                 </>
             )
@@ -269,6 +284,7 @@ class GamePage extends Component {
         }
 
 
+        // This is original test render
         return (
             <>
 
