@@ -19,6 +19,9 @@
     .navMargin {
       padding-right: 300px !important;
     }
+    .centerText {
+      padding-right: 300px !important;
+    }
 }
 
 @media only screen and (max-width: 991px) {

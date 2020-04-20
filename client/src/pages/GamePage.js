@@ -9,8 +9,10 @@ class GamePage extends Component {
     state = {
         username: "",
         cards: [],
-        playerOneCards: [],
-        playerTwoCards: [],
+        myCards: [],
+        opponentCards: [],
+        // playerOneCards: [],
+        // playerTwoCards: [],
         timerCount: 5,
         timer: null,
         timerName: null,
@@ -19,6 +21,16 @@ class GamePage extends Component {
         playerTwoClicked: "",
         gameStatus: "waiting",
         gameId: "",
+
+        me: {
+            pickedCard: null,
+            health: 10
+        },
+        opponent: {
+            username: "",
+            pickedCard: null,
+            health: 10
+        }
 
         // SOMETHING LIKE THIS??
         // game: {
@@ -52,8 +64,16 @@ class GamePage extends Component {
         this.props.socket.on("startGame", (data) => {
             // data from socket only contains gameId and gameStatus
             // console.log("THIS IS THE DATA COMING BACK FROM SOCKET.IO -----------", data)
+
+            let opponent = this.state.opponent;
+
+            if (data.user !== this.props.username) {
+                opponent.username = data.user;
+            }
+
             this.setState({
-                gameStatus: "found"
+                gameStatus: "found",
+                opponent
             });
             this.startTimer("preGameTimer");
         });
@@ -62,6 +82,15 @@ class GamePage extends Component {
 
         API.findGame(gameObj).then(res => {
             console.log("RESPONSE FROM THE FIND GAME END POINT", res.data);
+
+            if (res.data.gameStatus === "ready") {
+                let opponent = this.state.opponent;
+                opponent.username = res.data.playerOne;
+
+                this.setState({
+                    opponent
+                });
+            }
 
             // Create a player object, using the res.data received back from API?
             // Refer back to the users in state
@@ -77,20 +106,29 @@ class GamePage extends Component {
             // Put in if statement,
             // if this.state.game.user is null, it means player one has not been added to state
             // if player one isn't null, it means you should set state for player two?
-            if (this.state.game.user === null) {
-                const playerObj = {
-                    username: res.data.playerOne, // How to differentiate between setting as player one or two??  if statement?
-                    cards: [], // Fill with data from card function
-                    health: 10,
-                    pickedCard: ""
-                }
-            }
+            // if (this.state.game.user.playerOne === null) {
+            //     const playerObj = {
+            //         username: res.data.playerOne, // How to differentiate between setting as player one or two??  if statement?
+            //         cards: [], // Fill with data from card function
+            //         health: 10,
+            //         pickedCard: ""
+            //     }
+            // }
+            // else if (this.state.game.user !== null) {
+            //     const playerObj = {
+            //         username: res.data.playerTwo, 
+            //         cards: [], // Fill with data from card function
+            //         health: 10,
+            //         pickedCard: ""
+            //     }
+            // }
 
             this.setState({
                 gameId: res.data._id
             });
             // Only the playerTwo will emit the game data with both playerOne and playerTwo
-            this.props.socket.emit("join game", {gameId: res.data._id, gameStatus: res.data.gameStatus});
+            this.props.socket.emit("join game", {gameId: res.data._id, gameStatus: res.data.gameStatus, user: this.props.username});
+
            
         }).catch(err => {
             console.log(err);
@@ -120,14 +158,12 @@ class GamePage extends Component {
 
 
 
-        // API.getCards().then(res => {
-        //     this.props.socket.emit("test");
-        //     this.setState({ cards: res.data });
-        //     this.drawCards();
-        //     // this.startTimer();
-        // }).catch(err => {
-        //     console.log(err);
-        // });
+        API.getCards().then(res => {
+            this.setState({ cards: res.data });
+            this.drawCards();
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
     componentWillUnmount = () => {
@@ -159,7 +195,8 @@ class GamePage extends Component {
     
     countDown = (test) => {
         console.log("TIMER NAME:", this.state.timerName);
-        console.log("TIMER", test);
+        // console.log("TIMER", test);
+        console.log("OPPONENT USERNAME-----------------------", this.state.opponent.username);
         let time = this.state.timerCount - 1;
 
         if (time === -1) { 
@@ -190,28 +227,29 @@ class GamePage extends Component {
     // WILL THE FUNCTION BE RAN ONCE, AND BOTH USER'S WEB PAGES CALL IT?
     drawCards = () => {
 
-        for (let i = 0; i < 2; i++) {
-            const results = this.state.cards
-            .sort(function() { return .5 - Math.random() }) // Shuffle array
-            .slice(0, 4); // Get first 2 items
+        const results = this.state.cards
+        .sort(function() { return .5 - Math.random() }) // Shuffle array
+        .slice(0, 4); // Get first 2 items
 
-            const cardOne = results[0];
-            const cardTwo = results[1];
-            const cardThree = results[2];
-            const cardFour = results[3];
+        const cardOne = results[0];
+        const cardTwo = results[1];
+        const cardThree = results[2];
+        const cardFour = results[3];
 
-            const playerCards = [];
-            playerCards.push(cardOne, cardTwo, cardThree, cardFour);
+        const playerCards = [];
+        playerCards.push(cardOne, cardTwo, cardThree, cardFour);
 
-            if (this.state.playerOneCards.length === 0) {
-                this.setState({ playerOneCards: playerCards });
-            }
-            else {
-                this.setState({ playerTwoCards: playerCards });
-            }
+        this.setState({ myCards: playerCards });
+
+        // opponent cards...
+        let opponentCards = this.state.opponentCards;
+
+        for (let i = 0; i < 4; i++) {
+            opponentCards.push("/assets/images/opponentCardBack.jpg")
         }
-        console.log("PLAYER ONE-----", this.state.playerOneCards);
-        console.log("PLAYER TWO-----", this.state.playerTwoCards);
+        this.setState({
+            opponentCards
+        });
     }
 
     playerOneClick = (event) => {
@@ -226,10 +264,6 @@ class GamePage extends Component {
         })
     }
     
-
-
-    // Probably will need to map/render over playerOne cards, as well as map/render..
-    // .. playerTwo cards.
 
     render() {
 
@@ -264,8 +298,51 @@ class GamePage extends Component {
             return (
                 <>
                     <BodyClassName className="gamePagePic"></BodyClassName>
+                    <div className="row" id="cardContainer">
+                        {this.state.opponentCards.map((card, index) => {
+                            return (
+                                <div className="col s3 m3 l3 xl3" key={index}>
+                                    <div
+                                        // onClick={this.playerOneClick}
+                                        // style={ this.state.playerOneClicked === card.title ? { top: "20px" } : {} }
+                                    >
+                                        <div className="card-image">
+                                            <img className="cardImg" src={card} 
+                                                // alt={card.title} 
+                                                // data-power={card.power} 
+                                                // id={card.title}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+
+
                     <div className="container">
-                        <h5 className="font">Game started...Will need to be replaced with actual game</h5>
+                        <h5 className="font">Game started...</h5>
+                    </div>
+                    <div className="row" id="cardContainer">
+                        {this.state.myCards.map((card, index) => {
+                            return (
+                                <div className="col s3 m3 l3 xl3 cardSelectBot" key={index}>
+                                    <div className="card borderHover"
+                                            onClick={this.playerTwoClick}
+                                            style={ this.state.playerTwoClicked === card.title ? { top: "-20px" } : {} }
+                                        >
+                                        <div className="card-image" id={card.title}>
+                                            <img className="cardImg" 
+                                                src={card.img} 
+                                                alt={card.title} 
+                                                data-power={card.power}
+                                                id={card.title}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })}
                     </div>
                 </>
             )

@@ -24,7 +24,7 @@ module.exports = function(server) {
 
         socket.on("join game", function(data){
             if(data.gameId){
-                console.log("SOCKET FILE - Game joined ", data.gameId, data.gameStatus);
+                console.log("SOCKET FILE - Game joined ", data.gameId, data.gameStatus, data.user);
                 socket.join(data.gameId);
 
                 if (data.gameStatus === "ready") {
