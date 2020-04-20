@@ -96,10 +96,14 @@ class GamePage extends Component {
                 opponentClicked: data.opponentCardIndex.index
             });
 
-            // this.state.opponentCards[data.i]
-            console.log(this.state.opponent.pickedCard.index);
-            console.log(this.state.opponentClicked);
-            console.log(this.state.opponentCards);
+            if (this.state.userClicked !== "") {
+                // If user has picked card already, by the time he/she got data back from opponent's card click,
+                // then run function for comparing cards...
+                this.compareCards();
+            }
+            // console.log(this.state.opponent.pickedCard.index);
+            // console.log(this.state.opponentClicked);
+            // console.log(this.state.opponentCards);
         });
 
         console.log(this.state.gameStatus);
@@ -127,26 +131,6 @@ class GamePage extends Component {
             //     pickedCard: ""
             // }
 
-            // Put in if statement,
-            // if this.state.game.user is null, it means player one has not been added to state
-            // if player one isn't null, it means you should set state for player two?
-            // if (this.state.game.user.playerOne === null) {
-            //     const playerObj = {
-            //         username: res.data.playerOne, // How to differentiate between setting as player one or two??  if statement?
-            //         cards: [], // Fill with data from card function
-            //         health: 10,
-            //         pickedCard: ""
-            //     }
-            // }
-            // else if (this.state.game.user !== null) {
-            //     const playerObj = {
-            //         username: res.data.playerTwo, 
-            //         cards: [], // Fill with data from card function
-            //         health: 10,
-            //         pickedCard: ""
-            //     }
-            // }
-
             this.setState({
                 gameId: res.data._id
             });
@@ -156,31 +140,8 @@ class GamePage extends Component {
            
         }).catch(err => {
             console.log(err);
-        })
+        });
         
-
-        // API.findGame().then(res => {
-        //     const gameObj = {playerOne: this.state.username,
-        //         gameStatus: "waiting",              
-        //     }
-        //     const updateGameObj = { playerTwo: this.state.username, gameStatus: "ready" }
-        //     if (res.data === null) {
-        //         API.createGame(
-        //             gameObj
-        //         ).then(res => {
-        //             console.log("CREATED GAME RESPONSE", res.data);
-        //             this.props.socket.emit("join game", "PASS IN GAME ID HERE");
-        //         })
-        //     }
-        //     else {
-        //         API.updateGame(updateGameObj).then(res => {
-        //             console.log("UPDATED GAME RESPONSE", res.data);
-        //             this.props.socket.emit("join game", "PASS IN GAME ID HERE");
-        //         })
-        //     }
-        // })
-
-
 
         API.getCards().then(res => {
             this.setState({ cards: res.data });
@@ -301,6 +262,12 @@ class GamePage extends Component {
     }
 
     userClick = (event) => {
+        // Stops the user from clicking a different card, after a card has been chosen
+        // Remember to re set the state to ""
+        if (this.state.userClicked !== "") {
+            return;
+        }
+
         this.setState({
             userClicked: event.target.id
         });
@@ -323,6 +290,16 @@ class GamePage extends Component {
                 });
             }
         }
+        if (this.state.opponent.pickedCard.index !== "") {
+            // If you have received back from socket that the opponent has picked a card
+            // then run function to compare cards...
+            this.compareCards();
+        }
+    }
+
+    // Game function for comparing cards in between rounds..
+    compareCards = () => {
+        console.log("Compare Cards function called! yay........");
     }
     
 
