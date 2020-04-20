@@ -20,6 +20,7 @@ class GamePage extends Component {
         playerOneClicked: "", // Left this in, in case we want to use logic for playerTwo (click function for cards on top row)
         userClicked: "",
         opponentClicked: "",
+        userPower: "",
         gameStatus: "waiting",
         gameId: "",
 
@@ -276,6 +277,7 @@ class GamePage extends Component {
         for (let i = 0; i < this.state.myCards.length; i++) {
             if (this.state.myCards[i].title === event.target.id) {
                 console.log("INDEX OF CARD PICKED--", i);
+                console.log("My Cards power in the state..", this.state.myCards[i].power);
 
                 this.props.socket.emit("opponent pick", {gameId: this.state.gameId, opponentCardIndex: { 
                     index: i,
@@ -288,18 +290,60 @@ class GamePage extends Component {
                 this.setState({
                     pickedCard
                 });
+
+                this.setState({
+                    userPower: this.state.myCards[i].power
+                }, function() {
+                    if (this.state.opponent.pickedCard.index !== "") {
+                        // If you have received back from socket that the opponent has picked a card
+                        // then run function to compare cards...
+                        this.compareCards();
+                    }
+                });
             }
         }
-        if (this.state.opponent.pickedCard.index !== "") {
-            // If you have received back from socket that the opponent has picked a card
-            // then run function to compare cards...
-            this.compareCards();
-        }
+        // if (this.state.opponent.pickedCard.index !== "") {
+        //     // If you have received back from socket that the opponent has picked a card
+        //     // then run function to compare cards...
+        //     this.compareCards();
+        // }
     }
 
     // Game function for comparing cards in between rounds..
     compareCards = () => {
-        console.log("Compare Cards function called! yay........");
+        // let userPower;
+        // console.log("Compare Cards function called! yay........");
+
+        // console.log("The power of your clicked card is: ..........", this.state.userPower);
+
+        let myPower = this.state.userPower;
+        let opponentPower = this.state.opponent.pickedCard.power;
+
+        console.log("My power = ", myPower, "------Opponent Power", opponentPower);
+
+        // You need to set the state of health to reflect these changes
+        // Once you set the state, how do you want to display those changes to the users? 
+
+        // Maybe... display round results in middle, with a next round countdown of 5 seconds
+        // Then the next round begins..
+        if (myPower > opponentPower) {
+            let roundResult = myPower - opponentPower;
+            console.log("You dealt ", roundResult, " damage to your opponent");
+            let opponent = this.state.opponent;
+            opponent.health -= roundResult;
+            this.setState({
+                opponent
+            });
+        }
+        else if (myPower < opponentPower) {
+            let roundResult = opponentPower - myPower;
+            console.log("Your opponent dealt ", roundResult, " damage to you");
+            let me = this.state.me;
+            me.health -= roundResult;
+            this.setState({
+                me
+            });
+        }
     }
     
 
@@ -364,12 +408,18 @@ class GamePage extends Component {
                     </div>
 
                     <div className="row font">
-                        <div className="col s4 m4 l4">{this.state.opponent.username}</div>
+                        <div className="col s4 m4 l4">
+                            <p>{this.state.opponent.username}</p>
+                            <p>health: {this.state.opponent.health}</p>
+                        </div>
                         <div className="col s4 m4 l4 center-align">
                             <p>Round: {this.state.round} Choose a card.</p>
                             <p>Time Remaining: {this.state.timerCount}</p>
                         </div>
-                        <div className="col s4 m4 l4 right-align">{this.props.username}</div>
+                        <div className="col s4 m4 l4 right-align">
+                            <p>{this.props.username}</p>
+                            <p>health: {this.state.me.health}</p>
+                        </div>
                     </div>
 
                     <div className="row" id="cardContainer">
