@@ -6,20 +6,6 @@ module.exports = function(server) {
 
 
     function onConnect(socket) {
-        // Need to handle SO MUCH functionality here....
-
-        socket.on("test", function() {
-            console.log("I REALLY HOPE THIS WORKS");
-        })
-
-        /**
-         * JOIN GAME
-         * socket.join(data.gameId)
-         * check gameStatus
-         * if (gamesStatus === "ready") {
-         *  socket.broadcast.to(data.gameId).emit("startGame", object);
-         * }
-        */
 
 
         socket.on("join game", function(data){
@@ -31,8 +17,18 @@ module.exports = function(server) {
 
                     io.in(data.gameId).emit("startGame", data);
                 }
+
+                
             }
-        })
+        });
+
+
+        socket.on("opponent pick", function(data) {
+            console.log("SOCKET FILE - Opponent Picked A Card", data.gameId, data);
+            socket.to(data.gameId).emit("opponent pick", data);
+
+        });
+
         //when user leaves direct chat, leave socket chat room
         socket.on("leave game", function(data){
             if(data.gameId){

@@ -16,19 +16,22 @@ class GamePage extends Component {
         timerCount: 5,
         timer: null,
         timerName: null,
-        round: "",
-        playerOneClicked: "",
-        playerTwoClicked: "",
+        round: 1,
+        playerOneClicked: "", // Left this in, in case we want to use logic for playerTwo (click function for cards on top row)
+        userClicked: "",
+        opponentClicked: "",
         gameStatus: "waiting",
         gameId: "",
 
         me: {
-            pickedCard: null,
+            pickedCard: {},
             health: 10
         },
         opponent: {
             username: "",
-            pickedCard: null,
+            pickedCard: {
+                index: ""
+            },
             health: 10
         }
 
@@ -76,6 +79,27 @@ class GamePage extends Component {
                 opponent
             });
             this.startTimer("preGameTimer");
+        });
+
+        // This grabs the index of the card the opponent clicked on...
+        // Need to find a way to display to the other user's UI
+
+        this.props.socket.on("opponent pick", (data) => {
+            let opponent = this.state.opponent;
+            // let opponentClicked = this.state.opponentCards[data.index].title;
+            opponent.pickedCard = data.opponentCardIndex;
+
+            console.log(data.opponentCardIndex);
+
+            this.setState({
+                opponent,
+                opponentClicked: data.opponentCardIndex.index
+            });
+
+            // this.state.opponentCards[data.i]
+            console.log(this.state.opponent.pickedCard.index);
+            console.log(this.state.opponentClicked);
+            console.log(this.state.opponentCards);
         });
 
         console.log(this.state.gameStatus);
@@ -196,7 +220,7 @@ class GamePage extends Component {
     countDown = (test) => {
         console.log("TIMER NAME:", this.state.timerName);
         // console.log("TIMER", test);
-        console.log("OPPONENT USERNAME-----------------------", this.state.opponent.username);
+        // console.log("OPPONENT USERNAME-----------------------", this.state.opponent.username);
         let time = this.state.timerCount - 1;
 
         if (time === -1) { 
@@ -206,9 +230,22 @@ class GamePage extends Component {
                 this.setState({
                     gameStatus: "start"
                 });
+                this.startTimer("gameTimer");
             }
             else if (this.state.timerName === "gameTimer") {
                 // What to do here?
+                // Handle comparing of cards here...
+                if (this.state.round < 4) {
+                    let round = this.state.round;
+                    round += 1;
+                    this.setState({
+                        round  
+                    });
+                    this.startTimer("gameTimer");
+                }
+                else {
+                    // Handle end of game logic
+                }
             }
         }
         else {
@@ -245,7 +282,12 @@ class GamePage extends Component {
         let opponentCards = this.state.opponentCards;
 
         for (let i = 0; i < 4; i++) {
-            opponentCards.push("/assets/images/opponentCardBack.jpg")
+            // opponentCards.push("/assets/images/opponentCardBack.jpg")
+            let card = {
+                title: i,
+                img: "/assets/images/opponentCardBack.jpg"
+            }
+            opponentCards.push(card);
         }
         this.setState({
             opponentCards
@@ -258,10 +300,29 @@ class GamePage extends Component {
         });
     }
 
-    playerTwoClick = (event) => {
+    userClick = (event) => {
         this.setState({
-            playerTwoClicked: event.target.id
-        })
+            userClicked: event.target.id
+        });
+        console.log(event.target.id);
+        let pickedCard = this.state.me;
+        for (let i = 0; i < this.state.myCards.length; i++) {
+            if (this.state.myCards[i].title === event.target.id) {
+                console.log("INDEX OF CARD PICKED--", i);
+
+                this.props.socket.emit("opponent pick", {gameId: this.state.gameId, opponentCardIndex: { 
+                    index: i,
+                    title: this.state.myCards[i].title,
+                    power: this.state.myCards[i].power,
+                    img: this.state.myCards[i].img
+                }});
+
+                pickedCard.pickedCard = this.state.myCards[i].title;
+                this.setState({
+                    pickedCard
+                });
+            }
+        }
     }
     
 
@@ -287,8 +348,13 @@ class GamePage extends Component {
                 <>
                     <BodyClassName className="gamePagePic"></BodyClassName>
                     <div className="container centerText">
-                        <h5 className="font">Game has been found...</h5>
-                        <h5 className="font">Game starts in {this.state.timerCount}</h5>
+                        <div id="loadingIconDiv">
+                            <img src="/assets/images/loadingCatGif.gif" alt="loading icon"></img>
+                        </div>
+                        <div className="centerText">
+                            <h5 className="font foundText" id="giveMeMargin">Opponent found! </h5>
+                            <h5 className="font foundText">Game starts in {this.state.timerCount}</h5>
+                        </div>
                     </div>
                 </>
             )
@@ -302,12 +368,13 @@ class GamePage extends Component {
                         {this.state.opponentCards.map((card, index) => {
                             return (
                                 <div className="col s3 m3 l3 xl3" key={index}>
-                                    <div
+                                    <div className="opponentCards"
                                         // onClick={this.playerOneClick}
-                                        // style={ this.state.playerOneClicked === card.title ? { top: "20px" } : {} }
+                                        style={ this.state.opponentClicked === card.title ? { top: "20px" } : {} }
+                                        // style = { { top: "20px" } }
                                     >
                                         <div className="card-image">
-                                            <img className="cardImg" src={card} 
+                                            <img className="cardImg" src={card.img} 
                                                 // alt={card.title} 
                                                 // data-power={card.power} 
                                                 // id={card.title}
@@ -319,17 +386,22 @@ class GamePage extends Component {
                         })}
                     </div>
 
-
-                    <div className="container">
-                        <h5 className="font">Game started...</h5>
+                    <div className="row font">
+                        <div className="col s4 m4 l4">{this.state.opponent.username}</div>
+                        <div className="col s4 m4 l4 center-align">
+                            <p>Round: {this.state.round} Choose a card.</p>
+                            <p>Time Remaining: {this.state.timerCount}</p>
+                        </div>
+                        <div className="col s4 m4 l4 right-align">{this.props.username}</div>
                     </div>
+
                     <div className="row" id="cardContainer">
                         {this.state.myCards.map((card, index) => {
                             return (
                                 <div className="col s3 m3 l3 xl3 cardSelectBot" key={index}>
                                     <div className="card borderHover"
-                                            onClick={this.playerTwoClick}
-                                            style={ this.state.playerTwoClicked === card.title ? { top: "-20px" } : {} }
+                                            onClick={this.userClick}
+                                            style={ this.state.userClicked === card.title ? { top: "-20px" } : {} }
                                         >
                                         <div className="card-image" id={card.title}>
                                             <img className="cardImg" 
@@ -362,66 +434,66 @@ class GamePage extends Component {
 
 
         // This is original test render
-        return (
-            <>
+        // return (
+        //     <>
 
-                <div className="row" id="cardContainer">
+        //         <div className="row" id="cardContainer">
 
-                    {this.state.playerOneCards.map((card, index) => {
-                        return (
-                            <div className="col s3 m3 l3 xl3 cardSelectTop" key={index}>
-                                <div className="card borderHover"
-                                    onClick={this.playerOneClick}
-                                    style={ this.state.playerOneClicked === card.title ? { top: "20px" } : {} }
-                                >
-                                    <div className="card-image">
-                                        <img className="cardImg" src={card.img} 
-                                            alt={card.title} 
-                                            data-power={card.power} 
-                                            id={card.title}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    })}
+        //             {this.state.playerOneCards.map((card, index) => {
+        //                 return (
+        //                     <div className="col s3 m3 l3 xl3 cardSelectTop" key={index}>
+        //                         <div className="card borderHover"
+        //                             onClick={this.playerOneClick}
+        //                             style={ this.state.playerOneClicked === card.title ? { top: "20px" } : {} }
+        //                         >
+        //                             <div className="card-image">
+        //                                 <img className="cardImg" src={card.img} 
+        //                                     alt={card.title} 
+        //                                     data-power={card.power} 
+        //                                     id={card.title}
+        //                                 />
+        //                             </div>
+        //                         </div>
+        //                     </div>
+        //                 )
+        //             })}
 
-                </div>
+        //         </div>
 
-                <div className="row">
-                    <div className="col s4 m4 l4">Player One</div>
-                    <div className="col s4 m4 l4 center-align">
-                        <p>Round: {this.state.round} Choose a card.</p>
-                        <p>Time Remaining: {this.state.timer}</p>
-                    </div>
-                    <div className="col s4 m4 l4 right-align">Player Two</div>
-                </div>
+        //         <div className="row">
+        //             <div className="col s4 m4 l4">Player One</div>
+        //             <div className="col s4 m4 l4 center-align">
+        //                 <p>Round: {this.state.round} Choose a card.</p>
+        //                 <p>Time Remaining: {this.state.timer}</p>
+        //             </div>
+        //             <div className="col s4 m4 l4 right-align">Player Two</div>
+        //         </div>
 
-                <div className="row" id="cardContainer">
+        //         <div className="row" id="cardContainer">
 
-                    {this.state.playerTwoCards.map((card, index) => {
-                        return (
-                            <div className="col s3 m3 l3 xl3 cardSelectBot" key={index}>
-                                <div className="card borderHover"
-                                        onClick={this.playerTwoClick}
-                                        style={ this.state.playerTwoClicked === card.title ? { top: "-20px" } : {} }
-                                    >
-                                    <div className="card-image" id={card.title}>
-                                        <img className="cardImg" 
-                                            src={card.img} 
-                                            alt={card.title} 
-                                            data-power={card.power}
-                                            id={card.title}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    })}
+        //             {this.state.playerTwoCards.map((card, index) => {
+        //                 return (
+        //                     <div className="col s3 m3 l3 xl3 cardSelectBot" key={index}>
+        //                         <div className="card borderHover"
+        //                                 onClick={this.playerTwoClick}
+        //                                 style={ this.state.playerTwoClicked === card.title ? { top: "-20px" } : {} }
+        //                             >
+        //                             <div className="card-image" id={card.title}>
+        //                                 <img className="cardImg" 
+        //                                     src={card.img} 
+        //                                     alt={card.title} 
+        //                                     data-power={card.power}
+        //                                     id={card.title}
+        //                                 />
+        //                             </div>
+        //                         </div>
+        //                     </div>
+        //                 )
+        //             })}
 
-                </div>
-            </>
-        )
+        //         </div>
+        //     </>
+        // )
     }
 
 }
