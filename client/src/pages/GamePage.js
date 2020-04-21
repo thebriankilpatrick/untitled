@@ -266,18 +266,19 @@ class GamePage extends Component {
         // Stops the user from clicking a different card, after a card has been chosen
         // Remember to re set the state to ""
         if (this.state.userClicked !== "") {
+            console.log("User Clicked DOES NOT EQUAL empty string", this.state.userClicked);
             return;
         }
 
         this.setState({
             userClicked: event.target.id
         });
-        console.log(event.target.id);
+        // console.log(event.target.id);
         let pickedCard = this.state.me;
         for (let i = 0; i < this.state.myCards.length; i++) {
             if (this.state.myCards[i].title === event.target.id) {
-                console.log("INDEX OF CARD PICKED--", i);
-                console.log("My Cards power in the state..", this.state.myCards[i].power);
+                // console.log("INDEX OF CARD PICKED--", i);
+                // console.log("My Cards power in the state..", this.state.myCards[i].power);
 
                 this.props.socket.emit("opponent pick", {gameId: this.state.gameId, opponentCardIndex: { 
                     index: i,
@@ -315,6 +316,9 @@ class GamePage extends Component {
         // console.log("Compare Cards function called! yay........");
 
         // console.log("The power of your clicked card is: ..........", this.state.userPower);
+        if (this.state.userClicked === "") {
+            return;
+        }
 
         let myPower = this.state.userPower;
         let opponentPower = this.state.opponent.pickedCard.power;
@@ -343,6 +347,29 @@ class GamePage extends Component {
             this.setState({
                 me
             });
+        }
+
+        let opponent = this.state.opponent;
+        opponent.pickedCard = {
+            index: ""
+        }
+        this.setState({
+            userClicked: "",
+            opponentClicked: "",
+            opponent
+        });
+
+        clearInterval(this.state.timer);
+        if (this.state.round < 4) {
+            let round = this.state.round;
+            round += 1;
+            this.setState({
+                round  
+            });
+            this.startTimer("gameTimer");
+        }
+        else {
+            // Handle end of game logic
         }
     }
     
