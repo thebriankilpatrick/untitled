@@ -181,6 +181,12 @@ class GamePage extends Component {
                 timerName
             });
         }
+        else if (timerName === "endTimer") {
+            this.setState({
+                timerCount: 5,
+                timerName
+            });
+        }
         this.setState({timer: setInterval(this.countDown, 1000)});
         // The function will need to be called with each round, so the time resets
         // After each player has chosen, the timer stops, and the battle logic commences.
@@ -207,8 +213,27 @@ class GamePage extends Component {
                 this.storeGameText();
             }
             else if (this.state.timerName === "betweenRoundTimer") {
-                this.startTimer("gameTimer");
-                this.storeGameText();
+
+                if (this.state.me.health === 0) {
+                    this.setState({
+                        roundResultText: "You Lost!  Better Luck Next Time!"  
+                    }, function() {
+                        this.storeBetweenText();
+                    });
+                    this.startTimer("endTimer");
+                }
+                else if (this.state.opponent.health === 0) {
+                    this.setState({
+                        roundResultText: "You Won!  Clearly, Your Opponent Just Wasn't That Good."
+                    }, function() {
+                        this.storeBetweenText();
+                    });
+                    this.startTimer("endTimer");
+                }
+                else {
+                    this.startTimer("gameTimer");
+                    this.storeGameText();
+                }
             }
             else if (this.state.timerName === "gameTimer") {
                 // What to do here?
@@ -224,7 +249,14 @@ class GamePage extends Component {
                 }
                 else {
                     // Handle end of game logic
+                    this.startTimer("endTimer");
+                    this.storeBetweenText();
                 }
+            }
+            else if (this.state.timerName === "endTimer") {
+                this.setState({
+                    gameStatus: "end"
+                });
             }
         }
         else {
@@ -368,6 +400,11 @@ class GamePage extends Component {
                 roundResultText: "Your opponent dealt " + roundResult + " damage to you."
             });
         }
+        else if (myPower === opponentPower) {
+            this.setState({
+                roundResultText: "The power of the cards were equal, no damage was dealt this round."
+            });
+        }
 
         let opponent = this.state.opponent;
         opponent.pickedCard = {
@@ -380,8 +417,10 @@ class GamePage extends Component {
         });
 
         // HEEEEEY YOU!!! -----------------------------------------------------------------------------
-        // TODO:  Instead, call a "between round" timer here,
-        // Then, at the end of that timer, run this logic...
+        // TODO:  Handle the end of game logic! 
+        // How do I want to display and handle it??
+        // Also, todo: to not allow to be picked, and style, cards that have already been played...
+        // How do I do that??
         clearInterval(this.state.timer);
         if (this.state.round < 4) {
             let round = this.state.round;
@@ -396,12 +435,29 @@ class GamePage extends Component {
         }
         else {
             // Handle end of game logic
+            if (this.state.round === 4) {
+                if (this.state.me.health < this.state.opponent.health) {
+                    console.log("I lost!");
+                    this.setState({
+                        roundResultText: "You Lost!  Better Luck Next Time!"  
+                    }, function() {
+                        this.storeBetweenText();
+                    });
+                    this.startTimer("endTimer");
+                }
+                else if (this.state.me.health > this.state.opponent.health) {
+                    console.log("I won!");
+                    this.setState({
+                        roundResultText: "You Won!  Clearly, Your Opponent Just Wasn't That Good."
+                    }, function() {
+                        this.storeBetweenText();
+                    });
+                    this.startTimer("endTimer");
+                }
+            }
         }
     }
 
-    // HEY YOUUUUU!! -------------------------------------------------------------------------------------
-    // Call this function after each "in between" round phase
-    // resets the game info text to standard
     storeGameText = () => {
         let textOne = "Round: " + this.state.round + " Choose a card.";
         let textTwo = "Time Remaining: ";
@@ -413,9 +469,21 @@ class GamePage extends Component {
     }
 
     storeBetweenText = () => {
-        console.log("What round is it?  from store text function", this.state.round);
-        let textOne = this.state.roundResultText;
-        let textTwo = "Round " + this.state.round + " begins in ";
+        let textOne;
+        let textTwo;
+
+        textOne = this.state.roundResultText;
+        // textTwo = "Round " + this.state.round + " begins in ";
+
+        // textOne = this.state.roundResultText;
+        // textTwo = "Round " + this.state.round + " begins in ";
+
+        if (this.state.me.health === 0 || this.state.opponent.health === 0) {
+            textTwo = "Redirecting in "
+        }
+        else {
+            textTwo = "Round " + this.state.round + " begins in ";
+        }
 
         this.setState({
             gameTextOne: textOne,
@@ -487,14 +555,8 @@ class GamePage extends Component {
                             <p>health: {this.state.opponent.health}</p>
                         </div>
                         <div className="col s4 m4 l4 center-align">
-                            {/* Perhaps, a cheeky way is to store these statements in state, and change depending
-                            if between or during a round?? */}
                             <p>{this.state.gameTextOne}</p>
                             <p>{this.state.gameTextTwo} {this.state.timerCount}</p>
-                            {/* if this.state.roundResult is not equal to null, then display the info above  */}
-                            {/* {this.state.roundResult ? null : (
-                                <p>{this.state.roundResultText}</p>
-                            )} */}
                         </div>
                         <div className="col s4 m4 l4 right-align">
                             <p>{this.props.username}</p>
