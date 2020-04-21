@@ -23,6 +23,10 @@ class GamePage extends Component {
         userPower: "",
         gameStatus: "waiting",
         gameId: "",
+        roundResult: null,
+        roundResultText: "",
+        gameTextOne: "",
+        gameTextTwo: "",
 
         me: {
             pickedCard: {},
@@ -193,6 +197,7 @@ class GamePage extends Component {
                     gameStatus: "start"
                 });
                 this.startTimer("gameTimer");
+                this.storeGameText();
             }
             else if (this.state.timerName === "gameTimer") {
                 // What to do here?
@@ -323,7 +328,7 @@ class GamePage extends Component {
         let myPower = this.state.userPower;
         let opponentPower = this.state.opponent.pickedCard.power;
 
-        console.log("My power = ", myPower, "------Opponent Power", opponentPower);
+        // console.log("My power = ", myPower, "------Opponent Power", opponentPower);
 
         // You need to set the state of health to reflect these changes
         // Once you set the state, how do you want to display those changes to the users? 
@@ -332,11 +337,15 @@ class GamePage extends Component {
         // Then the next round begins..
         if (myPower > opponentPower) {
             let roundResult = myPower - opponentPower;
-            console.log("You dealt ", roundResult, " damage to your opponent");
+            // console.log("You dealt ", roundResult, " damage to your opponent");
             let opponent = this.state.opponent;
             opponent.health -= roundResult;
+            if (opponent.health < 0) {
+                opponent.health = 0;
+            }
             this.setState({
-                opponent
+                opponent,
+                roundResultText: "You dealt " + roundResult + " damage to your opponent!"
             });
         }
         else if (myPower < opponentPower) {
@@ -344,8 +353,14 @@ class GamePage extends Component {
             console.log("Your opponent dealt ", roundResult, " damage to you");
             let me = this.state.me;
             me.health -= roundResult;
+            if (me.health < 0) {
+                me.health = 0;
+            }
+
+            // Set callback function to call timer function for "in between rounds" timer
             this.setState({
-                me
+                me,
+                roundResultText: "Your opponent dealt " + roundResult + " damage to you."
             });
         }
 
@@ -359,6 +374,9 @@ class GamePage extends Component {
             opponent
         });
 
+        // HEEEEEY YOU!!! -----------------------------------------------------------------------------
+        // TODO:  Instead, call a "between round" timer here,
+        // Then, at the end of that timer, run this logic...
         clearInterval(this.state.timer);
         if (this.state.round < 4) {
             let round = this.state.round;
@@ -371,6 +389,19 @@ class GamePage extends Component {
         else {
             // Handle end of game logic
         }
+    }
+
+    // HEY YOUUUUU!! -------------------------------------------------------------------------------------
+    // Call this function after each "in between" round phase
+    // resets the game info text to standard
+    storeGameText = () => {
+        let textOne = "Round: " + this.state.round + " Choose a card.";
+        let textTwo = "Time Remaining: ";
+        
+        this.setState({
+            gameTextOne: textOne,
+            gameTextTwo: textTwo
+        });
     }
     
 
@@ -417,15 +448,10 @@ class GamePage extends Component {
                             return (
                                 <div className="col s3 m3 l3 xl3" key={index}>
                                     <div className="opponentCards"
-                                        // onClick={this.playerOneClick}
                                         style={ this.state.opponentClicked === card.title ? { top: "20px" } : {} }
-                                        // style = { { top: "20px" } }
                                     >
                                         <div className="card-image">
                                             <img className="cardImg" src={card.img} 
-                                                // alt={card.title} 
-                                                // data-power={card.power} 
-                                                // id={card.title}
                                             />
                                         </div>
                                     </div>
@@ -440,8 +466,14 @@ class GamePage extends Component {
                             <p>health: {this.state.opponent.health}</p>
                         </div>
                         <div className="col s4 m4 l4 center-align">
-                            <p>Round: {this.state.round} Choose a card.</p>
-                            <p>Time Remaining: {this.state.timerCount}</p>
+                            {/* Perhaps, a cheeky way is to store these statements in state, and change depending
+                            if between or during a round?? */}
+                            <p>{this.state.gameTextOne}</p>
+                            <p>{this.state.gameTextTwo} {this.state.timerCount}</p>
+                            {/* if this.state.roundResult is not equal to null, then display the info above  */}
+                            {this.state.roundResult ? null : (
+                                <p>{this.state.roundResultText}</p>
+                            )}
                         </div>
                         <div className="col s4 m4 l4 right-align">
                             <p>{this.props.username}</p>
