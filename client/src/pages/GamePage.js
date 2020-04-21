@@ -174,6 +174,13 @@ class GamePage extends Component {
                 timerName
             });
         }
+        else if (timerName === "betweenRoundTimer") {
+            console.log("WHAT ROUND IS THIS?????", this.state.round);
+            this.setState({
+                timerCount: 5,
+                timerName
+            });
+        }
         this.setState({timer: setInterval(this.countDown, 1000)});
         // The function will need to be called with each round, so the time resets
         // After each player has chosen, the timer stops, and the battle logic commences.
@@ -199,6 +206,10 @@ class GamePage extends Component {
                 this.startTimer("gameTimer");
                 this.storeGameText();
             }
+            else if (this.state.timerName === "betweenRoundTimer") {
+                this.startTimer("gameTimer");
+                this.storeGameText();
+            }
             else if (this.state.timerName === "gameTimer") {
                 // What to do here?
                 // Handle comparing of cards here...
@@ -208,7 +219,8 @@ class GamePage extends Component {
                     this.setState({
                         round  
                     });
-                    this.startTimer("gameTimer");
+                    this.startTimer("betweenRoundTimer");
+                    this.storeBetweenText();
                 }
                 else {
                     // Handle end of game logic
@@ -328,13 +340,6 @@ class GamePage extends Component {
         let myPower = this.state.userPower;
         let opponentPower = this.state.opponent.pickedCard.power;
 
-        // console.log("My power = ", myPower, "------Opponent Power", opponentPower);
-
-        // You need to set the state of health to reflect these changes
-        // Once you set the state, how do you want to display those changes to the users? 
-
-        // Maybe... display round results in middle, with a next round countdown of 5 seconds
-        // Then the next round begins..
         if (myPower > opponentPower) {
             let roundResult = myPower - opponentPower;
             // console.log("You dealt ", roundResult, " damage to your opponent");
@@ -383,8 +388,11 @@ class GamePage extends Component {
             round += 1;
             this.setState({
                 round  
+            }, function() {
+                this.storeBetweenText();
             });
-            this.startTimer("gameTimer");
+            this.startTimer("betweenRoundTimer");
+            // this.storeBetweenText();
         }
         else {
             // Handle end of game logic
@@ -401,6 +409,19 @@ class GamePage extends Component {
         this.setState({
             gameTextOne: textOne,
             gameTextTwo: textTwo
+        });
+    }
+
+    storeBetweenText = () => {
+        console.log("What round is it?  from store text function", this.state.round);
+        let textOne = this.state.roundResultText;
+        let textTwo = "Round " + this.state.round + " begins in ";
+
+        this.setState({
+            gameTextOne: textOne,
+            gameTextTwo: textTwo
+        }, function() {
+            console.log(this.state.gameTextOne);
         });
     }
     
@@ -471,9 +492,9 @@ class GamePage extends Component {
                             <p>{this.state.gameTextOne}</p>
                             <p>{this.state.gameTextTwo} {this.state.timerCount}</p>
                             {/* if this.state.roundResult is not equal to null, then display the info above  */}
-                            {this.state.roundResult ? null : (
+                            {/* {this.state.roundResult ? null : (
                                 <p>{this.state.roundResultText}</p>
-                            )}
+                            )} */}
                         </div>
                         <div className="col s4 m4 l4 right-align">
                             <p>{this.props.username}</p>
