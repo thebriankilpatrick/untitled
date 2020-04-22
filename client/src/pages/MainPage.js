@@ -28,9 +28,9 @@ class MainPage extends Component {
 
     // HEY YOUUUU-----------------------------------------------------------------------------------------------
     // TODO: 
-    // You get the user object back from session storage.
-    // user is stored in session storage from logging in....
-    // Need to update the user in session storage after playing a match...
+    // I called the function to get the user from the DB on mount
+    // This will allow me to grab the most up-to-date wins, losses, and rank from the DB
+    // However, this function only runs when the component mounts (load and reload)
     componentDidMount = () => {
         this.props.socket.emit("test");
         const user = sessionStorage.getItem("user");
@@ -63,18 +63,6 @@ class MainPage extends Component {
         }).catch(err => {
             console.log(err);
         });
-
-        // let obj = {
-        //     _id: userObj._id
-        // }
-        // // let id = this.state.userId;
-        // API.findUser(obj).then(res => {
-        //     this.setState({
-        //         wins: res.data.wins,
-        //         losses: res.data.losses,
-        //         rank: res.data.rank
-        //     });
-        // });
     }
 
     // componentDidUpdate = () => {

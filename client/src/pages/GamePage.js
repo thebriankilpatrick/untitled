@@ -30,6 +30,8 @@ class GamePage extends Component {
         receivedDmg: false,
         dealtDmg: false,
         lastRound: false,
+        userForfeit: false,
+        opponentForfeit: false,
 
         me: {
             pickedCard: {},
@@ -223,6 +225,10 @@ class GamePage extends Component {
             else if (this.state.timerName === "gameTimer") {
                 // What to do here?
                 // Handle comparing of cards here...
+                if (this.state.userClicked === "" || this.state.opponentClicked === "") {
+                    this.playerForfeit();
+                }
+
                 if (this.state.round < 4) {
                     let round = this.state.round;
                     round += 1;
@@ -449,7 +455,17 @@ class GamePage extends Component {
                 this.setState({
                     lastRound: true
                 });
-                if (this.state.me.health < this.state.opponent.health) {
+                if (this.state.userForfeit) {
+                    this.setState({
+                        roundResultText: "You didn't pick a card!  Wake up next time!"
+                    });
+                }
+                else if (this.state.opponentForfeit) {
+                    this.setState({
+                        roundResultText: "Your opponent fell asleep, and didn't pick a card!"
+                    });
+                }
+                else if (this.state.me.health < this.state.opponent.health) {
                     // console.log("I lost!");
                     this.setState({
                         roundResultText: "You Lost!  Better Luck Next Time!"  
@@ -468,6 +484,33 @@ class GamePage extends Component {
                     this.startTimer("endTimer");
                 }
             }
+        }
+    }
+
+    playerForfeit = () => {
+        console.log("A player has forfeited the match");
+
+        if (this.state.userClicked === "") {
+            console.log("You did not pick a card!");
+
+            // If user does not pick a card, his/her health becomes 0
+            let me = this.state.me;
+            me.health = 0;
+            this.setState({
+                me,
+                roundResultText: "You didn't pick a card!  Wake up next time!"
+            });
+        }
+        else if (this.state.opponentClicked === "") {
+            console.log("The opponent did not pick a card!");
+
+            // If opponent does not pick a card, his/her health becomes 0
+            let opponent = this.state.opponent;
+            opponent.health = 0;
+            this.setState({
+                opponent,
+                roundResultText: "Your opponent fell asleep, and didn't pick a card!"
+            });
         }
     }
 
