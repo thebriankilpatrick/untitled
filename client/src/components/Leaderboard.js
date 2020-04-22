@@ -11,8 +11,10 @@ class Leaderboard extends Component {
         API.getAllUsers().then(res => {
             this.setState({
                 users: res.data
+            }, function() {
+                this.state.users.sort((a, b) => (a.rank < b.rank) ? 1 : -1);
             });
-            this.state.users.sort((a, b) => (a.rank > b.rank) ? 1 : -1);
+            // this.state.users.sort((a, b) => (a.rank < b.rank) ? 1 : -1);
         }).catch(err => {
             console.log(err);
         })

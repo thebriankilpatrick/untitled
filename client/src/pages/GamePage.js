@@ -6,14 +6,11 @@ import "./GamePage.css";
 
 class GamePage extends Component {
 
-    // Probably need to store both playerOne and playerTwo data in state
     state = {
         username: "",
         cards: [],
         myCards: [],
         opponentCards: [],
-        // playerOneCards: [],
-        // playerTwoCards: [],
         timerCount: 5,
         timer: null,
         timerName: null,
@@ -45,27 +42,12 @@ class GamePage extends Component {
             },
             health: 10
         }
-
-        // SOMETHING LIKE THIS??
-        // game: {
-        //     user: {
-        //         exampleUser1: {
-        //             health: 10,
-        //             cards: [],
-        //             pickedCard: ""
-        //         },
-        //         exampleUser2: {
-        //             health: 10,
-        //             cards: [],
-        //             pickedCard: ""
-        //         }
-        //     }
-        // }
     }
 
     // CREATE USER OBJECT, AND THEN STORE IN THE STATE!!
 
     componentDidMount = () => {
+        // console.log("MY ID IS............", this.props.userId);
         this.setState({
             username: this.props.username
         });
@@ -100,7 +82,7 @@ class GamePage extends Component {
             // let opponentClicked = this.state.opponentCards[data.index].title;
             opponent.pickedCard = data.opponentCardIndex;
 
-            console.log(data.opponentCardIndex);
+            // console.log(data.opponentCardIndex);
 
             this.setState({
                 opponent,
@@ -120,7 +102,7 @@ class GamePage extends Component {
         console.log(this.state.gameStatus);
 
         API.findGame(gameObj).then(res => {
-            console.log("RESPONSE FROM THE FIND GAME END POINT", res.data);
+            // console.log("RESPONSE FROM THE FIND GAME END POINT", res.data);
 
             if (res.data.gameStatus === "ready") {
                 let opponent = this.state.opponent;
@@ -130,17 +112,6 @@ class GamePage extends Component {
                     opponent
                 });
             }
-
-            // Create a player object, using the res.data received back from API?
-            // Refer back to the users in state
-            // Call function to draw four random cards, and set those in this object?
-            // Examply
-            // const playerObj = {
-            //     username: res.data.playerOne, // How to differentiate between setting as player one or two??  if statement?
-            //     cards: [], // Fill with data from card function
-            //     health: 10,
-            //     pickedCard: ""
-            // }
 
             this.setState({
                 gameId: res.data._id
@@ -181,7 +152,7 @@ class GamePage extends Component {
             });
         }
         else if (timerName === "betweenRoundTimer") {
-            console.log("WHAT ROUND IS THIS?????", this.state.round);
+            // console.log("WHAT ROUND IS THIS?????", this.state.round);
             this.setState({
                 timerCount: 5,
                 timerName
@@ -203,7 +174,7 @@ class GamePage extends Component {
     }
     
     countDown = (test) => {
-        console.log("TIMER NAME:", this.state.timerName);
+        // console.log("TIMER NAME:", this.state.timerName);
         // console.log("TIMER", test);
         // console.log("OPPONENT USERNAME-----------------------", this.state.opponent.username);
         let time = this.state.timerCount - 1;
@@ -331,7 +302,7 @@ class GamePage extends Component {
         // Stops the user from clicking a different card, after a card has been chosen
         // Remember to re set the state to ""
         if (this.state.userClicked !== "") {
-            console.log("User Clicked DOES NOT EQUAL empty string", this.state.userClicked);
+            // console.log("User Clicked DOES NOT EQUAL empty string", this.state.userClicked);
             return;
         }
 
@@ -430,7 +401,7 @@ class GamePage extends Component {
             if (this.state.userClicked === myCards[i].title) {
                 // myCards.splice(i);
                 index = i;
-                console.log("Here is the index of your splice----", i);
+                // console.log("Here is the index of your splice----", i);
             }
         }
         myCards.splice(index, 1);
@@ -479,7 +450,7 @@ class GamePage extends Component {
                     lastRound: true
                 });
                 if (this.state.me.health < this.state.opponent.health) {
-                    console.log("I lost!");
+                    // console.log("I lost!");
                     this.setState({
                         roundResultText: "You Lost!  Better Luck Next Time!"  
                     }, function() {
@@ -488,7 +459,7 @@ class GamePage extends Component {
                     this.startTimer("endTimer");
                 }
                 else if (this.state.me.health > this.state.opponent.health) {
-                    console.log("I won!");
+                    // console.log("I won!");
                     this.setState({
                         roundResultText: "You Won!  Clearly, Your Opponent Just Wasn't That Good."
                     }, function() {
@@ -533,8 +504,6 @@ class GamePage extends Component {
         this.setState({
             gameTextOne: textOne,
             gameTextTwo: textTwo
-        }, function() {
-            console.log(this.state.gameTextOne);
         });
     }
 
@@ -561,6 +530,29 @@ class GamePage extends Component {
                endTextOne: win,
                endTextTwo: ifWin
            }); 
+        }
+
+        this.handleGameResult();
+    }
+
+    handleGameResult = () => {
+        let userObj = {
+            _id: this.props.userId
+        }
+        // let id = this.props.userId;
+        if (this.state.me.health < this.state.opponent.health) {
+            API.userLose(userObj).then(res => {
+                console.log("The LOSE API endpoint-----", res.data);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+        else if (this.state.me.health > this.state.opponent.health) {
+            API.userWin(userObj).then(res => {
+                console.log("The WIN API endpoint ------", res.data);
+            }).catch(err => {
+                console.log(err);
+            });
         }
     }
     

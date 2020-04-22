@@ -58,31 +58,108 @@ module.exports = function(app, passport) {
         }).catch(err => {
             res.status(500).send(err);
         })
+    });
+
+    // --------------------------------- TESTING UPDATE USER END POINT --------
+    app.put("/api/user/win", (req, res) => {
+        console.log("HERE IS THE WIN DB ENDPOINT, AND THE REQ IS:", req.body);
+        db.User.findByIdAndUpdate({
+            _id: req.body._id
+        },{
+            $inc: {rank: 5, wins: 1}
+        }, {
+            new: true
+        }).then(dbUser => {
+            console.log("WIN DB ENDPOINT", dbUser);
+            res.json(dbUser);
+        }).catch(err => {
+            res.status(500).send(err);
+        })
+    });
+
+    // Need to handle to make sure honor does not go below 0
+
+    // Gets the user, and reads the honor
+    // if else statement to decide the decrement of the honor
+    app.put("/api/user/lose", (req,res) => {
+        db.User.findById({
+            _id: req.body._id
+        }).then(dbUser => {
+            if (dbUser.rank > 2) {
+                db.User.findByIdAndUpdate({
+                    _id: req.body._id
+                },{
+                    $inc: {rank: -2, losses: 1} 
+                }, {
+                    new: true
+                }).then(dbUser => {
+                    console.log("LOSE DB ENDPOINT", dbUser);
+                    res.json(dbUser);
+                }).catch(err => {
+                    res.status(500).send(err);
+                });
+            }
+            else if (dbUser.rank === 1) {
+                db.User.findByIdAndUpdate({
+                    _id: req.body._id
+                },{
+                    $inc: {rank: -1, losses: 1} 
+                }, {
+                    new: true
+                }).then(dbUser => {
+                    console.log("LOSE DB ENDPOINT", dbUser);
+                    res.json(dbUser);
+                }).catch(err => {
+                    res.status(500).send(err);
+                })
+            }
+            else if (dbUser.rank === 0) {
+                db.User.findByIdAndUpdate({
+                    _id: req.body._id
+                },{
+                    $inc: {losses: 1} 
+                }, {
+                    new: true
+                }).then(dbUser => {
+                    console.log("LOSE DB ENDPOINT", dbUser);
+                    res.json(dbUser);
+                }).catch(err => {
+                    res.status(500).send(err);
+                });
+            }
+        });
+        
+        // db.User.findByIdAndUpdate({
+        //     _id: req.body.id
+        // },{
+        //     $inc: {honor: -2, losses: 1} 
+        // }, {
+        //     new: true
+        // }).then(dbUser => {
+        //     console.log("LOSE DB ENDPOINT", dbUser);
+        // }).catch(err => {
+        //     res.status(500).send(err);
+        // })
     })
 
-    // ---------------------------------------------------------------------------------------
-    // TESTING FIND MATCH FUNCTIONALITY
+
     app.post("/api/findGame", (req,res) => {
-        console.log("DOES IT EVENT GET TO HERE??");
         db.Game.findOne({
             gameStatus: "waiting"
         }).then(dbGame => {
-            console.log("dbGame object received back from the find request", dbGame);
+            // console.log("dbGame object received back from the find request", dbGame);
             if (!dbGame) {
 
                 db.Game.create({
                     playerOne: req.body.player,
                     gameStatus: "waiting"
                 }).then(gameObj => {
-                    console.log("Game did NOT exist, created one here ----", gameObj);
-
-                    // return back to UI {gameId: 12344, gameStatus: "ready" or "waiting"}
+                    // console.log("Game did NOT exist, created one here ----", gameObj);
                     res.json(gameObj);
                 })
             }
             else {
-                console.log("Game exists, here it is --------", dbGame);
-                console.log("HEY YOU!  THIS IS THE REQ.BODY-------", req.body);
+                // console.log("Game exists, here it is --------", dbGame);
                 // res.json(dbGame);
                 db.Game.findByIdAndUpdate({
                     _id: dbGame._id
@@ -106,51 +183,7 @@ module.exports = function(app, passport) {
     });
 
 
-
-    // Perhaps how the game route should be done?? -------------------
-    // app.get("/api/findGame", (req,res) => {
-    //     db.Game.findOne({
-    //         playerOne: { $ne: null },
-    //         playerTwo: null
-    //     }).then(dbGame => {
-    //         console.log("GET REQUEST FOR FIND GAME--", dbGame);
-    //         res.json(dbGame);
-    //     }).catch(err => {
-    //         console.log("Something went wrong, Get request for find game", err);
-    //         res.status(500).send(err);
-    //     });
-    // });
-
-    // app.post("/api/findGame", (req, res) => {
-    //     db.Game.create(req.body
-    //     ).then(dbGame => {
-    //         console.log("CREATED A NEW GAME RECORD---", dbGame);
-    //         res.json(dbGame);
-    //     }).catch(err => {
-    //         console.log("Something went wrong, post request for find game", err);
-    //         res.status(500).send(err);
-    //     })
-    // });
-
-    // app.put("/api/findGame", (req, res) => {
-    //     db.Game.findOneAndUpdate({
-    //         gameStatus: "waiting"
-    //     },
-    //     req.body
-            
-    //     ).then(dbGame => {
-    //         console.log("UPDATE REQUEST FOR FIND GAME---", dbGame);
-    //         res.json(dbGame);
-    //     }).catch(err => {
-    //         console.log("Something went wrong, PUT request for find game", err);
-    //         res.status(500).send(err);
-    //     })
-    // })
-
-
-
-
-    // -------------------- TESTING TO FIND DB CARDS -----------------
+    // Getting Card data from the db
     app.get("/api/cards", (req, res) => {
         db.Card.find().then(cardData => {
             // console.log(cardData);

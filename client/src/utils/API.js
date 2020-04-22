@@ -11,6 +11,14 @@ export default {
         return axios.get("/api/user");
     },
 
+    userWin: function(userObj) {
+        return axios.put("/api/user/win", userObj);
+    },
+
+    userLose: function(userObj) {
+        return axios.put("/api/user/lose", userObj)
+    },
+
     // user should have friends array, cards array, and deck array
     // so .get to those routes will not be necessary
     getUser: function(userObj) {

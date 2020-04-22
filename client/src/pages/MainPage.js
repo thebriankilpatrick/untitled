@@ -17,6 +17,7 @@ class MainPage extends Component {
 
     state = {
         username: "",
+        userId: "",
         wins: "",
         losses: "",
         rank: "",
@@ -29,9 +30,10 @@ class MainPage extends Component {
         this.props.socket.emit("test");
         const user = sessionStorage.getItem("user");
         const userObj = JSON.parse(user);
-        // console.log("------------------------------------",userObj.friend);
+        // console.log("------------------------------------",userObj._id);
         this.setState({
             username: userObj.username,
+            userId: userObj._id,
             wins: userObj.wins,
             losses: userObj.losses,
             rank: userObj.rank,
@@ -108,6 +110,7 @@ class MainPage extends Component {
                             <GamePage 
                                 socket={this.props.socket}
                                 username={this.state.username}
+                                userId={this.state.userId}
                             />
                         </Route>
                     </Wrapper>
