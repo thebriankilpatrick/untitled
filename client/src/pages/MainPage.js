@@ -4,7 +4,7 @@ import Wrapper from "../components/Wrapper";
 import HomePage from "./HomePage";
 import CollectionPage from "./Collection";
 import GamePage from "./GamePage";
-import FriendsPage from "./FriendsPage";
+// import FriendsPage from "./FriendsPage";
 import Navbar from "../components/Navbar";
 import SideNav from "../components/SideNav";
 import API from "../utils/API";
@@ -26,6 +26,11 @@ class MainPage extends Component {
         // isLoggedIn: true
     }
 
+    // HEY YOUUUU-----------------------------------------------------------------------------------------------
+    // TODO: 
+    // You get the user object back from session storage.
+    // user is stored in session storage from logging in....
+    // Need to update the user in session storage after playing a match...
     componentDidMount = () => {
         this.props.socket.emit("test");
         const user = sessionStorage.getItem("user");
@@ -101,11 +106,11 @@ class MainPage extends Component {
                                 cards={this.state.cards}
                             />
                         </Route>
-                        <Route exact path="/friends">
+                        {/* <Route exact path="/friends">
                             <FriendsPage 
                                 socket={this.props.socket}
                             />
-                        </Route>
+                        </Route> */}
                         <Route exact path="/game">
                             <GamePage 
                                 socket={this.props.socket}

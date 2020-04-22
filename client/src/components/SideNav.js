@@ -27,8 +27,8 @@ function SideNav(props) {
                         <a className="brand-logo center">{props.username}</a>
                     </div>
                 </nav>
-                <li className="sideNavLink">Friends ({props.friends.length})</li>
-                <li className="sideNavLink">Messages</li>
+                {/* <li className="sideNavLink">Friends ({props.friends.length})</li>
+                <li className="sideNavLink">Messages</li> */}
             </ul>
         </div>
     )
