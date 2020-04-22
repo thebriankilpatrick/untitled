@@ -60,6 +60,19 @@ module.exports = function(app, passport) {
         })
     });
 
+    app.get("/api/findUser", (req, res) => {
+        console.log("HERE IS THE REQ YOU ARE PASSING TO ENDPOINT", req.user._id);
+        db.User.findById({
+            _id: req.user._id
+        }
+        ).then(dbUser => {
+            console.log("FIND USER END POINT", dbUser);
+            res.json(dbUser);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    });
+
     // --------------------------------- TESTING UPDATE USER END POINT --------
     app.put("/api/user/win", (req, res) => {
         console.log("HERE IS THE WIN DB ENDPOINT, AND THE REQ IS:", req.body);

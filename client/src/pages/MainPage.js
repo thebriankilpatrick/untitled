@@ -43,6 +43,18 @@ class MainPage extends Component {
             losses: userObj.losses,
             rank: userObj.rank,
             friends: userObj.friend
+        }, function() {
+            let obj = {
+                _id: this.state.userId
+            }
+            // let id = this.state.userId;
+            API.findUser(obj).then(res => {
+                this.setState({
+                    wins: res.data.wins,
+                    losses: res.data.losses,
+                    rank: res.data.rank
+                });
+            });
         });
         // console.log(this.state.friends);
         API.getCards().then(res => {
@@ -51,7 +63,33 @@ class MainPage extends Component {
         }).catch(err => {
             console.log(err);
         });
+
+        // let obj = {
+        //     _id: userObj._id
+        // }
+        // // let id = this.state.userId;
+        // API.findUser(obj).then(res => {
+        //     this.setState({
+        //         wins: res.data.wins,
+        //         losses: res.data.losses,
+        //         rank: res.data.rank
+        //     });
+        // });
     }
+
+    // componentDidUpdate = () => {
+    //     let obj = {
+    //         _id: this.state.userId
+    //     }
+    //     // let id = this.state.userId;
+    //     API.findUser(obj).then(res => {
+    //         this.setState({
+    //             wins: res.data.wins,
+    //             losses: res.data.losses,
+    //             rank: res.data.rank
+    //         });
+    //     });
+    // }
 
     findMatch = () => {
         // Button click works!--

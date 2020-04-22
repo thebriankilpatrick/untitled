@@ -19,6 +19,11 @@ export default {
         return axios.put("/api/user/lose", userObj)
     },
 
+    findUser: function(obj) {
+        console.log("AXIOS FIND USER GET", obj);
+        return axios.get("/api/findUser", obj);
+    },
+
     // user should have friends array, cards array, and deck array
     // so .get to those routes will not be necessary
     getUser: function(userObj) {
