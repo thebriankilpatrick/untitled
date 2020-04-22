@@ -69,6 +69,14 @@ body {
     /* top: 20px; */
 }
 
+.endOfGame {
+    margin-top: 200px;
+}
+
+.giveMeHeight {
+    min-height: 200px;
+}
+
 /* Loading Icon Animation */
 
 #loadingIconDiv {

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import BodyClassName from 'react-body-classname';
+import { Link } from "react-router-dom";
 import API from "../utils/API";
 import "./GamePage.css";
 
@@ -27,6 +28,11 @@ class GamePage extends Component {
         roundResultText: "",
         gameTextOne: "",
         gameTextTwo: "",
+        endTextOne: "",
+        endTextTwo: "",
+        receivedDmg: false,
+        dealtDmg: false,
+        lastRound: false,
 
         me: {
             pickedCard: {},
@@ -216,7 +222,9 @@ class GamePage extends Component {
 
                 if (this.state.me.health === 0) {
                     this.setState({
-                        roundResultText: "You Lost!  Better Luck Next Time!"  
+                        roundResultText: "You Lost!  Better Luck Next Time!",
+                        dealtDmg: false,
+                        receivedDmg: false  
                     }, function() {
                         this.storeBetweenText();
                     });
@@ -224,13 +232,19 @@ class GamePage extends Component {
                 }
                 else if (this.state.opponent.health === 0) {
                     this.setState({
-                        roundResultText: "You Won!  Clearly, Your Opponent Just Wasn't That Good."
+                        roundResultText: "You Won!  Clearly, Your Opponent Just Wasn't That Good.",
+                        dealtDmg: false,
+                        receivedDmg: false 
                     }, function() {
                         this.storeBetweenText();
                     });
                     this.startTimer("endTimer");
                 }
                 else {
+                    this.setState({
+                        dealtDmg: false,
+                        receivedDmg: false 
+                    })
                     this.startTimer("gameTimer");
                     this.storeGameText();
                 }
@@ -256,6 +270,8 @@ class GamePage extends Component {
             else if (this.state.timerName === "endTimer") {
                 this.setState({
                     gameStatus: "end"
+                }, function() {
+                    this.endOfGameText();
                 });
             }
         }
@@ -382,12 +398,13 @@ class GamePage extends Component {
             }
             this.setState({
                 opponent,
-                roundResultText: "You dealt " + roundResult + " damage to your opponent!"
+                roundResultText: "You dealt " + roundResult + " damage to your opponent!",
+                dealtDmg: true
             });
         }
         else if (myPower < opponentPower) {
             let roundResult = opponentPower - myPower;
-            console.log("Your opponent dealt ", roundResult, " damage to you");
+            // console.log("Your opponent dealt ", roundResult, " damage to you");
             let me = this.state.me;
             me.health -= roundResult;
             if (me.health < 0) {
@@ -397,7 +414,8 @@ class GamePage extends Component {
             // Set callback function to call timer function for "in between rounds" timer
             this.setState({
                 me,
-                roundResultText: "Your opponent dealt " + roundResult + " damage to you."
+                roundResultText: "Your opponent dealt " + roundResult + " damage to you.",
+                receivedDmg: true
             });
         }
         else if (myPower === opponentPower) {
@@ -405,6 +423,27 @@ class GamePage extends Component {
                 roundResultText: "The power of the cards were equal, no damage was dealt this round."
             });
         }
+
+        let myCards = this.state.myCards;
+        let index;
+        for (let i = 0; i < myCards.length; i++) {
+            if (this.state.userClicked === myCards[i].title) {
+                // myCards.splice(i);
+                index = i;
+                console.log("Here is the index of your splice----", i);
+            }
+        }
+        myCards.splice(index, 1);
+        this.setState({
+            myCards
+        });
+
+        let opponentCards = this.state.opponentCards;
+        let opponentIndex = this.state.opponent.pickedCard.index
+        opponentCards.splice(opponentIndex, 1);
+        this.setState({
+            opponentCards
+        });
 
         let opponent = this.state.opponent;
         opponent.pickedCard = {
@@ -436,6 +475,9 @@ class GamePage extends Component {
         else {
             // Handle end of game logic
             if (this.state.round === 4) {
+                this.setState({
+                    lastRound: true
+                });
                 if (this.state.me.health < this.state.opponent.health) {
                     console.log("I lost!");
                     this.setState({
@@ -481,6 +523,9 @@ class GamePage extends Component {
         if (this.state.me.health === 0 || this.state.opponent.health === 0) {
             textTwo = "Redirecting in "
         }
+        else if (this.state.lastRound === true) {
+            textTwo = "Redirecting in "
+        }
         else {
             textTwo = "Round " + this.state.round + " begins in ";
         }
@@ -491,6 +536,32 @@ class GamePage extends Component {
         }, function() {
             console.log(this.state.gameTextOne);
         });
+    }
+
+    endOfGameText = () => {
+        let win = "Congratulations!  You Won!"
+        let ifWin = "You have been awarded 5 honor"
+
+        let lose = "BOOOOOOO, You lost!"
+        let ifLose = "You have lost 2 honor"
+
+        // How to handle if opponent's page unmounts?
+        // Also, it will set forfeit if the opponent does not pick a card within round time
+        // let forfeit = "Your opponent wussied out!  So, I suppose you won."
+
+        if (this.state.me.health < this.state.opponent.health) {
+            // set state for post game text
+            this.setState({
+                endTextOne: lose,
+                endTextTwo: ifLose
+            });
+        }
+        else {
+           this.setState({
+               endTextOne: win,
+               endTextTwo: ifWin
+           }); 
+        }
     }
     
 
@@ -549,13 +620,17 @@ class GamePage extends Component {
                         })}
                     </div>
 
-                    <div className="row font">
+                    <div className="row font giveMeHeight valign-wrapper">
                         <div className="col s4 m4 l4">
                             <p>{this.state.opponent.username}</p>
                             <p>health: {this.state.opponent.health}</p>
                         </div>
                         <div className="col s4 m4 l4 center-align">
-                            <p>{this.state.gameTextOne}</p>
+                            <p
+                                // style={ this.state.receivedDmg ? { color: "red" } : {} }
+                                // style={ this.state.dealtDmg ? { color: "green" } : {} }
+                                style={ this.state.receivedDmg ? { color: "red" } : this.state.dealtDmg ? { color: "green" } : {} }
+                            >{this.state.gameTextOne}</p>
                             <p>{this.state.gameTextTwo} {this.state.timerCount}</p>
                         </div>
                         <div className="col s4 m4 l4 right-align">
@@ -593,76 +668,15 @@ class GamePage extends Component {
             return (
                 <>
                     <BodyClassName className="gamePagePic"></BodyClassName>
-                    <div className="container">
-                        <h5 className="font">Game Ended...
-                        Put if statements inside of this return, to return results from the ended game.</h5>
+                    <div className="container center-align endOfGame">
+                        <h5 className="font">{this.state.endTextOne}</h5>
+                        <h5 className="font">{this.state.endTextTwo}</h5>
+                        <Link to="/home" className="waves-effect waves-light btn-large" id="homePlayBtn">HOME</Link>
                     </div>
                 </>
             )
         }
 
-
-        // This is original test render
-        // return (
-        //     <>
-
-        //         <div className="row" id="cardContainer">
-
-        //             {this.state.playerOneCards.map((card, index) => {
-        //                 return (
-        //                     <div className="col s3 m3 l3 xl3 cardSelectTop" key={index}>
-        //                         <div className="card borderHover"
-        //                             onClick={this.playerOneClick}
-        //                             style={ this.state.playerOneClicked === card.title ? { top: "20px" } : {} }
-        //                         >
-        //                             <div className="card-image">
-        //                                 <img className="cardImg" src={card.img} 
-        //                                     alt={card.title} 
-        //                                     data-power={card.power} 
-        //                                     id={card.title}
-        //                                 />
-        //                             </div>
-        //                         </div>
-        //                     </div>
-        //                 )
-        //             })}
-
-        //         </div>
-
-        //         <div className="row">
-        //             <div className="col s4 m4 l4">Player One</div>
-        //             <div className="col s4 m4 l4 center-align">
-        //                 <p>Round: {this.state.round} Choose a card.</p>
-        //                 <p>Time Remaining: {this.state.timer}</p>
-        //             </div>
-        //             <div className="col s4 m4 l4 right-align">Player Two</div>
-        //         </div>
-
-        //         <div className="row" id="cardContainer">
-
-        //             {this.state.playerTwoCards.map((card, index) => {
-        //                 return (
-        //                     <div className="col s3 m3 l3 xl3 cardSelectBot" key={index}>
-        //                         <div className="card borderHover"
-        //                                 onClick={this.playerTwoClick}
-        //                                 style={ this.state.playerTwoClicked === card.title ? { top: "-20px" } : {} }
-        //                             >
-        //                             <div className="card-image" id={card.title}>
-        //                                 <img className="cardImg" 
-        //                                     src={card.img} 
-        //                                     alt={card.title} 
-        //                                     data-power={card.power}
-        //                                     id={card.title}
-        //                                 />
-        //                             </div>
-        //                         </div>
-        //                     </div>
-        //                 )
-        //             })}
-
-        //         </div>
-        //     </>
-        // )
     }
 
 }
