@@ -11,6 +11,12 @@ import API from "../utils/API";
 // import Landing from "./Landing";
 import "./MainPage.css";
 
+
+// HEY YOUUUUU -------------------------------------------------------------------
+// TODO:
+// HOW DO I WANT TO STYLE THIS PAGE???????
+// SPECIFICALLY THE HOMEPAGE
+// ALSO NEED TO FIGURE OUT WHAT TO DO WITH SIDENAV...
 class MainPage extends Component {
 
     state = {

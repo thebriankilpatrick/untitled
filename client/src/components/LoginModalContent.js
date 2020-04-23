@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import API from "../utils/API";
 
 
@@ -65,7 +65,8 @@ class LoginModalContent extends Component {
                                 <label htmlFor="password">Password</label>
                             </div>
                             <div className="center-align">
-                                <a onClick={this.loginUser} className="modal-close waves-effect waves-light btn btnStyle mdlBtn">Login</a> 
+                                <a onClick={this.loginUser} className="modal-close waves-effect waves-light btn btnStyle mdlBtn">Login</a>
+                                <Link to="/register"><p onClick={this.props.handleRegisterClick} className="modalText">Don't have an account? Click here to register!</p></Link>
                             </div>   
                         </div>
                     </form>

@@ -1,9 +1,22 @@
 body {
   overflow: none !important;
+  background-color: rgb(38, 39, 43);
+}
+
+.textColor {
+  color: rgb(221, 220, 220);
+}
+
+#sideNavColor {
+  background-color: rgb(38, 39, 43);
 }
 
 #nav-mobile {
-  font-family: 'Righteous', cursive;
+  font-family: 'Righteous', cursive !important;
+}
+
+.brand-logo {
+  font-family: 'Righteous', cursive !important;
 }
 
 .sideNavLink {

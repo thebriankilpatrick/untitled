@@ -2,8 +2,8 @@ import React from "react";
 
 function HowToPlayText() {
     return (
-        <div className="container">
-            <p>
+        <div className="container customFont textColor">
+            <p className="howToPlayTitle">
                How to Play Super Smash Kittens:
             </p>
             <p>

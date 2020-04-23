@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import API from "../utils/API";
 
 
@@ -102,6 +102,7 @@ class RegisterModalContent extends Component {
                         </div>
                         <div className="center-align">
                             <a onClick={this.registerNewUser} className="modal-close waves-effect waves-light btn btnStyle mdlBtn">Register</a>
+                            <Link to="/login"><p onClick={this.props.handleLoginClick} className="modalText">Already have an account?  Login here!</p></Link>
                         </div>
                     </div>
                 </form>

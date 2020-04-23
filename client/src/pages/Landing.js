@@ -10,7 +10,9 @@ import "./Landing.css";
 class Landing extends Component {
 
     state = {
-        redirect: ""
+        redirect: "",
+        loginLink: true,
+        registerLink: false
     }
 
 
@@ -26,6 +28,20 @@ class Landing extends Component {
         this.setState({
             redirect: "/home"
         })
+    }
+
+    handleLoginClick = () => {
+        this.setState({
+            loginLink: true,
+            registerLink: false
+        });
+    }
+
+    handleRegisterClick = () => {
+        this.setState({
+            registerLink: true,
+            loginLink: false
+        });
     }
 
 
@@ -47,22 +63,27 @@ class Landing extends Component {
                 <div >
                     <BodyClassName className="landingPagePic"></BodyClassName>
                     <div className="container" id="initPlayBtn">
-                        <a className="waves-effect waves-light btn-large modal-trigger btnStyle" data-target="modal1" href="#modal1">PLAY GAME</a>
+                        <a className="waves-effect waves-light btn-large modal-trigger btnStyle" id="playBtnStyle" data-target="modal1" href="#modal1">PLAY GAME</a>
                     </div>
 
                     <div id="modal1" className="modal">
                         <div className="row align-center">
                             <div className="col l6 m6 s6">
-                                <Link to="/login"><h4 className="modalBtn center-align">Login</h4></Link>
+                                <Link to="/login"><h4 className="modalBtn center-align"
+                                    style={ this.state.loginLink ? { "backgroundColor": "rgb(102, 102, 102)" } : {} }
+                                    onClick={this.handleLoginClick}>Login</h4></Link>
                             </div>
                             <div className="col l6 m6 s6">
-                                <Link to="/register"><h4 className="modalBtn center-align">Register</h4></Link>
+                                <Link to="/register"><h4 className="modalBtn center-align" 
+                                    style={ this.state.registerLink ? { "backgroundColor": "rgb(102, 102, 102)" } : {} }
+                                    onClick={this.handleRegisterClick}>Register</h4></Link>
                             </div>
                         </div>
                         <Route exact path="/">
-                            <RegisterModalContent 
+                            <LoginModalContent  
                                 login={this.props.login}
                                 redirect={this.redirect}
+                                handleRegisterClick={this.handleRegisterClick}
                                 // isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>
@@ -70,6 +91,7 @@ class Landing extends Component {
                             <RegisterModalContent 
                                 login={this.props.login}
                                 redirect={this.redirect}
+                                handleLoginClick={this.handleLoginClick}
                                 // isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>
@@ -77,6 +99,7 @@ class Landing extends Component {
                             <LoginModalContent 
                                 login={this.props.login}
                                 redirect={this.redirect}
+                                handleRegisterClick={this.handleRegisterClick}
                                 // isLoggedIn={this.props.isLoggedIn}
                             />
                         </Route>

@@ -28,7 +28,7 @@ class HomePlayBtn extends Component {
 
     render() {
         return (
-            <div className="container" id="homePlayBtnContainer">
+            <div className="container textColor" id="homePlayBtnContainer">
                 <div className="row">
                     <div className="col l4 m4 s4 customFont">
                         <h5>{this.props.username}</h5>

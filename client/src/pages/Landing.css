@@ -19,6 +19,11 @@ body {
     font-family: 'Righteous', cursive;
 }
 
+#playBtnStyle {
+    background-image: linear-gradient( #036ea3, rgb(95, 49, 170));
+    border-radius: 6px;
+}
+
 .modal {
     opacity: .9 !important;
     background-color: rgb(66, 66, 66);
@@ -37,7 +42,18 @@ input:-internal-autofill-selected {
 }
 
 .modalBtn {
-    font-family: 'Righteous', cursive;
+    margin-top: 10px !important;
+    font-family: 'Bangers', cursive;
+    font-size: 40px;
+}
+
+.modalBtn:hover {
+    transition: .5s;
+    color: #036596;
+}
+
+.btnActive {
+    background-color: rgb(102, 102, 102);
 }
 
 .inputLoginRegister {
@@ -48,6 +64,14 @@ input:-internal-autofill-selected {
 
 .btnStyle {
     background-color: #039be5;
+    font-family: 'Bangers', cursive;
+    font-size: 23px;
+}
+
+.btnStyle:hover {
+    transition: .5s;
+    background-color: #036596;
+    letter-spacing: 2px;
 }
 
 .btnStyle:hover {
@@ -55,6 +79,7 @@ input:-internal-autofill-selected {
 }
 
 .mdlBtn {
+    margin-top: 20px;
     width: 50%;
 }
 
@@ -63,6 +88,16 @@ input:-internal-autofill-selected {
     background-color: #036596;
     width: 60%;
     letter-spacing: 2px;
+}
+
+.modalText {
+    color: rgb(219, 218, 218);
+}
+
+.modalText:hover {
+    cursor: pointer;
+    transition: .5s;
+    color: #0382c2;
 }
 
 @media only screen and (min-width: 768px) {
