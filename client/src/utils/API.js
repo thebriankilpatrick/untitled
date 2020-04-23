@@ -32,6 +32,12 @@ export default {
         return axios.post("/login", userObj);
     },
 
+    getUpdatedUser: function(obj) {
+        console.log("LOOK FOR THIS ONE..............", obj);
+
+        return axios.get("/api/updatedUser", obj);
+    },
+
     // .get to grab all cards from db
     // I think I'll need this... ?
     getCards: function() {

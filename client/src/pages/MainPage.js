@@ -65,19 +65,13 @@ class MainPage extends Component {
         });
     }
 
-    // componentDidUpdate = () => {
-    //     let obj = {
-    //         _id: this.state.userId
-    //     }
-    //     // let id = this.state.userId;
-    //     API.findUser(obj).then(res => {
-    //         this.setState({
-    //             wins: res.data.wins,
-    //             losses: res.data.losses,
-    //             rank: res.data.rank
-    //         });
-    //     });
-    // }
+    componentWillUpdate = (newProps, newState) => {
+        console.log(newProps, newState);
+    }
+
+    componentDidUpdate = () => {
+        console.log("Component has been updated");
+    }
 
     findMatch = () => {
         // Button click works!--

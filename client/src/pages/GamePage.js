@@ -137,6 +137,13 @@ class GamePage extends Component {
 
     componentWillUnmount = () => {
         // Need to handle logic for if a user closes or refreshes the page..
+        this.props.socket.emit("leave game", {gameId: this.state.gameId});
+
+        let me = this.state.me;
+        me.health = 0;
+        this.setState({
+            me
+        });
     }
 
     // This is where the timer name in state is being set
@@ -197,7 +204,7 @@ class GamePage extends Component {
                     this.setState({
                         roundResultText: "You Lost!  Better Luck Next Time!",
                         dealtDmg: false,
-                        receivedDmg: false  
+                        receivedDmg: true  
                     }, function() {
                         this.storeBetweenText();
                     });
@@ -206,9 +213,11 @@ class GamePage extends Component {
                 else if (this.state.opponent.health === 0) {
                     this.setState({
                         roundResultText: "You Won!  Clearly, Your Opponent Just Wasn't That Good.",
-                        dealtDmg: false,
+                        dealtDmg: true,
                         receivedDmg: false 
                     }, function() {
+                        console.log("Received damage?", this.state.receivedDmg);
+                        console.log("Or dealt damage??", this.state.dealtDmg);
                         this.storeBetweenText();
                     });
                     this.startTimer("endTimer");
@@ -376,7 +385,8 @@ class GamePage extends Component {
             this.setState({
                 opponent,
                 roundResultText: "You dealt " + roundResult + " damage to your opponent!",
-                dealtDmg: true
+                dealtDmg: true,
+                receivedDmg: false
             });
         }
         else if (myPower < opponentPower) {
@@ -392,7 +402,8 @@ class GamePage extends Component {
             this.setState({
                 me,
                 roundResultText: "Your opponent dealt " + roundResult + " damage to you.",
-                receivedDmg: true
+                receivedDmg: true,
+                dealtDmg: false
             });
         }
         else if (myPower === opponentPower) {
@@ -457,18 +468,24 @@ class GamePage extends Component {
                 });
                 if (this.state.userForfeit) {
                     this.setState({
-                        roundResultText: "You didn't pick a card!  Wake up next time!"
+                        roundResultText: "You didn't pick a card!  Wake up next time!",
+                        receivedDmg: true,
+                        dealtDmg: false
                     });
                 }
                 else if (this.state.opponentForfeit) {
                     this.setState({
-                        roundResultText: "Your opponent fell asleep, and didn't pick a card!"
+                        roundResultText: "Your opponent fell asleep, and didn't pick a card!",
+                        dealtDmg: true,
+                        receivedDmg: false
                     });
                 }
                 else if (this.state.me.health < this.state.opponent.health) {
                     // console.log("I lost!");
                     this.setState({
-                        roundResultText: "You Lost!  Better Luck Next Time!"  
+                        roundResultText: "You Lost!  Better Luck Next Time!",
+                        receivedDmg: true,
+                        dealtDmg: false
                     }, function() {
                         this.storeBetweenText();
                     });
@@ -477,7 +494,9 @@ class GamePage extends Component {
                 else if (this.state.me.health > this.state.opponent.health) {
                     // console.log("I won!");
                     this.setState({
-                        roundResultText: "You Won!  Clearly, Your Opponent Just Wasn't That Good."
+                        roundResultText: "You Won!  Clearly, Your Opponent Just Wasn't That Good.",
+                        dealtDmg: true,
+                        receivedDmg: false
                     }, function() {
                         this.storeBetweenText();
                     });
@@ -498,7 +517,9 @@ class GamePage extends Component {
             me.health = 0;
             this.setState({
                 me,
-                roundResultText: "You didn't pick a card!  Wake up next time!"
+                roundResultText: "You didn't pick a card!  Wake up next time!",
+                receivedDmg: true,
+                dealtDmg: false
             });
         }
         else if (this.state.opponentClicked === "") {
@@ -509,7 +530,9 @@ class GamePage extends Component {
             opponent.health = 0;
             this.setState({
                 opponent,
-                roundResultText: "Your opponent fell asleep, and didn't pick a card!"
+                roundResultText: "Your opponent fell asleep, and didn't pick a card!",
+                dealtDmg: true,
+                receivedDmg: false
             });
         }
     }

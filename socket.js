@@ -32,7 +32,7 @@ module.exports = function(server) {
         //when user leaves direct chat, leave socket chat room
         socket.on("leave game", function(data){
             if(data.gameId){
-                console.log("SOCKET FILE - Left game", data.gameId, data.gameStatus);
+                console.log("SOCKET FILE - Left game", data.gameId);
                 socket.leave(data.gameId);
             }
         })
