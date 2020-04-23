@@ -109,6 +109,7 @@ class MainPage extends Component {
                                 rank={this.state.rank}
                                 findMatch={this.findMatch}
                                 socket={this.props.socket}
+                                userId={this.state.userId}
                             />
                         </Route>
                         <Route exact path="/home">
@@ -119,6 +120,7 @@ class MainPage extends Component {
                                 rank={this.state.rank}
                                 findMatch={this.findMatch}
                                 socket={this.props.socket}
+                                userId={this.state.userId}
                             />
                         </Route>
                         <Route exact path="/collection">

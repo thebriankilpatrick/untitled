@@ -22,7 +22,6 @@ body {
 .modal {
     opacity: .9 !important;
     background-color: rgb(66, 66, 66);
-    width: 40%;
 }
 
 #lessMargin {
@@ -64,4 +63,16 @@ input:-internal-autofill-selected {
     background-color: #036596;
     width: 60%;
     letter-spacing: 2px;
+}
+
+@media only screen and (min-width: 768px) {
+    .modal {
+        width: 60%;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .modal {
+        width: 50%;
+    }
 }

@@ -6,6 +6,8 @@ import "./HomePage.css";
 
 function HomePage(props) {
 
+    console.log("Here is the userId from the home page....", props.userId);
+
     return (
         <>
             <HomePlayBtn 
@@ -14,6 +16,7 @@ function HomePage(props) {
                 losses={props.losses}
                 rank={props.rank}
                 findMatch={props.findMatch}
+                userId={props.userId}
             />
             <HowToPlayText ></HowToPlayText>
             <Leaderboard ></Leaderboard>

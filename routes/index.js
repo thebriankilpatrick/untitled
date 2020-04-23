@@ -43,7 +43,7 @@ module.exports = function(app, passport) {
     app.post("/api/user", (req, res) => {
         console.log("Hitting the route POST /api/user")
         db.User.create(req.body).then(dbUser => {
-            console.log(dbUser)
+            // console.log(dbUser)
             res.json(dbUser);
         }).catch(err => {
             console.log(err);
@@ -53,7 +53,7 @@ module.exports = function(app, passport) {
 
     app.get("/api/user", (req, res) => {
         db.User.find().then(dbUsers => {
-            console.log(dbUsers);
+            // console.log(dbUsers);
             res.json(dbUsers);
         }).catch(err => {
             res.status(500).send(err);
@@ -73,18 +73,18 @@ module.exports = function(app, passport) {
         });
     });
 
-    // app.get("/api/updatedUser", (req, res) => {
-    //     console.log("LOOK FOR MEEEEE+++++++++++++++++++++++++", req);
-    //     db.User.findById({
-    //         _id: req.user._id
-    //     }
-    //     ).then(dbUser => {
-    //         console.log("FIND USER END POINT", dbUser);
-    //         res.json(dbUser);
-    //     }).catch(err => {
-    //         res.status(500).send(err);
-    //     });
-    // });
+    app.get("/api/updatedUser", (req, res) => {
+        console.log("LOOK FOR MEEEEE+++++++++++++++++++++++++", req.user);
+        db.User.findById({
+            _id: req.user._id
+        }
+        ).then(dbUser => {
+            console.log("FIND USER END POINT", dbUser);
+            res.json(dbUser);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    });
 
     // --------------------------------- TESTING UPDATE USER END POINT --------
     app.put("/api/user/win", (req, res) => {
