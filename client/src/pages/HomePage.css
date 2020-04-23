@@ -24,3 +24,22 @@
 .customFont {
     font-family: 'Righteous', cursive;
 }
+
+@media only screen and (max-width: 620px) {
+    #homePlayBtn {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 548px) {
+    #homePlayBtn {
+        font-size: 18px;
+    }
+}
+
+@media only screen and (max-width: 515px) {
+    #homePlayBtn {
+        font-size: 15px;
+        padding: 0 10px;
+    }
+}

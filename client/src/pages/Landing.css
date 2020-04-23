@@ -20,8 +20,12 @@ body {
 }
 
 #playBtnStyle {
-    background-image: linear-gradient( #036ea3, rgb(95, 49, 170));
+    background-image: linear-gradient( #036ea3, rgb(122, 49, 170));
     border-radius: 6px;
+}
+
+#playBtnStyle:hover {
+    background-image: linear-gradient( #025e8b, rgb(82, 40, 150));
 }
 
 .modal {

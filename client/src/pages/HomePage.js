@@ -18,8 +18,14 @@ function HomePage(props) {
                 findMatch={props.findMatch}
                 userId={props.userId}
             />
-            <HowToPlayText ></HowToPlayText>
-            <Leaderboard ></Leaderboard>
+            <div className="row">
+                <div className="col s12 m6 l12">
+                    <HowToPlayText ></HowToPlayText>
+                </div>
+                <div className="col s12 m6 l12">
+                    <Leaderboard ></Leaderboard>
+                </div>
+            </div>
         </>
     )
 }
