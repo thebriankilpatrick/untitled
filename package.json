@@ -10,7 +10,7 @@
     "client": "cd client && npm run start",
     "seed": "node scripts/cardSeed.js",
     "install": "cd client && npm install",
-    "build": "cd client && npm run build",
+    "build": "cd client && npm run build && npm run seed",
     "heroku-postbuild": "npm run build"
   },
   "author": "",
