@@ -1,3 +1,7 @@
+body {
+  overflow: none !important;
+}
+
 #nav-mobile {
   font-family: 'Righteous', cursive;
 }

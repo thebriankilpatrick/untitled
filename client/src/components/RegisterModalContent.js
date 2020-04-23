@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import API from "../utils/API";
 
 
-// Register button should link to MainPage
 class RegisterModalContent extends Component {
 
     state = {
@@ -69,10 +68,10 @@ class RegisterModalContent extends Component {
         return (
         <>
             <div className="modal-content">
-                <h4 className="modalHeader" >Register</h4>
+                {/* <h4 className="modalHeader center-align" >Register</h4> */}
                 <form>
                     <div className="row">
-                        <div className="input-field col s12">
+                        <div className="input-field col s12" id="lessMargin">
                             <input id="email" type="email" className="validate inputLoginRegister" 
                                 name="email" 
                                 value={this.state.email}
@@ -81,14 +80,14 @@ class RegisterModalContent extends Component {
                             <label htmlFor="email">Email</label>
                             <span className="helper-text" data-error="please input an actual email" data-success=""></span>
                         </div>
-                        <div className="input-field col s12">
+                        {/* <div className="input-field col s12">
                             <input id="birthday" type="text" className="validate inputLoginRegister" 
                                 name="birthday" 
                                 value={this.state.birthday}
                                 onChange={this.handleChange}
                                 />
                             <label htmlFor="birthday">Birthday</label>
-                        </div>
+                        </div> */}
                         <div className="input-field col s12">
                             <input id="username" type="text" className="validate inputLoginRegister" 
                                 name="username" 
@@ -105,7 +104,9 @@ class RegisterModalContent extends Component {
                                 />
                             <label htmlFor="password">Password</label>
                         </div>
-                        <a onClick={this.registerNewUser} className="waves-effect waves-light btn btnStyle">Register</a>
+                        <div className="center-align">
+                            <a onClick={this.registerNewUser} className="modal-close waves-effect waves-light btn btnStyle mdlBtn">Register</a>
+                        </div>
                     </div>
                 </form>
             </div>

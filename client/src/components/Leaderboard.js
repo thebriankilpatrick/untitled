@@ -14,7 +14,6 @@ class Leaderboard extends Component {
             }, function() {
                 this.state.users.sort((a, b) => (a.rank < b.rank) ? 1 : -1);
             });
-            // this.state.users.sort((a, b) => (a.rank < b.rank) ? 1 : -1);
         }).catch(err => {
             console.log(err);
         })
@@ -33,7 +32,7 @@ class Leaderboard extends Component {
                     </thead>
 
                     <tbody>
-                        {this.state.users.map((user, index) => {
+                        {this.state.users.slice(0, 5).map((user, index) => {
                             return (
                             <tr key={index}>
                                 <td>{index + 1}</td>

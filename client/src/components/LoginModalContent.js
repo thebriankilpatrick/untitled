@@ -45,7 +45,7 @@ class LoginModalContent extends Component {
         return (
             <>
                 <div className="modal-content">
-                    <h4 className="modalHeader">Login</h4>
+                    {/* <h4 className="modalHeader center-align">Login</h4> */}
                     <form>
                         <div className="row">
                             <div className="input-field col s12">
@@ -65,7 +65,9 @@ class LoginModalContent extends Component {
                                 />
                                 <label htmlFor="password">Password</label>
                             </div>
-                            <a onClick={this.loginUser} className="modal-close waves-effect waves-light btn btnStyle">Login</a>    
+                            <div className="center-align">
+                                <a onClick={this.loginUser} className="modal-close waves-effect waves-light btn btnStyle mdlBtn">Login</a> 
+                            </div>   
                         </div>
                     </form>
                 </div>

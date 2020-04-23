@@ -22,6 +22,11 @@ body {
 .modal {
     opacity: .9 !important;
     background-color: rgb(66, 66, 66);
+    width: 40%;
+}
+
+#lessMargin {
+    margin-bottom: 2px;
 }
 
 input:-internal-autofill-selected {
@@ -30,8 +35,6 @@ input:-internal-autofill-selected {
 
 .modalHeader {
     font-family: 'Righteous', cursive;
-    position: relative;
-    left: 7px !important;
 }
 
 .modalBtn {
@@ -50,4 +53,15 @@ input:-internal-autofill-selected {
 
 .btnStyle:hover {
     background-color: #0382c2;
+}
+
+.mdlBtn {
+    width: 50%;
+}
+
+.mdlBtn:hover {
+    transition: .5s;
+    background-color: #036596;
+    width: 60%;
+    letter-spacing: 2px;
 }

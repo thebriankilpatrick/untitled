@@ -1,3 +1,7 @@
+body {
+    overflow: none !important;
+}
+
 .landingPagePic {
     background-image: url(./assets/images/backgroundImg.png);
     height: 100%; 
@@ -5,3 +9,4 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+
