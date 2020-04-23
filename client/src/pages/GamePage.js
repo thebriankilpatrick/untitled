@@ -46,8 +46,6 @@ class GamePage extends Component {
         }
     }
 
-    // CREATE USER OBJECT, AND THEN STORE IN THE STATE!!
-
     componentDidMount = () => {
         // console.log("MY ID IS............", this.props.userId);
         this.setState({
@@ -60,7 +58,6 @@ class GamePage extends Component {
         }
 
         this.props.socket.on("startGame", (data) => {
-            // data from socket only contains gameId and gameStatus
             // console.log("THIS IS THE DATA COMING BACK FROM SOCKET.IO -----------", data)
 
             let opponent = this.state.opponent;
@@ -76,9 +73,6 @@ class GamePage extends Component {
             this.startTimer("preGameTimer");
         });
 
-        // This grabs the index of the card the opponent clicked on...
-        // Need to find a way to display to the other user's UI
-
         this.props.socket.on("opponent pick", (data) => {
             let opponent = this.state.opponent;
             // let opponentClicked = this.state.opponentCards[data.index].title;
@@ -93,12 +87,9 @@ class GamePage extends Component {
 
             if (this.state.userClicked !== "") {
                 // If user has picked card already, by the time he/she got data back from opponent's card click,
-                // then run function for comparing cards...
                 this.compareCards();
             }
-            // console.log(this.state.opponent.pickedCard.index);
-            // console.log(this.state.opponentClicked);
-            // console.log(this.state.opponentCards);
+
         });
 
         console.log(this.state.gameStatus);
@@ -136,7 +127,7 @@ class GamePage extends Component {
     }
 
     componentWillUnmount = () => {
-        // Need to handle logic for if a user closes or refreshes the page..
+
         this.props.socket.emit("leave game", {gameId: this.state.gameId});
 
         let me = this.state.me;
@@ -174,23 +165,16 @@ class GamePage extends Component {
             });
         }
         this.setState({timer: setInterval(this.countDown, 1000)});
-        // The function will need to be called with each round, so the time resets
-        // After each player has chosen, the timer stops, and the battle logic commences.
-        // Then, at the start of the next round, the timer is reset and starts back up.
 
-        // Note, if a player does not pick a card within the allotted time, 
-        // that player forefeits the match.
     }
     
     countDown = (test) => {
-        // console.log("TIMER NAME:", this.state.timerName);
-        // console.log("TIMER", test);
-        // console.log("OPPONENT USERNAME-----------------------", this.state.opponent.username);
+
         let time = this.state.timerCount - 1;
 
         if (time === -1) { 
             clearInterval(this.state.timer);
-            // REMEMBER TO ADD ALL OTHER LOGIC FOR DIFFERENT TIMER NAMES
+
             if (this.state.timerName === "preGameTimer") {
                 this.setState({
                     gameStatus: "start"
@@ -232,8 +216,7 @@ class GamePage extends Component {
                 }
             }
             else if (this.state.timerName === "gameTimer") {
-                // What to do here?
-                // Handle comparing of cards here...
+
                 if (this.state.userClicked === "" || this.state.opponentClicked === "") {
                     this.playerForfeit();
                 }
@@ -248,7 +231,7 @@ class GamePage extends Component {
                     this.storeBetweenText();
                 }
                 else {
-                    // Handle end of game logic
+
                     this.startTimer("endTimer");
                     this.storeBetweenText();
                 }
@@ -268,13 +251,6 @@ class GamePage extends Component {
         }
       }
 
-
-    // FUNCTION "DRAWS" FOUR RANDOM CARDS FOR PLAYER ONE AND PLAYER TWO
-    // AND SETS THOSE EQUAL TO THE CORRESPONDING STATE
-
-    // NOTE --------------------
-    // HOW WILL THE LOGIC BE HANDLED FOR ACTUALLY DRAWING THE CARDS???
-    // WILL THE FUNCTION BE RAN ONCE, AND BOTH USER'S WEB PAGES CALL IT?
     drawCards = () => {
 
         const results = this.state.cards
@@ -295,7 +271,7 @@ class GamePage extends Component {
         let opponentCards = this.state.opponentCards;
 
         for (let i = 0; i < 4; i++) {
-            // opponentCards.push("/assets/images/opponentCardBack.jpg")
+
             let card = {
                 title: i,
                 img: "/assets/images/opponentCardBack.jpg"
@@ -315,7 +291,6 @@ class GamePage extends Component {
 
     userClick = (event) => {
         // Stops the user from clicking a different card, after a card has been chosen
-        // Remember to re set the state to ""
         if (this.state.userClicked !== "") {
             // console.log("User Clicked DOES NOT EQUAL empty string", this.state.userClicked);
             return;
@@ -354,17 +329,10 @@ class GamePage extends Component {
                 });
             }
         }
-        // if (this.state.opponent.pickedCard.index !== "") {
-        //     // If you have received back from socket that the opponent has picked a card
-        //     // then run function to compare cards...
-        //     this.compareCards();
-        // }
     }
 
     // Game function for comparing cards in between rounds..
     compareCards = () => {
-        // let userPower;
-        // console.log("Compare Cards function called! yay........");
 
         // console.log("The power of your clicked card is: ..........", this.state.userPower);
         if (this.state.userClicked === "") {
@@ -398,7 +366,6 @@ class GamePage extends Component {
                 me.health = 0;
             }
 
-            // Set callback function to call timer function for "in between rounds" timer
             this.setState({
                 me,
                 roundResultText: "Your opponent dealt " + roundResult + " damage to you.",
@@ -416,7 +383,6 @@ class GamePage extends Component {
         let index;
         for (let i = 0; i < myCards.length; i++) {
             if (this.state.userClicked === myCards[i].title) {
-                // myCards.splice(i);
                 index = i;
                 // console.log("Here is the index of your splice----", i);
             }
@@ -443,11 +409,6 @@ class GamePage extends Component {
             opponent
         });
 
-        // HEEEEEY YOU!!! -----------------------------------------------------------------------------
-        // TODO:  Handle the end of game logic! 
-        // How do I want to display and handle it??
-        // Also, todo: to not allow to be picked, and style, cards that have already been played...
-        // How do I do that??
         clearInterval(this.state.timer);
         if (this.state.round < 4) {
             let round = this.state.round;
@@ -458,10 +419,8 @@ class GamePage extends Component {
                 this.storeBetweenText();
             });
             this.startTimer("betweenRoundTimer");
-            // this.storeBetweenText();
         }
         else {
-            // Handle end of game logic
             if (this.state.round === 4) {
                 this.setState({
                     lastRound: true
@@ -552,10 +511,6 @@ class GamePage extends Component {
         let textTwo;
 
         textOne = this.state.roundResultText;
-        // textTwo = "Round " + this.state.round + " begins in ";
-
-        // textOne = this.state.roundResultText;
-        // textTwo = "Round " + this.state.round + " begins in ";
 
         if (this.state.me.health === 0 || this.state.opponent.health === 0) {
             textTwo = "Redirecting in "
@@ -580,12 +535,9 @@ class GamePage extends Component {
         let lose = "BOOOOOOO, You lost!"
         let ifLose = "You have lost 2 honor"
 
-        // How to handle if opponent's page unmounts?
-        // Also, it will set forfeit if the opponent does not pick a card within round time
-        // let forfeit = "Your opponent wussied out!  So, I suppose you won."
 
         if (this.state.me.health < this.state.opponent.health) {
-            // set state for post game text
+
             this.setState({
                 endTextOne: lose,
                 endTextTwo: ifLose
@@ -605,17 +557,17 @@ class GamePage extends Component {
         let userObj = {
             _id: this.props.userId
         }
-        // let id = this.props.userId;
+
         if (this.state.me.health < this.state.opponent.health) {
             API.userLose(userObj).then(res => {
-                console.log("The LOSE API endpoint-----", res.data);
+                // console.log("The LOSE API endpoint-----", res.data);
             }).catch(err => {
                 console.log(err);
             });
         }
         else if (this.state.me.health > this.state.opponent.health) {
             API.userWin(userObj).then(res => {
-                console.log("The WIN API endpoint ------", res.data);
+                // console.log("The WIN API endpoint ------", res.data);
             }).catch(err => {
                 console.log(err);
             });

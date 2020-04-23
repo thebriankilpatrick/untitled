@@ -15,7 +15,7 @@ class RegisterModalContent extends Component {
     handleChange = event => {
         const {name, value} = event.target;
         this.setState({[name]: value});
-        console.log(name + value);
+        // console.log(name + value);
     }
 
     registerNewUser = () => {
@@ -26,12 +26,9 @@ class RegisterModalContent extends Component {
             birthday: birthday,
             password: password
         };
-        console.log(userObj);
-        // Success!
-        // Need to add API call here to post user to db
+        // console.log(userObj);
         API.registerNewUser(userObj).then(res => {
             if (res.status === 200) {
-                // this.props.handleLog() works!!!
                 this.loginUser(userObj.email, userObj.password)
             }
         }).catch(error => {
@@ -47,13 +44,12 @@ class RegisterModalContent extends Component {
             password: password
         };
 
-        console.log(userObj);
-        // Success!
-        // Need to add API call here to handle the login and handle authentication
+        // console.log(userObj);
+
         API.getUser(userObj).then(res => {
             console.log(res);
             if (res.status === 200) {
-                // this.props.handleLog() works!!!
+
                 this.props.redirect();
                 this.props.login(res.data);
                 console.log(res);

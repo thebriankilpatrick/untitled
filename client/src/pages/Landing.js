@@ -7,24 +7,17 @@ import "./Landing.css";
 // import MainPage from "./MainPage";
 
 
-// Render full size picture on body via body className
-// After logging out, and rendering Landing page, state should be set to isLoggedIn: false
-// Might need to add the isLoggedIn state to the App component
-
 class Landing extends Component {
 
     state = {
         redirect: ""
     }
 
-    // handleLog = () => {
-    //     this.setState({ isLoggedIn: true });
-    // }
 
     componentDidMount = () => {
 
         var event = document.createEvent('Event');
-        // Define the event name.
+
         event.initEvent('LandingPageLoaded', true, true);
         document.dispatchEvent(event)
     }
@@ -38,11 +31,6 @@ class Landing extends Component {
 
     render(props) {
 
-        // if (this.state.isLoggedIn) {
-        //     return (
-        //         <MainPage></MainPage>
-        //     )
-        // }
 
         if (this.state.redirect === "/home") {
             return (

@@ -1,16 +1,7 @@
 import React from "react";
 import "./Collection.css";
 
-// const cardCollection = [];
 
-// Use function to call database for cards, and store in cardCollection var.
-// Then map over cardCollection and render for each card
-
-// Add className="borderHover" for hover effect
-
-// Passed test card image through props.
-// you will need to map over array to display all cards
-// also, don't forget to actually set the cards to the user, not call cards from db...
 function CollectionPage(props) {
     return (
         <>

@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+
+// THIS COMPONENT IS NOT IN USE....
+// WILL BE ADDED IN FUTURE VERSION
 class FriendsPage extends Component {
 
     state = {

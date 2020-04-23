@@ -11,8 +11,6 @@ import API from "../utils/API";
 // import Landing from "./Landing";
 import "./MainPage.css";
 
-// Would like to pass the amound of friends that are online through props...
-// Might need to add the isLoggedIn state to the App component
 class MainPage extends Component {
 
     state = {
@@ -26,16 +24,11 @@ class MainPage extends Component {
         // isLoggedIn: true
     }
 
-    // HEY YOUUUU-----------------------------------------------------------------------------------------------
-    // TODO: 
-    // I called the function to get the user from the DB on mount
-    // This will allow me to grab the most up-to-date wins, losses, and rank from the DB
-    // However, this function only runs when the component mounts (load and reload)
     componentDidMount = () => {
         this.props.socket.emit("test");
         const user = sessionStorage.getItem("user");
         const userObj = JSON.parse(user);
-        // console.log("------------------------------------",userObj._id);
+
         this.setState({
             username: userObj.username,
             userId: userObj._id,
@@ -47,7 +40,7 @@ class MainPage extends Component {
             let obj = {
                 _id: this.state.userId
             }
-            // let id = this.state.userId;
+
             API.findUser(obj).then(res => {
                 this.setState({
                     wins: res.data.wins,
@@ -56,9 +49,8 @@ class MainPage extends Component {
                 });
             });
         });
-        // console.log(this.state.friends);
+
         API.getCards().then(res => {
-            // console.log(res);
             this.setState({ cards: res.data });
         }).catch(err => {
             console.log(err);
@@ -74,16 +66,8 @@ class MainPage extends Component {
     }
 
     findMatch = () => {
-        // Button click works!--
-        console.log("HANDLE THIS FUNCTIONALITY");
-        // Need to find a game record where playerOne has a value, and playerTwo does not.
-        // If no game record exist, or exists with conditions above,
-        // then create new game record.
-        // If the above does exists, then update the record with playerTwo info
 
-
-
-        
+        console.log("Tesing functionality");    
     }
 
 

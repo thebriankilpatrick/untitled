@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import API from "../utils/API";
 
 
-// Login button should link to MainPage
 class LoginModalContent extends Component {
 
     state = {
@@ -14,7 +13,7 @@ class LoginModalContent extends Component {
     handleChange = event => {
         const {name, value} = event.target;
         this.setState({[name]: value});
-        console.log(name + value);
+        // console.log(name + value);
     }
 
     loginUser = (props) => {
@@ -24,7 +23,7 @@ class LoginModalContent extends Component {
             password: password
         };
 
-        console.log(userObj);
+        // console.log(userObj);
 
         API.getUser(userObj).then(res => {
             console.log(res);
@@ -32,7 +31,7 @@ class LoginModalContent extends Component {
 
                 this.props.redirect();
                 this.props.login(res.data);
-                console.log(res);
+                // console.log(res);
             }
         }).catch(err => {
             alert("Either username or password is incorrect.");

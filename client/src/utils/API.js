@@ -3,7 +3,7 @@ import axios from "axios";
 export default {
 
     registerNewUser: function(userObj) {
-        console.log('axios post', userObj)
+        // console.log('axios post', userObj)
         return axios.post("/api/user", userObj);
     },
 
@@ -20,41 +20,28 @@ export default {
     },
 
     findUser: function(obj) {
-        console.log("AXIOS FIND USER GET", obj);
+        // console.log("AXIOS FIND USER GET", obj);
         return axios.get("/api/findUser", obj);
     },
 
-    // user should have friends array, cards array, and deck array
-    // so .get to those routes will not be necessary
     getUser: function(userObj) {
-        console.log("Axios GET", userObj);
+        // console.log("Axios GET", userObj);
         // return axios.get("/api/user/" + userObj.email);
         return axios.post("/login", userObj);
     },
 
     getUpdatedUser: function(obj) {
-        console.log("LOOK FOR THIS ONE..............", obj);
+        // console.log("LOOK FOR THIS ONE..............", obj);
 
         return axios.get("/api/updatedUser", obj);
     },
 
-    // .get to grab all cards from db
-    // I think I'll need this... ?
     getCards: function() {
         return axios.get("/api/cards");
     },
 
     findGame: function(gameObj) {
-        console.log("FIND GAME END POINT -----", gameObj);
+        // console.log("FIND GAME END POINT -----", gameObj);
         return axios.post("/api/findGame", gameObj);
     }
-
-    // createGame: function(gameObj) {
-    //     console.log("CREATE GAME OBJ", gameObj);
-    //     return axios.post("/api/findGame", gameObj);
-    // },
-
-    // updateGame: function(gameObj) {
-    //     return axios.put("/api/findGame", gameObj);
-    // }
 }

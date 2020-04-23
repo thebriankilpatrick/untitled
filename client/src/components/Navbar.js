@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-// Need to set the state of Landing page to isLoggedIn: false
-// after clicking the logout button
 function Navbar(props) {
     return (
         <div className="navbar-fixed">

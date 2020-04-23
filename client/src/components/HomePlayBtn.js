@@ -2,13 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import API from "../utils/API";
 
-// Place rank and user info inside container
-// Then have "play" button
 
-// Does "play" button need to link to new page?
-// It will need to make a call to the db before it can render
-
-// ------------------REMOVE LINK TAG AND REPLACE WITH <a> TAG-------JUST A TEST
 class HomePlayBtn extends Component {
 
     state = {
@@ -22,8 +16,7 @@ class HomePlayBtn extends Component {
         let obj = {
             _id: userId
         }
-        console.log("here is your obj", obj);
-        // let id = this.state.userId;
+        // console.log("here is your obj", obj);
         API.getUpdatedUser(obj).then(res => {
             this.setState({
                 wins: res.data.wins,
