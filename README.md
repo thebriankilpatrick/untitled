@@ -1,29 +1,42 @@
-# Create React Express App
+# Super Smash Kittens  
 
-## About This Boilerplate
+Here lies my final project for the University of Richmond Coding Boot Camp.  
 
-This setup allows for a Node/Express/React app which can be easily deployed to Heroku.
+[Link to Super Smash Kittens](https://supersmashkittens.herokuapp.com/)  
 
-The front-end React app will auto-reload as it's updated via webpack dev server, and the backend Express app will auto-reload independently with nodemon.
+### What is Super Smash Kittens???  
 
-## Starting the app locally
+Super Smash Kittens is an online card game, 
+where you can create an account and start battling other players,
+in real time!  Win matches to advance your rank in the leaderboards!  
 
-Start by installing front and backend dependencies. While in this directory, run the following command:
+### How to play  
 
-```
-npm install
-```
+Simply click on the "Find Match" button on the home page, and this will 
+redirect you to the game lobby.  There, you will await an opponent!  
+Once an oppenent has been found, the game will begin after a short countdown.  
 
-This should install node modules within the server and the client folder.
+The rules of the card game are simple:  
 
-After both installations complete, run the following command in your terminal:
+Each round, click on a card to use against your opponent.  
+If your card has more power than your oppenent's card, you will deal 
+the difference in damage to your opponent's health.  
 
-```
-npm start
-```
+If you do not pick a card within the round's timer, you will automatically lose, 
+so don't fall asleep!  
 
-Your app should now be running on <http://localhost:3000>. The Express server should intercept any AJAX requests from the client.
+Winning a match will award the player with 5 honor, 
+and losing will cost the player 2 honor.  
 
-## Deployment (Heroku)
+### Technologies Used  
 
-To deploy, simply add and commit your changes, and push to Heroku. As is, the NPM scripts should take care of the rest.
+* HTML / CSS / JavaScript  
+* React  
+* Socket.io  
+* Materialize CSS  
+* MongoDB / Mongoose  
+* PassportJS / bcryptJS  
+
+### Licenses  
+
+MIT
