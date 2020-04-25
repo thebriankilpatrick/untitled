@@ -26,9 +26,9 @@
     font-family: 'Righteous', cursive;
 }
 
-#winsCount {
+/* #winsCount {
     margin-top: 25px;
-}
+} */
 
 .howToPlayPTag {
  text-align: justify;
@@ -36,7 +36,7 @@
 
 /* Username */
 .username {
-    font-size:30px;
+    font-size:17px;
     background: -webkit-linear-gradient(#ea6dfa, #333);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
