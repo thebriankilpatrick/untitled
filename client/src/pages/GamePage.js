@@ -84,7 +84,7 @@ class GamePage extends Component {
                 opponent,
                 opponentClicked: data.opponentCardIndex.index
             });
-
+            
             if (this.state.userClicked !== "") {
                 // If user has picked card already, by the time he/she got data back from opponent's card click,
                 this.compareCards();
@@ -183,7 +183,7 @@ class GamePage extends Component {
                 this.storeGameText();
             }
             else if (this.state.timerName === "betweenRoundTimer") {
-
+                this.resetCards();
                 if (this.state.me.health === 0) {
                     this.setState({
                         roundResultText: "You Lost!  Better Luck Next Time!",
@@ -379,37 +379,11 @@ class GamePage extends Component {
             });
         }
 
-        let myCards = this.state.myCards;
-        let index;
-        for (let i = 0; i < myCards.length; i++) {
-            if (this.state.userClicked === myCards[i].title) {
-                index = i;
-                // console.log("Here is the index of your splice----", i);
-            }
-        }
-        myCards.splice(index, 1);
-        this.setState({
-            myCards
-        });
-
-        let opponentCards = this.state.opponentCards;
-        let opponentIndex = this.state.opponent.pickedCard.index
-        opponentCards.splice(opponentIndex, 1);
-        this.setState({
-            opponentCards
-        });
-
-        let opponent = this.state.opponent;
-        opponent.pickedCard = {
-            index: ""
-        }
-        this.setState({
-            userClicked: "",
-            opponentClicked: "",
-            opponent
-        });
 
         clearInterval(this.state.timer);
+
+
+        
         if (this.state.round < 4) {
             let round = this.state.round;
             round += 1;
@@ -553,6 +527,39 @@ class GamePage extends Component {
         this.handleGameResult();
     }
 
+    resetCards = () => {
+        
+        let myCards = this.state.myCards;
+        let index;
+        for (let i = 0; i < myCards.length; i++) {
+            if (this.state.userClicked === myCards[i].title) {
+                index = i;
+                // console.log("Here is the index of your splice----", i);
+            }
+        }
+        myCards.splice(index, 1);
+        this.setState({
+            myCards
+        });
+
+        let opponentCards = this.state.opponentCards;
+        let opponentIndex = this.state.opponent.pickedCard.index
+        opponentCards.splice(opponentIndex, 1);
+        this.setState({
+            opponentCards
+        });
+
+        let opponent = this.state.opponent;
+        opponent.pickedCard = {
+            index: ""
+        }
+        this.setState({
+            userClicked: "",
+            opponentClicked: "",
+            opponent
+        });
+    }
+
     handleGameResult = () => {
         let userObj = {
             _id: this.props.userId
@@ -610,18 +617,23 @@ class GamePage extends Component {
         }
 
         else if (this.state.gameStatus === "start") {
+
             return (
                 <>
                     <BodyClassName className="gamePagePic"></BodyClassName>
                     <div className="row" id="cardContainer">
                         {this.state.opponentCards.map((card, index) => {
+                            let displayOpponentCard = false;
+                            if (this.state.opponentClicked === card.title && this.state.userClicked !== "" && this.state.opponent.pickedCard.img) {
+                                displayOpponentCard = true;
+                            }
                             return (
                                 <div className="col s3 m3 l3 xl3" key={index}>
                                     <div className="opponentCards"
                                         style={ this.state.opponentClicked === card.title ? { top: "20px" } : {} }
                                     >
                                         <div className="card-image">
-                                            <img className="cardImg" src={card.img} 
+                                            <img className="cardImg" src={ displayOpponentCard ? this.state.opponent.pickedCard.img : card.img} 
                                             />
                                         </div>
                                     </div>

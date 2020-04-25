@@ -17,8 +17,6 @@ module.exports = function(server) {
 
                     io.in(data.gameId).emit("startGame", data);
                 }
-
-                
             }
         });
 
