@@ -31,12 +31,12 @@ class HomePlayBtn extends Component {
             <div className="container textColor" id="homePlayBtnContainer">
                 <div className="row">
                     <div className="col l4 m4 s4 customFont">
-                        <h5>{this.props.username}</h5>
+                        <h5 className="username">{this.props.username}</h5>
                         <p>honor: {this.state.rank}</p>
                     </div>
 
                     <div className="col l4 m4 s4 customFont">
-                        <p>wins: {this.state.wins}</p>
+                        <p id="winsCount">wins: {this.state.wins}</p>
                         <p>losses: {this.state.losses}</p>
                     </div>
 

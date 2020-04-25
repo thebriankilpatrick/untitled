@@ -4,13 +4,14 @@
 
 #navLogo {
     font-family: 'Righteous', cursive;
+    animation: blinkingText 1.2s infinite;
 }
 
 #homePlayBtn {
     font-family: 'Bangers', cursive;
     font-size: 23px;
     top: 10px;
-    background-color: #039be5;
+    background-image: linear-gradient( #036ea3, rgb(122, 49, 170));
 }
 
 #homePlayBtn:hover {
@@ -25,6 +26,68 @@
     font-family: 'Righteous', cursive;
 }
 
+#winsCount {
+    margin-top: 25px;
+}
+
+.howToPlayPTag {
+ text-align: justify;
+}
+
+/* Username */
+.username {
+    font-size:30px;
+    background: -webkit-linear-gradient(#ea6dfa, #333);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+/* Rank Table */
+#rankTableHead {
+    background: #efefef1f;
+}
+#rankTable tbody {
+    background-image: url('../assets/images/space-rank-table-background.jpg');
+    background-size: contain;
+}
+#rankTable .rankTableRecord0 {
+    background: #84199eb8;
+}
+
+#rankTable .rankTableRecord1 {
+    background: #6c196dba;
+}
+
+#rankTable .rankTableRecord2 {
+    background: #461652d9;
+}
+
+#rankTable .rankTableRecord3,
+#rankTable .rankTableRecord4,
+#rankTable .rankTableRecord5
+{
+    background: #3c1346e0;
+}
+
+/* CSS Animation */
+@keyframes blinkingText{
+    0% {
+        color: #bd7ccd;
+    }
+    49% {
+        color: #a054b2;
+    }
+    60% {
+        color: #9752ae;
+    }
+    99% {
+        color: #b17eba;
+    }
+    100% {
+        color: #cb7de3;
+    }
+}
+
+/* Media Queries */
 @media only screen and (max-width: 620px) {
     #homePlayBtn {
         font-size: 20px;
@@ -43,3 +106,4 @@
         padding: 0 10px;
     }
 }
+

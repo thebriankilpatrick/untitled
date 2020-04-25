@@ -23,9 +23,9 @@ class Leaderboard extends Component {
     render() {
         return (
             <div className="container textColor">
-                <table>
+                <table id="rankTable">
                     <thead>
-                    <tr>
+                    <tr id="rankTableHead">
                         <th>Rank</th>
                         <th>Username</th>
                         <th>Honor</th>
@@ -35,7 +35,7 @@ class Leaderboard extends Component {
                     <tbody>
                         {this.state.users.slice(0, 5).map((user, index) => {
                             return (
-                            <tr key={index}>
+                            <tr key={index} className={"rankTableRecord" + index}>
                                 <td>{index + 1}</td>
                                 <td>{user.username}</td>
                                 <td>{user.rank}</td>

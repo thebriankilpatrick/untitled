@@ -30,6 +30,7 @@ app.use(passport.session());
 // Define API routes here
 require("./routes")(app, passport);
 
+// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/card-game");
 mongoose.connect(process.env.MONGODB_URI || "mongodb://user:supersmash1@ds117913.mlab.com:17913/heroku_sj8s2smp");
 
 // Send every other request to the React app

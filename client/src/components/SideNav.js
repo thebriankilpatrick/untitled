@@ -11,7 +11,7 @@ function SideNav(props) {
             <ul id="nav-mobile" className="sidenav sidenav-fixed right-aligned" id="sideNavColor">
                 <nav>
                     <div className="nav-wrapper grey darken-3">
-                        <a className="brand-logo center">{props.username}</a>
+                        <a className="brand-logo center username">{props.username}</a>
                     </div>
                 </nav>
                 {/* <li className="sideNavLink">Friends ({props.friends.length})</li>
