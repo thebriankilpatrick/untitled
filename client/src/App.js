@@ -4,8 +4,8 @@ import MainPage from "./pages/MainPage";
 import "./App.css";
 
 import openSocket from "socket.io-client";
-const socket = openSocket("http://localhost:3000");
-// const socket = openSocket("https://supersmashkittens.herokuapp.com/");
+// const socket = openSocket("http://localhost:3000");
+const socket = openSocket("https://supersmashkittens.herokuapp.com/");
 
 
 class App extends Component {
