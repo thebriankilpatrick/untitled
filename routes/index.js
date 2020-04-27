@@ -61,12 +61,12 @@ module.exports = function(app, passport) {
     });
 
     app.get("/api/findUser", (req, res) => {
-        console.log("HERE IS THE REQ YOU ARE PASSING TO ENDPOINT", req.user._id);
+        // console.log("HERE IS THE REQ YOU ARE PASSING TO ENDPOINT", req.user._id);
         db.User.findById({
             _id: req.user._id
         }
         ).then(dbUser => {
-            console.log("FIND USER END POINT", dbUser);
+            // console.log("FIND USER END POINT", dbUser);
             res.json(dbUser);
         }).catch(err => {
             res.status(500).send(err);
@@ -74,7 +74,7 @@ module.exports = function(app, passport) {
     });
 
     app.get("/api/updatedUser", (req, res) => {
-        console.log("LOOK FOR MEEEEE+++++++++++++++++++++++++", req.user);
+        // console.log("LOOK FOR MEEEEE+++++++++++++++++++++++++", req.user);
         db.User.findById({
             _id: req.user._id
         }
@@ -88,7 +88,7 @@ module.exports = function(app, passport) {
 
     // --------------------------------- TESTING UPDATE USER END POINT --------
     app.put("/api/user/win", (req, res) => {
-        console.log("HERE IS THE WIN DB ENDPOINT, AND THE REQ IS:", req.body);
+        // console.log("HERE IS THE WIN DB ENDPOINT, AND THE REQ IS:", req.body);
         db.User.findByIdAndUpdate({
             _id: req.body._id
         },{
@@ -102,8 +102,6 @@ module.exports = function(app, passport) {
             res.status(500).send(err);
         })
     });
-
-    // Need to handle to make sure honor does not go below 0
 
     // Gets the user, and reads the honor
     // if else statement to decide the decrement of the honor
@@ -155,17 +153,6 @@ module.exports = function(app, passport) {
             }
         });
         
-        // db.User.findByIdAndUpdate({
-        //     _id: req.body.id
-        // },{
-        //     $inc: {honor: -2, losses: 1} 
-        // }, {
-        //     new: true
-        // }).then(dbUser => {
-        //     console.log("LOSE DB ENDPOINT", dbUser);
-        // }).catch(err => {
-        //     res.status(500).send(err);
-        // })
     })
 
 
@@ -206,6 +193,18 @@ module.exports = function(app, passport) {
             console.log(err)
             res.status(500).send(err);
         })
+    });
+
+    app.delete("/api/leftGame/:id", (req, res) => {
+        console.log("HERE IS YOUR REQ FOR DELETE ENDPOINT", req.params, "-------------------------------------------------");
+        db.Game.findOneAndDelete({
+            _id: req.params.id
+        }).then(gameData => {
+            console.log("Game record has been deleted.", gameData);
+            res.json(gameData);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
     });
 
 

@@ -130,11 +130,30 @@ class GamePage extends Component {
 
         this.props.socket.emit("leave game", {gameId: this.state.gameId});
 
-        let me = this.state.me;
-        me.health = 0;
-        this.setState({
-            me
-        });
+        if (this.state.gameStatus === "waiting") {
+            // Delete game record...
+            API.leaveGame(this.state.gameId).then(res => {
+                console.log("The game record has been deleted", res);
+            });
+        }
+        else if (this.state.gameStatus !== "end") {
+            // Set health to 0, and don't delete game record??
+            let userObj = {
+                _id: this.props.userId
+            }
+    
+            API.userLose(userObj).then(res => {
+                console.log("The LOSE API endpoint-----", res.data);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+
+        // let me = this.state.me;
+        // me.health = 0;
+        // this.setState({
+        //     me
+        // });
     }
 
     // This is where the timer name in state is being set

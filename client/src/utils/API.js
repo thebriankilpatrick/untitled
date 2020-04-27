@@ -43,5 +43,10 @@ export default {
     findGame: function(gameObj) {
         // console.log("FIND GAME END POINT -----", gameObj);
         return axios.post("/api/findGame", gameObj);
+    },
+
+    leaveGame: function(gameId) {
+        console.log("DELETE GAME ENDPOINT", gameId);
+        return axios.delete("/api/leftGame/" + gameId);
     }
 }
