@@ -211,6 +211,7 @@ class GamePage extends Component {
                         dealtDmg: false,
                         receivedDmg: false 
                     })
+                    this.displayCards();
                     this.startTimer("gameTimer");
                     this.storeGameText();
                 }
@@ -283,6 +284,43 @@ class GamePage extends Component {
         });
     }
 
+    displayCards = () => {
+        let myCards = this.state.myCards;
+        let index;
+        for (let i = 0; i < myCards.length; i++) {
+            if (this.state.userClicked === myCards[i].title) {
+                index = i;
+                // console.log("Here is the index of your splice----", i);
+            }
+        }
+        // myCards.splice(index, 1);
+
+        myCards[index]["used"] = true;
+
+        this.setState({
+            myCards
+        });
+
+        let opponentCards = this.state.opponentCards;
+        let opponentIndex = this.state.opponent.pickedCard.index
+        // opponentCards.splice(opponentIndex, 1);
+        opponentCards[opponentIndex]["used"] = true;
+        this.setState({
+            opponentCards
+        });
+
+        let opponent = this.state.opponent;
+        opponent.pickedCard = {
+            index: ""
+        }
+        this.setState({
+            userClicked: "",
+            opponentClicked: "",
+            opponent
+        });
+
+    }
+
     playerOneClick = (event) => {
         this.setState({
             playerOneClicked: event.target.id
@@ -342,6 +380,11 @@ class GamePage extends Component {
         let myPower = this.state.userPower;
         let opponentPower = this.state.opponent.pickedCard.power;
 
+        let opponentInd = this.state.opponent.pickedCard.index;
+
+        let opponentCards = this.state.opponentCards;
+        opponentCards[opponentInd]["revealed"] = true;
+
         if (myPower > opponentPower) {
             let roundResult = myPower - opponentPower;
             // console.log("You dealt ", roundResult, " damage to your opponent");
@@ -379,35 +422,35 @@ class GamePage extends Component {
             });
         }
 
-        let myCards = this.state.myCards;
-        let index;
-        for (let i = 0; i < myCards.length; i++) {
-            if (this.state.userClicked === myCards[i].title) {
-                index = i;
-                // console.log("Here is the index of your splice----", i);
-            }
-        }
-        myCards.splice(index, 1);
-        this.setState({
-            myCards
-        });
+        // let myCards = this.state.myCards;
+        // let index;
+        // for (let i = 0; i < myCards.length; i++) {
+        //     if (this.state.userClicked === myCards[i].title) {
+        //         index = i;
+        //         // console.log("Here is the index of your splice----", i);
+        //     }
+        // }
+        // myCards.splice(index, 1);
+        // this.setState({
+        //     myCards
+        // });
 
-        let opponentCards = this.state.opponentCards;
-        let opponentIndex = this.state.opponent.pickedCard.index
-        opponentCards.splice(opponentIndex, 1);
-        this.setState({
-            opponentCards
-        });
+        // let opponentCards = this.state.opponentCards;
+        // let opponentIndex = this.state.opponent.pickedCard.index
+        // opponentCards.splice(opponentIndex, 1);
+        // this.setState({
+        //     opponentCards
+        // });
 
-        let opponent = this.state.opponent;
-        opponent.pickedCard = {
-            index: ""
-        }
-        this.setState({
-            userClicked: "",
-            opponentClicked: "",
-            opponent
-        });
+        // let opponent = this.state.opponent;
+        // opponent.pickedCard = {
+        //     index: ""
+        // }
+        // this.setState({
+        //     userClicked: "",
+        //     opponentClicked: "",
+        //     opponent
+        // });
 
         clearInterval(this.state.timer);
         if (this.state.round < 4) {
@@ -573,6 +616,18 @@ class GamePage extends Component {
             });
         }
     }
+
+    defineClassName = (card) => {
+        if (card.revealed && !card.used) {
+            return "revealedCard"
+        }
+        else if (card.used) {
+            return "usedCard"
+        }
+        else {
+            return "opponentCards"
+        }
+    }
     
 
     render() {
@@ -610,18 +665,34 @@ class GamePage extends Component {
         }
 
         else if (this.state.gameStatus === "start") {
+
             return (
                 <>
                     <BodyClassName className="gamePagePic"></BodyClassName>
                     <div className="row" id="cardContainer">
                         {this.state.opponentCards.map((card, index) => {
+                            let displayedCardTitle = null;
+                            let displayedCardImg = null;
+                             if (this.state.opponent.pickedCard.title && this.state.userClicked) {
+                                displayedCardTitle = this.state.opponent.pickedCard.title;
+                
+                                for (let i = 0; i < this.state.cards.length; i++) {
+                                    if (displayedCardTitle === this.state.cards[i].title) {
+                                        displayedCardImg = this.state.cards[i].img;
+                                        console.log("Setting the card image here!", displayedCardImg);
+                                    }
+                                }
+                            }
+
                             return (
                                 <div className="col s3 m3 l3 xl3" key={index}>
-                                    <div className="opponentCards"
+                                    {/* <div className={"opponentCards" + card.used? " usedCard" : ""} */}
+                                    <div className={ this.defineClassName(card) }
                                         style={ this.state.opponentClicked === card.title ? { top: "20px" } : {} }
                                     >
                                         <div className="card-image">
-                                            <img className="cardImg" src={card.img} 
+                                            <img className="cardImg"
+                                                src={ this.state.opponent.pickedCard.title && this.state.userClicked && this.state.opponentClicked === card.title ? displayedCardImg : card.img }
                                             />
                                         </div>
                                     </div>
@@ -651,12 +722,10 @@ class GamePage extends Component {
 
                     <div className="row" id="cardContainer">
                         {this.state.myCards.map((card, index) => {
-                            return (
-                                <div className="col s3 m3 l3 xl3 cardSelectBot" key={index}>
-                                    <div className="card borderHover"
-                                            onClick={this.userClick}
-                                            style={ this.state.userClicked === card.title ? { top: "-20px" } : {} }
-                                        >
+                            if (card.used) {
+                                return (
+                                    <div className="col s3 m3 l3 xl3 cardSelectBot" key={index}>
+                                    <div className="card usedCard">
                                         <div className="card-image" id={card.title}>
                                             <img className="cardImg" 
                                                 src={card.img} 
@@ -667,7 +736,27 @@ class GamePage extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            )
+                                )
+                            }
+                            else {
+                                return (
+                                    <div className="col s3 m3 l3 xl3 cardSelectBot" key={index}>
+                                        <div className="card borderHover"
+                                                onClick={this.userClick}
+                                                style={ this.state.userClicked === card.title ? { top: "-20px" } : {} }
+                                            >
+                                            <div className="card-image" id={card.title}>
+                                                <img className="cardImg" 
+                                                    src={card.img} 
+                                                    alt={card.title} 
+                                                    data-power={card.power}
+                                                    id={card.title}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            }
                         })}
                     </div>
                 </>

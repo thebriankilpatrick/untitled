@@ -68,6 +68,21 @@ body {
     /* top: 20px; */
 }
 
+.usedCard {
+    position: relative;
+    cursor: default !important;
+    opacity: .1;
+}
+
+.revealedCard {
+    position: relative;
+    top: 20px;
+}
+
+.usedCard:hover {
+    background: none !important;
+}
+
 .endOfGame {
     margin-top: 200px;
 }
