@@ -5,6 +5,18 @@ import LoginModalContent from "../components/LoginModalContent";
 import RegisterModalContent from "../components/RegisterModalContent";
 import "./Landing.css";
 // import MainPage from "./MainPage";
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
+
+const options = {
+    // you can also just use 'bottom center'
+    position: positions.BOTTOM_CENTER,
+    timeout: 5000,
+    offset: '30px',
+    // you can also just use 'scale'
+    transition: transitions.SCALE,
+    type: "error"
+}
 
 
 class Landing extends Component {
@@ -59,6 +71,7 @@ class Landing extends Component {
         return (
 
             <Router>
+                <AlertProvider template={AlertTemplate} {...options}>
 
                 <div >
                     <BodyClassName className="landingPagePic"></BodyClassName>
@@ -106,6 +119,7 @@ class Landing extends Component {
                     </div>
 
                 </div>
+                </AlertProvider>
             </Router>
         )
     }

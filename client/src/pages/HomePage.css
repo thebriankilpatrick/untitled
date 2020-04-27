@@ -88,6 +88,7 @@
 }
 
 /* Media Queries */
+
 @media only screen and (max-width: 620px) {
     #homePlayBtn {
         font-size: 20px;
@@ -107,3 +108,66 @@
     }
 }
 
+/* @media only screen and (min-width: 1020px) {
+    .username {
+        font-size: 21px;
+    }
+    #winsCount {
+        margin-top: 15px;
+    }
+} */
+
+@media only screen and (min-width: 620px) {
+    .username {
+        font-size: 21px;
+    }
+    #winsCount {
+        margin-top: 15px;
+    }
+}
+
+@media only screen and (min-width: 750px) {
+    .username {
+        font-size: 25px;
+    }
+    #winsCount {
+        margin-top: 20px;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .username {
+        font-size: 21px;
+    }
+    #winsCount {
+        margin-top: 15px;
+    }
+    #homePlayBtn {
+        font-size: 19px;
+    }
+}
+
+@media only screen and (min-width: 1050px) {
+    /* .username {
+        font-size: 21px;
+    }
+    #winsCount {
+        margin-top: 15px;
+    } */
+    #homePlayBtn {
+        font-size: 23px;
+    }
+}
+
+@media only screen and (min-width: 1292px) {
+    .username {
+        font-size: 30px;
+    }
+    #winsCount {
+        margin-top: 25px;
+    }
+
+    #homePlayBtn {
+        margin-top: 20px;
+    }
+}

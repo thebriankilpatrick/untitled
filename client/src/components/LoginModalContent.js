@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import API from "../utils/API";
-
+import { withAlert } from 'react-alert'
 
 class LoginModalContent extends Component {
 
     state = {
         email: "",
-        password: ""
+        password: "",
+        incorrect: false,
+        // alert: useAlert()
     }
 
     handleChange = event => {
@@ -16,7 +18,12 @@ class LoginModalContent extends Component {
         // console.log(name + value);
     }
 
-    loginUser = (props) => {
+    loginUser = () => {
+
+        this.setState({
+            incorrect: false
+        });
+
         const {email, password} = this.state;
         const userObj = {
             email: email,
@@ -34,13 +41,21 @@ class LoginModalContent extends Component {
                 // console.log(res);
             }
         }).catch(err => {
-            alert("Either username or password is incorrect.");
+            // alert("Either email or password is incorrect.");
+            this.setState({
+                incorrect: true
+            }, function() {
+                this.props.alert.show("Either email or password is incorrect.");
+            }
+            );
+            // this.state.alert.show("Either email or password is incorrect");
             console.log(err);
         });
     }
 
 
     render() {
+
         return (
             <>
                 <div className="modal-content">
@@ -76,4 +91,4 @@ class LoginModalContent extends Component {
     }
 }
 
-export default LoginModalContent;
+export default withAlert()(LoginModalContent);

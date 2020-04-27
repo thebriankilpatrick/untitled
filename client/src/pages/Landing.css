@@ -114,4 +114,22 @@ input:-internal-autofill-selected {
     .modal {
         width: 50%;
     }
+
+    #initPlayBtn {
+        top: 300px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+
+    #initPlayBtn {
+        top: 400px;
+    }
+}
+
+@media only screen and (min-width: 1400px) {
+
+    #initPlayBtn {
+        top: 520px;
+    }
 }
