@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { withAlert } from 'react-alert'
 import API from "../utils/API";
 
 
@@ -15,7 +16,6 @@ class RegisterModalContent extends Component {
     handleChange = event => {
         const {name, value} = event.target;
         this.setState({[name]: value});
-        // console.log(name + value);
     }
 
     registerNewUser = () => {
@@ -26,25 +26,24 @@ class RegisterModalContent extends Component {
             birthday: birthday,
             password: password
         };
-        // console.log(userObj);
         API.registerNewUser(userObj).then(res => {
             if (res.status === 200) {
                 this.loginUser(userObj.email, userObj.password)
             }
         }).catch(error => {
-            // console.log(error);
+            // Display React-Alert if username or email exists
+            this.props.alert.show("Either email or username already exists.");
             throw error;
         })
     }
 
+    // If success, logs user in directly after registering
     loginUser = (email, password) => {
 
         const userObj = {
             email: email,
             password: password
         };
-
-        // console.log(userObj);
 
         API.getUser(userObj).then(res => {
             console.log(res);
@@ -72,6 +71,7 @@ class RegisterModalContent extends Component {
                                 name="email" 
                                 value={this.state.email}
                                 onChange={this.handleChange}
+                                autoComplete="off"
                                 />
                             <label htmlFor="email">Email</label>
                             <span className="helper-text" data-error="please input an actual email" data-success=""></span>
@@ -89,6 +89,7 @@ class RegisterModalContent extends Component {
                                 name="username" 
                                 value={this.state.username}
                                 onChange={this.handleChange}
+                                autoComplete="off"
                                 />
                             <label htmlFor="username">Username</label>
                         </div>
@@ -97,6 +98,7 @@ class RegisterModalContent extends Component {
                                 name="password" 
                                 value={this.state.password}
                                 onChange={this.handleChange}
+                                autoComplete="off"
                                 />
                             <label htmlFor="password">Password</label>
                         </div>
@@ -112,4 +114,4 @@ class RegisterModalContent extends Component {
     }
 }
 
-export default RegisterModalContent;
+export default withAlert()(RegisterModalContent);

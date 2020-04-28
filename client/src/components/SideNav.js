@@ -91,6 +91,7 @@ class SideNav extends Component {
                                 value={this.state.myMessage}
                                 onChange={this.handleChange}
                                 onKeyDown={this.handleKeyDown}
+                                autoComplete="off"
                             />
                             <label htmlFor="chatInput">Message</label>
                         </div>

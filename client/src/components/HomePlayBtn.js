@@ -16,7 +16,6 @@ class HomePlayBtn extends Component {
         let obj = {
             _id: userId
         }
-        // console.log("here is your obj", obj);
         API.getUpdatedUser(obj).then(res => {
             this.setState({
                 wins: res.data.wins,

@@ -7,6 +7,8 @@ class Leaderboard extends Component {
         users: []
     }
 
+    // When component mounts, pull most up-to-date data from user in DB
+    // Then force the page to update with new data
     componentWillMount = () => {
         API.getAllUsers().then(res => {
             this.setState({

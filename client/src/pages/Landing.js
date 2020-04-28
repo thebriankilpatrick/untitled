@@ -33,7 +33,10 @@ class Landing extends Component {
         var event = document.createEvent('Event');
 
         event.initEvent('LandingPageLoaded', true, true);
-        document.dispatchEvent(event)
+        document.dispatchEvent(event);
+
+        // Removes any stored messages in sessionStorage prior to logging in
+        sessionStorage.removeItem("messages");
     }
 
     redirect = () => {

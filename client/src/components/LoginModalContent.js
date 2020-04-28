@@ -9,13 +9,11 @@ class LoginModalContent extends Component {
         email: "",
         password: "",
         incorrect: false,
-        // alert: useAlert()
     }
 
     handleChange = event => {
         const {name, value} = event.target;
         this.setState({[name]: value});
-        // console.log(name + value);
     }
 
     loginUser = () => {
@@ -30,25 +28,21 @@ class LoginModalContent extends Component {
             password: password
         };
 
-        // console.log(userObj);
-
         API.getUser(userObj).then(res => {
             console.log(res);
             if (res.status === 200) {
 
                 this.props.redirect();
                 this.props.login(res.data);
-                // console.log(res);
             }
         }).catch(err => {
-            // alert("Either email or password is incorrect.");
             this.setState({
                 incorrect: true
             }, function() {
+                // Display React-Alert if email or password is incorrect
                 this.props.alert.show("Either email or password is incorrect.");
             }
             );
-            // this.state.alert.show("Either email or password is incorrect");
             console.log(err);
         });
     }
@@ -67,6 +61,7 @@ class LoginModalContent extends Component {
                                     name="email"
                                     value={this.state.email}
                                     onChange={this.handleChange}
+                                    autoComplete="off"
                                 />
                                 <label className="labelLoginRegister" htmlFor="email">Email</label>
                                 <span className="helper-text" data-error="please input an email" data-success=""></span>
@@ -76,6 +71,7 @@ class LoginModalContent extends Component {
                                     name="password"
                                     value={this.state.password}
                                     onChange={this.handleChange}
+                                    autoComplete="off"
                                 />
                                 <label htmlFor="password">Password</label>
                             </div>
