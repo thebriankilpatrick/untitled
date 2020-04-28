@@ -43,12 +43,11 @@ module.exports = function(server) {
         });
 
         socket.on("leave chat", function(){
-            console.log("SOCKET - Chat joined ");
             socket.leave("chat");  
         });
-        
+
         socket.on("send message", function(data) {
-            io.in("chat").emit("receive message", data);
+            socket.to('chat').emit("receive message", data);
         })
     }
 

@@ -7,7 +7,7 @@ class SideNav extends Component {
 
     state = {
         myMessage: "",
-        chatMessages: []
+        chatMessages: []  //Array of message objects: {username: "123", text: "abc"}
     }
 
     componentWillMount = () => {
@@ -15,6 +15,16 @@ class SideNav extends Component {
         if (messages) {
             this.setState({chatMessages: JSON.parse(messages)})
         }
+        // Join global chat
+        this.props.socket.emit("join chat");
+
+        // Listen to received messages
+        this.props.socket.on("receive message", (messageObj) => {
+            let chatMessages = this.state.chatMessages;
+            chatMessages.push(messageObj);
+            this.setState({chatMessages});
+            sessionStorage.setItem('messages', JSON.stringify(chatMessages));
+        })
     }
 
     handleChange = (event) => {
@@ -36,9 +46,17 @@ class SideNav extends Component {
                     console.log("state chatMessages", this.state.chatMessages);
                     sessionStorage.setItem('messages', JSON.stringify(this.state.chatMessages));
                 });
-                
+
+                this.props.socket.emit("send message", {
+                    username: this.props.username,
+                    text: event.target.value
+                })
             }
         }
+    }
+
+    componentWillUnmount = () => {
+        this.props.socket.emit("leave chat");
     }
 
     render() {
