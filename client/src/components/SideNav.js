@@ -13,7 +13,10 @@ class SideNav extends Component {
     componentWillMount = () => {
         let messages =  sessionStorage.getItem('messages');
         if (messages) {
-            this.setState({chatMessages: JSON.parse(messages)})
+            this.setState({chatMessages: JSON.parse(messages)}, function() {
+                var objDiv = document.getElementsByClassName("all-messages-field")[0];
+                objDiv.scrollTop = objDiv.scrollHeight;
+            });
         }
         // Join global chat
         this.props.socket.emit("join chat");
@@ -24,6 +27,8 @@ class SideNav extends Component {
             chatMessages.push(messageObj);
             this.setState({chatMessages});
             sessionStorage.setItem('messages', JSON.stringify(chatMessages));
+            var objDiv = document.getElementsByClassName("all-messages-field")[0];
+            objDiv.scrollTop = objDiv.scrollHeight;
         })
     }
 
@@ -45,6 +50,8 @@ class SideNav extends Component {
                 this.setState({myMessage: "", chatMessages}, function() {
                     console.log("state chatMessages", this.state.chatMessages);
                     sessionStorage.setItem('messages', JSON.stringify(this.state.chatMessages));
+                    var objDiv = document.getElementsByClassName("all-messages-field")[0];
+                    objDiv.scrollTop = objDiv.scrollHeight;
                 });
 
                 this.props.socket.emit("send message", {
@@ -70,8 +77,14 @@ class SideNav extends Component {
                     </nav>
                     <div id="chatBox">
                         <div className="all-messages-field col s12">
-                            <ul>
-
+                            <ul id="messagesList">
+                                {this.state.chatMessages.map(messageObj => {
+                                    return (
+                                        <li className="messageItem">
+                                            <span className={messageObj.username === this.props.username? "myMessage" : "otherMessage"}>{messageObj.username}:</span> {messageObj.text} 
+                                        </li>
+                                    )
+                                })}
                             </ul>
                         </div>
                         <div className="input-field col s12" id="messageInput">

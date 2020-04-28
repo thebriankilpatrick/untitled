@@ -42,6 +42,35 @@ body {
   width: 100%;
 }
 
+.all-messages-field {
+  height: 65vh;
+  position: relative;
+  overflow: scroll;
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.all-messages-field::-webkit-scrollbar {
+  display: none;
+}
+
+.myMessage {
+  color: rgb(66, 66, 180);
+  font-weight: 700;
+}
+
+.otherMessage {
+  color: rgb(145, 41, 145);
+  font-weight: 700;
+}
+
+.messageItem {
+  margin-top: 8px !important;
+  margin-left: 5px;
+  line-height: 20px !important;
+  color: #998a8a;
+}
+
 
 @media only screen and (min-width: 992px) {
     body {
