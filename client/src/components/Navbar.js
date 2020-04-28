@@ -11,7 +11,7 @@ function Navbar(props) {
                     <ul id="nav-mobile" className="right navMargin">
                         <li><Link to="/home">Home</Link></li>
                         <li><Link to="/collection">Collection</Link></li>
-                        {/* <li><Link to="/friends" className="hide-on-large-only">Friends</Link></li> */}
+                        <li><a className="hide-on-large-only sidenav-trigger" data-target="sideNavColor">Chat</a></li>
                         <li><Link to="/" onClick={props.logout} >Logout</Link></li>
                     </ul>
                 </div>

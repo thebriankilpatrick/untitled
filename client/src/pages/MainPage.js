@@ -62,6 +62,12 @@ class MainPage extends Component {
         }).catch(err => {
             console.log(err);
         });
+
+        console.log("Show Side Nav click registered")
+        var event = document.createEvent('Event');
+
+        event.initEvent('showSideNav', true, true);
+        document.dispatchEvent(event)
     }
 
     componentWillUpdate = (newProps, newState) => {
@@ -79,6 +85,14 @@ class MainPage extends Component {
     componentWillUnmount = () => {
         this.props.socket.emit("leave chat");
     }
+
+    // showSideNav = () => {
+    //     console.log("Show Side Nav click registered")
+    //     var event = document.createEvent('Event');
+
+    //     event.initEvent('showSideNav', true, true);
+    //     document.dispatchEvent(event)
+    // }
 
 
     render = (props) => {

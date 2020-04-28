@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 
 
-// THIS COMPONENT WILL DISPLAY CHAT
-// CHAT WILL BE ADDED IN FUTURE VERSION
 class SideNav extends Component {
 
     state = {
@@ -94,7 +92,7 @@ class SideNav extends Component {
                                 onChange={this.handleChange}
                                 onKeyDown={this.handleKeyDown}
                             />
-                            <label htmlFor="chat">Message</label>
+                            <label htmlFor="chatInput">Message</label>
                         </div>
                     </div>
                     {/* <li className="sideNavLink">Friends ({props.friends.length})</li>

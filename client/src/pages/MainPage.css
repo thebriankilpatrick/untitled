@@ -42,6 +42,11 @@ body {
   width: 100%;
 }
 
+#chatInput {
+  color: rgb(223, 221, 221);
+  margin-left: 5px;
+}
+
 .all-messages-field {
   height: 65vh;
   position: relative;
@@ -90,5 +95,8 @@ body {
     }
     .brand-logo {
       left: 0;
+    }
+    .sidenav {
+      opacity: .9;
     }
 }
