@@ -36,6 +36,20 @@ module.exports = function(server) {
                 socket.leave(data.gameId);
             }
         })
+
+        socket.on("join chat", function(){
+            console.log("SOCKET - Chat joined ");
+            socket.join("chat");  
+        });
+
+        socket.on("leave chat", function(){
+            console.log("SOCKET - Chat joined ");
+            socket.leave("chat");  
+        });
+        
+        socket.on("send message", function(data) {
+            io.in("chat").emit("receive message", data);
+        })
     }
 
 }

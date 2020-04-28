@@ -31,7 +31,8 @@ class MainPage extends Component {
     }
 
     componentDidMount = () => {
-        this.props.socket.emit("test");
+        this.props.socket.emit("join chat");
+
         const user = sessionStorage.getItem("user");
         const userObj = JSON.parse(user);
 
@@ -72,8 +73,11 @@ class MainPage extends Component {
     }
 
     findMatch = () => {
-
         console.log("Tesing functionality");    
+    }
+
+    componentWillUnmount = () => {
+        this.props.socket.emit("leave chat");
     }
 
 
